@@ -394,7 +394,9 @@ function oxHTML(){
   const cur=(window.__ox)||{};
   const answered=Object.values(players).filter(p=>p&&p.oxIdx===cur.idx&&p.oxA).length;
   return `<div class="eyebrow">OX 퀴즈 · ${MODE==='practice'?'연습':'본게임'}</div>
-    <h1 class="t">${cur.reveal? '정답 '+esc(cur.answer) : '문제 '+(oxIdx+1)}</h1>
+    <h1 class="t">${cur.reveal? '정답 '+esc(cur.answer) : '문제 '+(oxIdx+1)}
+      ${!cur.reveal&&cur.q? (cur.open?'<span style="font-size:20px;color:var(--ok)"> · 접수 중</span>'
+        :'<span style="font-size:20px;color:var(--up)"> · 마감</span>') : ''}</h1>
     <div class="oxq"><div class="q">${esc(q.q)}</div>
       ${cur.reveal? `<div class="why">정답 <b style="color:var(--amber)">${esc(q.a)}</b> — ${esc(q.why||'')}</div>`:''}</div>
     <div class="stat">
@@ -403,7 +405,8 @@ function oxHTML(){
       <div>제출 <b>${answered}명</b></div>
     </div>
     <div class="picker">
-      <button class="btn pri" id="oxGo">문제 내기 (7초)</button>
+      <button class="btn pri" id="oxGo">문제 열기</button>
+      <button class="btn" id="oxShut">마감</button>
       <button class="btn" id="oxMark">채점하기</button>
       <button class="btn sm" id="oxPrev">◀ 이전 문제</button>
       <input type="number" id="oxJump" value="${oxIdx+1}" min="1" max="${bank.length}">
@@ -412,14 +415,21 @@ function oxHTML(){
     </div>
     <div class="survivors">${alive.slice(0,40).map(([k,p])=>`<span class="sv">${esc(p.name)}</span>`).join('')}
       ${alive.length>40?`<span class="sv">외 ${alive.length-40}명</span>`:''}</div>
-    <p class="lede" style="margin-top:14px">생존자가 <b>5명 이하</b>가 되면 다음 단계에서 힌트를 나눠줍니다.
+    <p class="lede" style="margin-top:14px"><b>문제 열기</b> → 직접 "5·4·3·2·1" 세기 → <b>마감</b> → <b>채점하기</b> 순서입니다.
+      생존자가 <b>5명 이하</b>가 되면 다음 단계에서 힌트를 나눠줍니다.
       너무 많이 남으면 문제를 더 내세요.</p>`;
 }
 function oxGo(){
   const bank=oxBank(), q=bank[Math.min(oxIdx,bank.length-1)];
-  window.__ox={idx:oxIdx, q:q.q, answer:q.a, reveal:false, endsAt:Date.now()+7000};
-  db.ref('state').update({phase:'ox', ox:{idx:oxIdx,q:q.q,endsAt:window.__ox.endsAt,reveal:false,active:true}});
+  window.__ox={idx:oxIdx, q:q.q, answer:q.a, reveal:false, open:true};
+  db.ref('state').update({phase:'ox', ox:{idx:oxIdx,q:q.q,open:true,reveal:false,active:true}});
   render();
+}
+function oxShut(){
+  const cur=window.__ox||{};
+  if(!cur.q){ alert('먼저 문제를 여세요.'); return; }
+  window.__ox=Object.assign({},cur,{open:false});
+  db.ref('state/ox').update({open:false}).then(render);
 }
 function oxMark(){
   const bank=oxBank(), q=bank[Math.min(oxIdx,bank.length-1)];
@@ -429,8 +439,8 @@ function oxMark(){
     const ok = p.oxIdx===oxIdx && p.oxA===q.a;
     if(!ok) up['players/'+k+'/alive']=false;
   });
-  up['state/ox']={idx:oxIdx,q:q.q,reveal:true,answer:q.a,active:true};
-  window.__ox={idx:oxIdx,q:q.q,answer:q.a,reveal:true};
+  up['state/ox']={idx:oxIdx,q:q.q,reveal:true,answer:q.a,active:true,open:false};
+  window.__ox={idx:oxIdx,q:q.q,answer:q.a,reveal:true,open:false};
   db.ref().update(up).then(render);
 }
 function oxResetAll(){
@@ -611,6 +621,7 @@ document.addEventListener('keydown',e=>{
 document.addEventListener('click',e=>{
   const id=e.target.id;
   if(id==='oxGo') oxGo();
+  else if(id==='oxShut') oxShut();
   else if(id==='oxMark') oxMark();
   else if(id==='oxReset'){ if(confirm('탈락자를 전원 부활시킬까요?')) oxResetAll(); }
   else if(id==='oxPrev'){ oxIdx=Math.max(0,oxIdx-1); window.__ox=null; render(); }
