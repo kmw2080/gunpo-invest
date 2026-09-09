@@ -75,6 +75,11 @@ input[type=tel]{font-family:var(--mono);text-align:center}
 .hint .s{font-size:12px;color:var(--faint);margin-top:7px}
 
 /* ── 업종 그리드 ── */
+.minih{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:11px}
+.minih.empty2{display:block;color:var(--faint);font-size:12.5px;padding:2px 0 4px}
+.chip{background:rgba(245,194,76,.1);border:1px solid var(--amberdim);color:var(--amber);
+  border-radius:20px;padding:5px 11px;font-family:var(--mono);font-size:12px}
+.chip b{font-family:var(--disp);font-size:13px}
 .secgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
 .sec{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:14px 12px;
   text-align:left;color:inherit;position:relative}
@@ -88,6 +93,8 @@ input[type=tel]{font-family:var(--mono);text-align:center}
 .sechead{font-family:var(--disp);font-weight:900;font-size:22px;margin:0 0 12px}
 .stk{background:var(--panel);border:1px solid var(--line);border-radius:11px;margin-bottom:8px;overflow:hidden}
 .stk.own{border-color:var(--amberdim)}
+.stk.flash{border-color:var(--ok);box-shadow:0 0 0 1px var(--ok) inset}
+.stk.flash .stkhd .q.on{color:var(--ok)}
 .stkhd{display:grid;grid-template-columns:36px 1fr auto;align-items:center;gap:12px;
   padding:13px;width:100%;background:none;border:none;color:inherit;text-align:left}
 .stkhd .L{font-family:var(--disp);font-weight:900;font-size:24px;color:var(--amber);text-align:center;line-height:1}
@@ -107,9 +114,12 @@ input[type=tel]{font-family:var(--mono);text-align:center}
 
 /* ── OX ── */
 .ox{text-align:center;padding:2vh 0}
-.ox .cnt{font-family:var(--mono);font-size:60px;font-weight:700;color:var(--amber);line-height:1}
-.ox .cnt.hot{color:var(--up)}
-.ox .q{font-size:22px;font-weight:700;line-height:1.5;margin:20px 0 24px;text-wrap:balance}
+.ansbig{font-family:var(--disp);font-weight:900;font-size:64px;color:var(--amber);line-height:1;margin-bottom:12px}
+.res{font-size:20px;font-weight:700}
+.res.good{color:var(--ok)} .res.bad{color:var(--up)}
+.oxmsg{margin-top:18px;font-size:15px;color:var(--dim);font-weight:600}
+.oxmsg.done{color:var(--ok)} .oxmsg.shut{color:var(--up)}
+.ox .q{font-size:23px;font-weight:700;line-height:1.5;margin:6px 0 26px;text-wrap:balance}
 .oxb{display:flex;gap:12px}
 .oxb button{flex:1;aspect-ratio:1;border-radius:18px;border:2px solid var(--line);
   background:var(--panel);color:var(--ink);font-family:var(--disp);font-weight:900;font-size:64px}
@@ -170,7 +180,9 @@ const db=firebase.database();
 
 const $=s=>document.querySelector(s);
 const won=n=>Math.round(n||0).toLocaleString('ko-KR');
-let uid=null, me=null, ST=null, openId=null, view='sectors', curSec=null, tick=null;
+let uid=null, me=null, ST=null, openId=null, view='sectors', curSec=null;
+let skew=0, flashId=null, flashT=null;
+const now=()=>Date.now()+skew;
 
 try{ uid=localStorage.getItem('gp_uid'); }catch(e){}
 function newUid(){ const u='p'+Date.now().toString(36)+Math.random().toString(36).slice(2,7);
@@ -178,6 +190,7 @@ function newUid(){ const u='p'+Date.now().toString(36)+Math.random().toString(36
 
 /* ── 연결 상태 ── */
 db.ref('.info/connected').on('value',s=>$('#conn').classList.toggle('on', s.val()!==true));
+db.ref('.info/serverTimeOffset').on('value',s=>{ skew=s.val()||0; });
 
 /* ── 구독 ── */
 db.ref('state').on('value',s=>{ ST=s.val(); render(); });
@@ -319,7 +332,7 @@ function tradeHTML(){
     <div class="m">매매가 마감됐습니다</div><div class="s">결과를 기다려주세요</div></div>`+holdHTML();
   const S=secList();
   if(view==='stocks' && curSec && S[curSec]) return stocksHTML(curSec, S[curSec]);
-  return `<div class="secgrid">${Object.keys(S).map(sec=>{
+  return miniHold() + `<div class="secgrid">${Object.keys(S).map(sec=>{
     const c=secChg(sec), own=ownedIn(sec);
     const h = c===null? '&nbsp;' : `<span class="${c>0.0005?'up':c<-0.0005?'down':'flat'}">직전 ${c>0?'+':''}${(c*100).toFixed(0)}%</span>`;
     return `<button class="sec ${own?'own':''}" data-sec="${esc(sec)}">
@@ -328,6 +341,13 @@ function tradeHTML(){
   }).join('')}</div>`;
 }
 
+function miniHold(){
+  const q=(me.qty)||{}, p=P();
+  const rows=LABELS().filter(s=>(q[s.id]||0)>0);
+  if(!rows.length) return `<div class="minih empty2">아직 아무것도 사지 않았습니다 — 전액 현금</div>`;
+  return `<div class="minih">${rows.map(s=>`<span class="chip">${esc(s.sector)} <b>${s.letter}</b>
+    ${(q[s.id]).toLocaleString('ko-KR')}주</span>`).join('')}</div>`;
+}
 function stocksHTML(sec,list){
   const p=P(), v=PREV(), q=(me.qty)||{}, cash=me.cash||0;
   return `<button class="back" id="back">← 업종 목록</button>
@@ -336,7 +356,7 @@ function stocksHTML(sec,list){
       const price=p[s.id]||0, have=q[s.id]||0, canBuy=price?Math.floor(cash/price):0;
       const base=v[s.id], c = base? price/base-1 : null;
       const cc = c===null?'flat':c>0.0005?'up':c<-0.0005?'down':'flat';
-      return `<div class="stk ${openId===s.id?'open':''} ${have>0?'own':''}" data-card="${s.id}">
+      return `<div class="stk ${openId===s.id?'open':''} ${have>0?'own':''} ${flashId===s.id?'flash':''}" data-card="${s.id}">
         <button class="stkhd" data-t="${s.id}">
           <span class="L">${s.letter}</span>
           <span><span class="p">${won(price)}</span>
@@ -366,24 +386,26 @@ function oxHTML(){
   const ox=ST.ox||{};
   if(me.alive===false) return `<div class="dead"><div class="big">탈락</div>
     <div style="color:var(--dim);font-size:15px;line-height:1.6">자리에 앉아주세요.<br>다음 라운드에서 다시 만나요.</div></div>`;
+  if(!ox.q) return `<div class="wait"><div class="ic">✋</div>
+    <div class="m"><span class="pulse"></span>문제 준비 중</div>
+    <div class="s">진행자가 문제를 열면 O · X 버튼이 나옵니다</div></div>`;
   const answered = me.oxIdx===ox.idx && me.oxA;
-  const left = ox.endsAt? Math.max(0, Math.ceil((ox.endsAt-Date.now())/1000)) : 0;
   if(ox.reveal){
-    const right = me.oxA===ox.answer;
-    return `<div class="ox"><div class="q">${esc(ox.q||'')}</div>
-      <div class="cnt ${right?'':'hot'}" style="font-size:44px">정답 ${esc(ox.answer||'')}</div>
-      <div style="margin-top:14px;font-size:17px;font-weight:700;color:${right?'var(--ok)':'var(--up)'}">
-        ${answered? (right?'맞혔습니다 🎉':'틀렸습니다') : '미제출 — 탈락'}</div></div>`;
+    const right = answered && me.oxA===ox.answer;
+    return `<div class="ox"><div class="q">${esc(ox.q)}</div>
+      <div class="ansbig">정답 ${esc(ox.answer||'')}</div>
+      <div class="res ${right?'good':'bad'}">${answered? (right?'맞혔습니다 🎉':'틀렸습니다') : '미제출'}</div></div>`;
   }
+  const locked = answered || !ox.open;
   return `<div class="ox">
-    <div class="cnt ${left<=3?'hot':''}" id="cnt">${left}</div>
-    <div class="q">${esc(ox.q||'준비 중…')}</div>
+    <div class="q">${esc(ox.q)}</div>
     <div class="oxb">
-      <button data-ox="O" class="${me.oxIdx===ox.idx&&me.oxA==='O'?'sel':''}" ${answered||left<=0?'disabled':''}>O</button>
-      <button data-ox="X" class="${me.oxIdx===ox.idx&&me.oxA==='X'?'sel':''}" ${answered||left<=0?'disabled':''}>X</button>
+      <button data-ox="O" class="${answered&&me.oxA==='O'?'sel':''}" ${locked?'disabled':''}>O</button>
+      <button data-ox="X" class="${answered&&me.oxA==='X'?'sel':''}" ${locked?'disabled':''}>X</button>
     </div>
-    <div style="margin-top:16px;color:var(--dim);font-size:14px">
-      ${answered?'제출했습니다. 결과를 기다려주세요':'7초 안에 고르세요. 안 고르면 탈락입니다'}</div></div>`;
+    <div class="oxmsg ${answered?'done':ox.open?'':'shut'}">
+      ${answered? '✓ 제출했습니다 — '+esc(me.oxA) : ox.open? 'O 또는 X를 고르세요' : '마감되었습니다'}
+    </div></div>`;
 }
 
 /* ── 이벤트 ── */
@@ -400,21 +422,10 @@ function bind(){
   document.querySelectorAll('[data-buy]').forEach(b=>b.onclick=()=>trade(b.dataset.buy,1));
   document.querySelectorAll('[data-sell]').forEach(b=>b.onclick=()=>trade(b.dataset.sell,-1));
   document.querySelectorAll('[data-ox]').forEach(b=>b.onclick=()=>submitOx(b.dataset.ox));
-  startTick();
-}
-function startTick(){
-  clearInterval(tick); tick=null;
-  if(!ST||ST.phase!=='ox'||!ST.ox||ST.ox.reveal||!ST.ox.endsAt) return;
-  tick=setInterval(()=>{
-    const el=$('#cnt'); if(!el){ clearInterval(tick); return; }
-    const l=Math.max(0,Math.ceil((ST.ox.endsAt-Date.now())/1000));
-    el.textContent=l; el.classList.toggle('hot',l<=3);
-    if(l<=0){ clearInterval(tick); render(); }
-  },200);
 }
 function submitOx(a){
   const ox=ST.ox||{};
-  if(ox.reveal || (ox.endsAt&&Date.now()>ox.endsAt)) { toast('시간이 지났습니다','bad'); return; }
+  if(ox.reveal || !ox.open){ toast('마감되었습니다','bad'); return; }
   db.ref('players/'+uid).update({oxA:a, oxIdx:ox.idx, oxT:firebase.database.ServerValue.TIMESTAMP});
 }
 function trade(id,dir){
@@ -434,7 +445,10 @@ function trade(id,dir){
   }).then(r=>{
     if(!r.committed){ toast(dir>0?'현금이 부족합니다':'보유 수량이 부족합니다','bad'); return; }
     if(el) el.value='';
-    toast(`${dir>0?'매수':'매도'} ${n.toLocaleString('ko-KR')}주 · ${won(n*price)}`,'good');
+    openId=null; flashId=id;
+    clearTimeout(flashT); flashT=setTimeout(()=>{ flashId=null; render(); },1600);
+    toast(`✓ ${dir>0?'매수':'매도'} 완료 — ${n.toLocaleString('ko-KR')}주 · ${won(n*price)}`,'good');
+    render();
   }).catch(()=>toast('처리 실패. 다시 시도해주세요','bad'));
 }
 
