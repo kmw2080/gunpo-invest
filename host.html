@@ -1,0 +1,630 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>군포센터 투자 대회 · 진행자</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@700;900&family=IBM+Plex+Mono:wght@400;600;700&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --ground:#0E1116; --panel:#161C24; --panel2:#1D242E; --line:#2A3441;
+  --ink:#E9EDF2; --dim:#93A0B1; --faint:#5D6B7C;
+  --up:#F04452; --down:#3182F6; --flat:#8B95A5;
+  --amber:#F5C24C; --amberdim:#8A6E24; --ok:#37B679;
+  --disp:"Gothic A1","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --body:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --mono:"IBM Plex Mono","IBM Plex Sans KR",monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--body);-webkit-font-smoothing:antialiased}
+button{font-family:var(--body);cursor:pointer}
+:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation-duration:.01ms!important}}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.up{color:var(--up)} .down{color:var(--down)} .flat{color:var(--flat)}
+
+.bar{display:flex;align-items:center;gap:12px;padding:11px 18px;border-bottom:1px solid var(--line);
+  position:sticky;top:0;background:var(--ground);z-index:20;flex-wrap:wrap}
+.brand{font-family:var(--disp);font-weight:900;font-size:19px;color:var(--amber)}
+.brand span{color:var(--ink)}
+.tag{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--faint);border:1px solid var(--line);border-radius:5px;padding:3px 8px}
+.tag.live{color:var(--ok);border-color:rgba(55,182,121,.45)}
+.tag.prac{color:var(--amber);border-color:var(--amberdim)}
+.spacer{margin-left:auto}
+.btn{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:7px;
+  padding:9px 14px;font-size:14px;font-weight:600}
+.btn:hover{background:#26303c}
+.btn.pri{background:var(--amber);color:#171208;border-color:var(--amber);font-weight:700}
+.btn.pri:hover{background:#ffd469}
+.btn.grn{background:var(--ok);border-color:var(--ok);color:#04170D;font-weight:700}
+.btn.red{background:transparent;color:var(--up);border-color:rgba(240,68,82,.45)}
+.btn.red:hover{background:rgba(240,68,82,.12)}
+.btn.sm{padding:6px 10px;font-size:12.5px}
+.btn:disabled{opacity:.32;cursor:not-allowed}
+.timer{font-family:var(--mono);font-size:26px;font-weight:700;color:var(--amber);min-width:78px;text-align:center}
+.timer.hot{color:var(--up);animation:pl .8s infinite}
+@keyframes pl{50%{opacity:.4}}
+
+.main{display:grid;grid-template-columns:1fr 372px;gap:20px;padding:16px 18px 40px;max-width:1680px;margin:0 auto}
+@media (max-width:1150px){.main{grid-template-columns:1fr}}
+
+.eyebrow{font-family:var(--mono);font-size:12.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--amber);margin-bottom:8px}
+h1.t{font-family:var(--disp);font-weight:900;font-size:clamp(30px,4.6vw,62px);line-height:1.05;margin:0 0 12px;text-wrap:balance}
+.lede{font-size:16px;line-height:1.7;color:var(--dim);max-width:64ch}
+.lede b{color:var(--ink)}
+
+/* 업종 보드 */
+.board{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:9px;margin-top:14px}
+.sec{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:11px 12px}
+.sec h4{margin:0 0 8px;font-size:13px;font-weight:700;display:flex;align-items:center;gap:6px}
+.sec h4 .avg{margin-left:auto;font-family:var(--mono);font-size:12px;font-weight:700}
+.sec .cnt{font-family:var(--mono);font-size:10.5px;color:var(--faint);font-weight:400}
+.srow{display:grid;grid-template-columns:20px 1fr 62px;align-items:center;gap:7px;padding:4px 0;
+  font-family:var(--mono);font-size:13px;font-variant-numeric:tabular-nums;transition:background .3s;border-radius:4px}
+.srow .L{font-family:var(--disp);font-weight:900;font-size:15px;color:var(--amber);text-align:center}
+.srow .pz{text-align:right;font-weight:600}
+.srow .cg{text-align:right;font-weight:700;font-size:12px}
+.srow.fu{background:rgba(240,68,82,.16)} .srow.fd{background:rgba(49,130,246,.16)}
+
+/* 뉴스 */
+.yr{font-family:var(--disp);font-weight:900;font-size:clamp(70px,12vw,170px);line-height:.9;color:var(--amber)}
+.news{list-style:none;padding:0;margin:18px 0 0;display:flex;flex-direction:column;gap:11px;max-width:70ch}
+.news li{background:var(--panel);border-left:3px solid var(--amber);border-radius:0 8px 8px 0;
+  padding:14px 17px;font-size:18px;line-height:1.5;display:flex;gap:13px}
+.news li span.d{font-family:var(--mono);font-size:11px;color:var(--amberdim);padding-top:5px}
+
+/* 라이브 패널 */
+.live{display:flex;flex-direction:column;gap:12px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:13px 14px}
+.card h3{margin:0 0 10px;font-family:var(--mono);font-size:11px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--faint);font-weight:600;display:flex;align-items:center;gap:8px}
+.card h3 .n{margin-left:auto;color:var(--amber);font-size:13px}
+.tabs{display:flex;gap:5px;margin-bottom:9px}
+.tabs button{flex:1;background:var(--panel2);border:1px solid var(--line);color:var(--dim);
+  border-radius:6px;padding:6px 0;font-size:12.5px;font-weight:600}
+.tabs button.on{background:var(--amber);color:#171208;border-color:var(--amber)}
+.rank{display:flex;flex-direction:column;gap:3px;max-height:340px;overflow-y:auto}
+.rk{display:grid;grid-template-columns:22px 1fr auto;gap:9px;align-items:center;padding:5px 4px;
+  font-size:13px;border-radius:5px}
+.rk:nth-child(1){background:rgba(245,194,76,.1)}
+.rk .i{font-family:var(--disp);font-weight:900;font-size:14px;color:var(--faint);text-align:center}
+.rk:nth-child(1) .i{color:var(--amber)}
+.rk .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:600}
+.rk .v{font-family:var(--mono);font-size:12.5px;font-weight:600;font-variant-numeric:tabular-nums}
+.flow{display:flex;flex-direction:column;gap:5px;max-height:260px;overflow-y:auto}
+.fl{display:grid;grid-template-columns:1fr 46px 60px;gap:8px;align-items:center;font-size:12.5px}
+.fl .bar{height:6px;background:var(--panel2);border-radius:3px;overflow:hidden}
+.fl .bf{height:100%;background:var(--amberdim)}
+.fl .c{font-family:var(--mono);font-size:12px;color:var(--dim);text-align:right}
+.empty{color:var(--faint);font-size:12.5px;padding:6px 2px}
+
+/* OX */
+.oxq{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px;margin-top:12px}
+.oxq .q{font-size:clamp(22px,3.4vw,40px);font-weight:800;line-height:1.4;text-wrap:balance}
+.oxq .why{color:var(--dim);font-size:14.5px;margin-top:10px}
+.oxbig{font-family:var(--disp);font-weight:900;font-size:clamp(60px,10vw,130px);color:var(--amber);line-height:1}
+.stat{display:flex;gap:22px;margin-top:14px;flex-wrap:wrap}
+.stat div{font-family:var(--mono);font-size:15px}
+.stat b{font-size:26px;font-weight:700;display:block;margin-top:3px}
+.picker{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:12px}
+input[type=text],input[type=number]{background:var(--panel2);border:1px solid var(--line);color:var(--ink);
+  border-radius:7px;padding:9px 12px;font-family:var(--mono);font-size:14px;width:92px;text-align:center}
+.survivors{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.sv{background:var(--panel2);border:1px solid var(--line);border-radius:6px;padding:6px 11px;font-size:13.5px;font-weight:600}
+.sv.top{border-color:var(--amber);color:var(--amber)}
+.hintrow{display:grid;grid-template-columns:34px 110px 1fr;gap:11px;align-items:center;
+  background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:11px 13px;margin-bottom:7px}
+.hintrow .r{font-family:var(--disp);font-weight:900;font-size:17px;color:var(--amber);text-align:center}
+.hintrow .n{font-weight:700}
+.hintrow .h{font-size:14px;color:var(--dim);line-height:1.5}
+
+/* 최종 */
+.pod{display:grid;grid-template-columns:48px 1fr 1fr 150px 90px;gap:13px;align-items:center;
+  background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:12px 15px;margin-bottom:7px}
+.pod.p1{border-color:var(--amber);background:linear-gradient(90deg,rgba(245,194,76,.11),var(--panel) 60%)}
+.pod .i{font-family:var(--disp);font-weight:900;font-size:23px;text-align:center;color:var(--faint)}
+.pod.p1 .i{color:var(--amber)}
+.pod .nm{font-weight:700;font-size:17px}
+.pod .bw{height:9px;background:var(--panel2);border-radius:5px;overflow:hidden}
+.pod .bf{height:100%;background:linear-gradient(90deg,var(--amberdim),var(--amber));transition:width .9s}
+.pod .v{font-family:var(--mono);font-size:17px;font-weight:700;text-align:right}
+.pod .m{font-family:var(--mono);font-size:15px;font-weight:700;text-align:right}
+.rv{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:9px;margin-top:16px}
+.rvi{background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:12px 14px;
+  display:grid;grid-template-columns:74px 1fr auto;gap:11px;align-items:center}
+.rvi .c{font-family:var(--mono);font-size:12px;color:var(--amber)}
+.rvi .n{font-weight:700;font-size:15.5px}
+.rvi .m{font-family:var(--mono);font-size:15px;font-weight:700}
+
+.admin{border-top:1px solid var(--line);margin-top:26px;padding-top:14px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.admin .lab{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-right:4px}
+.danger{margin-left:auto}
+.kbd{font-family:var(--mono);font-size:11.5px;color:var(--faint);margin-top:14px}
+.kbd b{color:var(--dim);background:var(--panel2);border:1px solid var(--line);border-radius:4px;padding:1px 6px}
+.conn{background:var(--up);color:#fff;text-align:center;font-size:13px;padding:6px;display:none}
+.conn.on{display:block}
+</style>
+</head>
+<body>
+<div class="conn" id="conn">서버 연결 끊김 — 재연결 중…</div>
+<div class="bar">
+  <div class="brand">군포센터 <span>투자 대회</span></div>
+  <span class="tag" id="modeTag">준비</span>
+  <span class="tag" id="stepTag">—</span>
+  <span class="tag live" id="pcount">참가 0명</span>
+  <div class="spacer"></div>
+  <div class="timer" id="timer">2:00</div>
+  <button class="btn" id="tBtn">타이머</button>
+  <button class="btn" id="openBtn">매매 열기</button>
+  <button class="btn" id="prev">← 이전</button>
+  <button class="btn pri" id="next">다음 →</button>
+</div>
+
+<div class="main">
+  <div id="stage"></div>
+  <div class="live">
+    <div class="card">
+      <h3>실시간 순위 <span class="n" id="rkCount">0명</span></h3>
+      <div class="tabs">
+        <button data-tab="total" class="on">합계</button>
+        <button data-tab="cash">현금</button>
+        <button data-tab="stock">주식</button>
+      </div>
+      <div class="rank" id="rank"></div>
+    </div>
+    <div class="card">
+      <h3>업종 쏠림</h3>
+      <div class="flow" id="flow"></div>
+    </div>
+  </div>
+</div>
+
+<div class="main" style="padding-top:0">
+  <div class="admin">
+    <span class="lab">관리</span>
+    <button class="btn grn" id="startMain">본게임 시작</button>
+    <button class="btn" id="toPractice">연습으로</button>
+    <button class="btn" id="undo">라운드 되돌리기</button>
+    <button class="btn" id="restore">백업에서 복구</button>
+    <span class="danger"></span>
+    <button class="btn red" id="wipe">전체 초기화</button>
+  </div>
+</div>
+<p class="kbd" style="max-width:1680px;margin:10px auto 40px;padding:0 18px">
+  <b>Space</b> 다음 · <b>←</b> 이전 · <b>T</b> 타이머 · <b>O</b> 매매 열기/닫기 · <b>F</b> 전체화면</p>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+<script>
+const D={"years":[2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015],"sectors":["전자·반도체","조선·중공업","건설·플랜트","철강·금속","화학","자동차","인터넷·게임","엔터·미디어","뷰티","소비재","금융","항공·해운","통신·공공"],"stocks":[{"id":"전자·반도체|A","sector":"전자·반도체","letter":"A","real":"삼성전자","p":[10000,7910,8230,6840,11080,14030,15920,20940,18700,20240,17340]},{"id":"전자·반도체|B","sector":"전자·반도체","letter":"B","real":"LG디스플레이","p":[10000,5970,9220,6340,9080,9250,7140,7110,6150,8870,5500]},{"id":"전자·반도체|C","sector":"전자·반도체","letter":"C","real":"SK하이닉스","p":[10000,8590,7400,2770,7170,9460,8570,7780,12070,15300,8910]},{"id":"조선·중공업|A","sector":"조선·중공업","letter":"A","real":"현대중공업","p":[10000,20210,47930,32440,31510,84320,55810,39330,41700,20990,17090]},{"id":"조선·중공업|B","sector":"조선·중공업","letter":"B","real":"두산중공업","p":[10000,12900,26750,21210,24320,23440,20310,14250,11460,7520,5630]},{"id":"조선·중공업|C","sector":"조선·중공업","letter":"C","real":"대우조선해양","p":[10000,11570,12560,9180,8220,18830,13080,14130,16500,9400,2020]},{"id":"건설·플랜트|A","sector":"건설·플랜트","letter":"A","real":"GS건설","p":[10000,16290,23850,12760,19100,25800,21850,12260,7410,5900,5960]},{"id":"건설·플랜트|B","sector":"건설·플랜트","letter":"B","real":"삼성엔지니어링","p":[10000,15210,32520,20530,43190,75930,83920,61950,28560,15140,5040]},{"id":"건설·플랜트|C","sector":"건설·플랜트","letter":"C","real":"대림산업","p":[10000,9880,17040,6260,10190,16560,14390,12480,11170,7440,10620]},{"id":"철강·금속|A","sector":"철강·금속","letter":"A","real":"POSCO","p":[10000,15360,24180,17560,26470,22890,21420,18850,16180,14070,10390]},{"id":"철강·금속|B","sector":"철강·금속","letter":"B","real":"고려아연","p":[10000,14690,19380,16420,31510,55720,73170,74210,68370,85740,88650]},{"id":"철강·금속|C","sector":"철강·금속","letter":"C","real":"현대제철","p":[10000,12000,23720,14170,32190,52670,41330,31760,29450,25690,19320]},{"id":"화학|A","sector":"화학","letter":"A","real":"롯데케미칼","p":[10000,13640,15840,10730,20750,67040,68460,47360,39850,33080,52690]},{"id":"화학|B","sector":"화학","letter":"B","real":"OCI","p":[10000,14390,76340,72360,60850,134770,94550,60790,68960,28490,24160]},{"id":"화학|C","sector":"화학","letter":"C","real":"LG화학","p":[10000,8340,15110,16300,40890,86790,78250,64480,55820,43550,65720]},{"id":"자동차|A","sector":"자동차","letter":"A","real":"현대차","p":[10000,7800,8650,5730,13760,21980,27360,25600,29540,21720,17520]},{"id":"자동차|B","sector":"자동차","letter":"B","real":"현대모비스","p":[10000,9270,9580,8170,18680,32790,35350,36610,40090,32480,34330]},{"id":"자동차|C","sector":"자동차","letter":"C","real":"기아","p":[10000,5160,4600,3510,8800,24870,30960,23990,25370,22020,22080]},{"id":"인터넷·게임|A","sector":"인터넷·게임","letter":"A","real":"NAVER","p":[10000,13090,21160,14760,18300,21160,22490,25650,58680,62310,54740]},{"id":"인터넷·게임|B","sector":"인터넷·게임","letter":"B","real":"엔씨소프트","p":[10000,7410,5650,8210,17060,25240,38680,18200,26250,27230,32030]},{"id":"인터넷·게임|C","sector":"인터넷·게임","letter":"C","real":"다음","p":[10000,13540,15780,6780,17410,20080,33300,26100,20730,39620,28400]},{"id":"엔터·미디어|A","sector":"엔터·미디어","letter":"A","real":"CJ CGV","p":[10000,7570,5780,5660,8700,10510,10450,15360,20460,25850,56950]},{"id":"엔터·미디어|B","sector":"엔터·미디어","letter":"B","real":"제일기획","p":[10000,10340,11140,9060,13660,18840,23280,29970,37470,26430,30690]},{"id":"엔터·미디어|C","sector":"엔터·미디어","letter":"C","real":"SBS","p":[10000,9150,12140,6410,9040,5450,7200,9870,8670,6660,7120]},{"id":"엔터·미디어|D","sector":"엔터·미디어","letter":"D","real":"SM엔터","p":[10000,5920,1820,1480,4490,19580,49530,42460,48190,38470,45460]},{"id":"뷰티|A","sector":"뷰티","letter":"A","real":"코리아나화장품","p":[10000,7200,4460,2900,3860,3970,4930,8040,5480,12890,43070]},{"id":"뷰티|B","sector":"뷰티","letter":"B","real":"LG생활건강","p":[10000,18460,27540,27530,47510,68560,81080,103550,82120,118970,172290]},{"id":"뷰티|C","sector":"뷰티","letter":"C","real":"아모레G","p":[10000,6450,5520,4120,5860,8450,11660,18750,21710,57510,68340]},{"id":"소비재|A","sector":"소비재","letter":"A","real":"농심","p":[10000,8770,6700,7130,8220,7530,8860,10610,10580,9100,18580]},{"id":"소비재|B","sector":"소비재","letter":"B","real":"호텔신라","p":[10000,11350,22450,11150,17300,24980,39240,40990,69890,91730,58810]},{"id":"소비재|C","sector":"소비재","letter":"C","real":"강원랜드","p":[10000,10120,11310,6950,9140,15450,16210,19730,21880,21500,28040]},{"id":"금융|A","sector":"금융","letter":"A","real":"신한지주","p":[10000,12210,12690,7230,10980,13470,12380,11540,13040,13120,11600]},{"id":"금융|B","sector":"금융","letter":"B","real":"하나금융","p":[10000,10030,10190,5170,7520,10210,8980,9240,9790,7870,5350]},{"id":"금융|C","sector":"금융","letter":"C","real":"삼성화재","p":[10000,12470,15090,13470,15420,19550,18680,19270,22280,26920,27640]},{"id":"항공·해운|A","sector":"항공·해운","letter":"A","real":"현대상선","p":[10000,12700,25690,23210,22170,26200,22530,16270,11650,8780,2440]},{"id":"항공·해운|B","sector":"항공·해운","letter":"B","real":"아시아나항공","p":[10000,9390,9980,6040,5430,16700,10910,8910,8010,12760,6750]},{"id":"항공·해운|C","sector":"항공·해운","letter":"C","real":"대한항공","p":[10000,11270,22790,12000,19100,24790,17360,15500,10970,14740,8020]},{"id":"통신·공공|A","sector":"통신·공공","letter":"A","real":"SK텔레콤","p":[10000,10960,12410,12920,12350,12020,11440,14750,20260,28460,21960]},{"id":"통신·공공|B","sector":"통신·공공","letter":"B","real":"한국전력","p":[10000,10450,9500,7100,9640,7140,7010,8140,8900,11010,14310]},{"id":"통신·공공|C","sector":"통신·공공","letter":"C","real":"KT","p":[10000,11630,14170,11580,15200,13420,11320,13110,11320,11000,10190]}],"news":{"2006":["중국이 세계의 공장이 되면서 배·철강·건설 수요가 폭발했습니다","원화가 강해져 수출 대기업의 채산성이 나빠졌습니다","코스피가 처음으로 1,400선을 넘었습니다"],"2007":["코스피가 사상 처음 2,000을 돌파했습니다","태양광과 원자재 열풍 — 화학 소재에 돈이 몰렸습니다","조선사 수주잔고가 사상 최대를 기록했습니다"],"2008":["리먼브라더스가 파산했습니다. 글로벌 금융위기","환율이 1,500원에 육박하고 코스피는 892까지 떨어졌습니다","부동산 PF가 무너지며 건설사가 직격탄을 맞았습니다"],"2009":["각국이 사상 최대 규모의 부양책을 쏟아부었습니다","원화 약세로 자동차 수출이 폭발했습니다","선박 발주가 뚝 끊겼습니다"],"2010":["'차·화·정' — 자동차와 화학이 시장을 이끌었습니다","중국 소비가 폭발하며 화학 제품 값이 뛰었습니다","통신 요금 인하 압력이 커졌습니다"],"2011":["K-POP이 유럽과 일본에서 터졌습니다. 한류가 산업이 됐습니다","미국 신용등급이 사상 처음 강등되며 8월 증시가 급락했습니다","유가가 치솟아 항공·해운의 비용이 급증했습니다"],"2012":["중국인 관광객이 몰려오며 화장품이 날개 돋친 듯 팔렸습니다","조선 신규 수주는 절벽이었습니다","태양광 폴리실리콘 가격이 무너졌습니다"],"2013":["스마트폰이 일상이 되며 모바일 메신저와 게임이 폭발했습니다","해외 건설 현장에서 대규모 손실이 드러났습니다","엔저가 심해져 일본과 경쟁하는 업종이 힘들어졌습니다"],"2014":["중국에서 K-뷰티 열풍 — 화장품 주가가 두 배로 뛰었습니다","국제유가가 반토막 났습니다 (배럴 100달러 → 50달러)","조선사들이 해양플랜트에서 조 단위 손실을 실토했습니다"],"2015":["면세점과 화장품이 사상 최대 실적을 냈습니다","대형 조선사에서 조 단위 부실이 터졌습니다","메르스로 관광이 끊기고 중국 증시가 폭락했습니다"]},"hints":{"2006":{"1":"2006년은 상승장입니다. 그중 조선·중공업이 가장 크게 오릅니다.","2":"2006년은 상승장입니다. 그중 철강·금속이 크게 오릅니다.","3":"2006년은 상승장입니다. 그런데 자동차는 가장 크게 떨어집니다.","4":"2006년은 상승장입니다."},"2007":{"1":"2007년은 강한 상승장입니다. 그중 화학이 가장 크게 오릅니다.","2":"2007년은 강한 상승장입니다. 그중 조선·중공업이 크게 오릅니다.","3":"2007년은 강한 상승장입니다. 그런데 엔터·미디어는 가장 크게 떨어집니다.","4":"2007년은 강한 상승장입니다."},"2008":{"1":"2008년은 하락장입니다. 그중 화학이 가장 덜 떨어집니다.","2":"2008년은 하락장입니다. 그중 통신·공공이 그나마 버팁니다.","3":"2008년은 하락장입니다. 그런데 건설·플랜트는 가장 크게 떨어집니다.","4":"2008년은 하락장입니다."},"2009":{"1":"2009년은 강한 상승장입니다. 그중 자동차가 가장 크게 오릅니다.","2":"2009년은 강한 상승장입니다. 그중 인터넷·게임이 크게 오릅니다.","3":"2009년은 강한 상승장입니다. 그런데 조선·중공업은 혼자 못 오릅니다.","4":"2009년은 강한 상승장입니다."},"2010":{"1":"2010년은 강한 상승장입니다. 그중 화학이 가장 크게 오릅니다.","2":"2010년은 강한 상승장입니다. 그중 자동차가 크게 오릅니다.","3":"2010년은 강한 상승장입니다. 그런데 통신·공공은 가장 크게 떨어집니다.","4":"2010년은 강한 상승장입니다."},"2011":{"1":"2011년은 상승장입니다. 그중 엔터·미디어가 가장 크게 오릅니다.","2":"2011년은 상승장입니다. 그중 인터넷·게임이 크게 오릅니다.","3":"2011년은 상승장입니다. 그런데 항공·해운은 가장 크게 떨어집니다.","4":"2011년은 상승장입니다."},"2012":{"1":"2012년은 방향이 없는 해입니다. 그중 뷰티가 가장 크게 오릅니다.","2":"2012년은 방향이 없는 해입니다. 그중 엔터·미디어가 크게 오릅니다.","3":"2012년은 방향이 없는 해입니다. 그런데 화학은 가장 크게 떨어집니다.","4":"2012년은 방향이 없는 해입니다."},"2013":{"1":"2013년은 방향이 없는 해입니다. 그중 인터넷·게임이 가장 크게 오릅니다.","2":"2013년은 방향이 없는 해입니다. 그중 소비재가 크게 오릅니다.","3":"2013년은 방향이 없는 해입니다. 그런데 건설·플랜트는 가장 크게 떨어집니다.","4":"2013년은 방향이 없는 해입니다."},"2014":{"1":"2014년은 상승장입니다. 그중 뷰티가 가장 크게 오릅니다.","2":"2014년은 상승장입니다. 그중 인터넷·게임이 크게 오릅니다.","3":"2014년은 상승장입니다. 그런데 조선·중공업은 가장 크게 떨어집니다.","4":"2014년은 상승장입니다."},"2015":{"1":"2015년은 방향이 없는 해입니다. 그중 뷰티가 가장 크게 오릅니다.","2":"2015년은 방향이 없는 해입니다. 그중 엔터·미디어가 크게 오릅니다.","3":"2015년은 방향이 없는 해입니다. 그런데 항공·해운은 가장 크게 떨어집니다.","4":"2015년은 방향이 없는 해입니다."}},"practice":{"stocks":[{"id":"연습|A","sector":"연습","letter":"A","real":"안정형","p":[10000,10600,11550,12360]},{"id":"연습|B","sector":"연습","letter":"B","real":"성장형","p":[10000,14000,10500,18900]},{"id":"연습|C","sector":"연습","letter":"C","real":"거품형","p":[10000,22000,8800,4400]}],"ox":{"q":"코알라는 곰이다","a":"X","why":"캥거루와 같은 유대류입니다"},"hints":{"1":"다음 해엔 A만 오릅니다.","2":"다음 해엔 C가 크게 떨어집니다.","3":"다음 해는 하락장입니다.","4":"다음 해는 조심하세요."},"news":["연습입니다. 실제 회사가 아닙니다.","작년에 오른 종목이 올해도 오른다는 법은 없습니다.",""]},"ox":[{"q":"대한민국에서 가장 큰 섬은 거제도다","a":"X","why":"제주도입니다"},{"q":"코뿔소의 뿔은 뼈로 되어 있다","a":"X","why":"머리카락·손톱과 같은 케라틴입니다"},{"q":"감자의 싹에는 독성이 있다","a":"O","why":"솔라닌이라는 독성 물질입니다"},{"q":"토성은 태양계에서 가장 큰 행성이다","a":"X","why":"목성이 가장 큽니다"},{"q":"독도는 강원도에 속한다","a":"X","why":"경상북도 울릉군입니다"},{"q":"개는 색을 전혀 구분하지 못한다","a":"X","why":"파랑·노랑 계열은 구분합니다"},{"q":"알래스카는 원래 러시아 땅이었다","a":"O","why":"1867년에 미국이 사들였습니다"},{"q":"아몬드는 견과류가 아니다","a":"O","why":"복숭아씨처럼 열매 속 씨앗입니다"},{"q":"펭귄은 북극에 산다","a":"X","why":"남극에 삽니다"},{"q":"세계에서 인구가 가장 많은 나라는 중국이다","a":"X","why":"2023년부터 인도가 1위입니다"},{"q":"참치는 헤엄을 멈추면 숨을 쉴 수 없다","a":"O","why":"입으로 물을 밀어 넣어야 아가미가 작동합니다"},{"q":"백두산은 화산이다","a":"O","why":""},{"q":"파인애플은 나무에서 열린다","a":"X","why":"땅에서 자라는 풀입니다"},{"q":"달걀 껍데기 색은 닭 품종에 따라 달라진다","a":"O","why":"영양가와는 상관없습니다"},{"q":"소금은 상하지 않는다","a":"O","why":""},{"q":"문어의 다리는 10개다","a":"X","why":"8개입니다"},{"q":"뱀은 귀가 없어서 소리를 전혀 못 듣는다","a":"X","why":"턱뼈로 진동을 느낍니다"},{"q":"한글날은 10월 3일이다","a":"X","why":"10월 3일은 개천절입니다"},{"q":"바나나는 나무가 아니라 풀에서 열린다","a":"O","why":""},{"q":"낙타 혹에는 물이 들어 있다","a":"X","why":"지방이 들어 있습니다"},{"q":"로마 숫자에는 0이 없다","a":"O","why":""},{"q":"바이올린 줄은 6개다","a":"X","why":"4개입니다"},{"q":"달에는 대기가 거의 없다","a":"O","why":""},{"q":"토마토는 식물학적으로 과일이다","a":"O","why":""},{"q":"태극기의 괘는 8개다","a":"X","why":"건곤감리 4개입니다"},{"q":"피아노 건반은 100개다","a":"X","why":"88개입니다"},{"q":"세계에서 가장 작은 나라는 바티칸이다","a":"O","why":""},{"q":"적도는 아프리카를 지난다","a":"O","why":""},{"q":"성인의 뼈는 300개가 넘는다","a":"X","why":"206개입니다. 신생아가 약 300개"},{"q":"남극에는 북극곰이 산다","a":"X","why":"북극곰은 북극에만 삽니다"},{"q":"우주에서 만리장성이 맨눈으로 보인다","a":"X","why":"보이지 않습니다"},{"q":"대한민국의 표준시는 UTC+8이다","a":"X","why":"UTC+9입니다"},{"q":"타조는 사람보다 빠르게 달린다","a":"O","why":"시속 70km까지 냅니다"},{"q":"김치는 원래 빨간색이 아니었다","a":"O","why":"고추가 들어온 뒤에 빨개졌습니다"},{"q":"지구에서 가장 큰 동물은 코끼리다","a":"X","why":"흰긴수염고래입니다"},{"q":"남한에서 가장 높은 산은 한라산이다","a":"O","why":"1,947m"},{"q":"우리나라 최초의 지하철은 서울 1호선이다","a":"O","why":""},{"q":"금붕어의 기억력은 3초다","a":"X","why":"몇 달까지 기억합니다"},{"q":"번개는 같은 자리에 두 번 치지 않는다","a":"X","why":"오히려 높은 곳에 반복해서 칩니다"},{"q":"다이아몬드는 탄소로 이루어져 있다","a":"O","why":""},{"q":"문어의 심장은 3개다","a":"O","why":""},{"q":"당근을 많이 먹으면 밤눈이 좋아진다","a":"X","why":"2차대전 때 영국이 퍼뜨린 선전입니다"},{"q":"상어는 뼈가 없다","a":"O","why":"연골로 되어 있습니다"},{"q":"매운맛은 미각이 아니라 통각이다","a":"O","why":""},{"q":"캥거루는 뒤로 걷지 못한다","a":"O","why":""},{"q":"코끼리는 점프할 수 없다","a":"O","why":""},{"q":"말벌은 침을 쏘면 죽는다","a":"X","why":"말벌은 여러 번 쏩니다. 죽는 건 꿀벌"},{"q":"달팽이에게도 이빨이 있다","a":"O","why":"치설이라고 합니다"},{"q":"나비는 발로 맛을 느낀다","a":"O","why":""},{"q":"사람의 혀에는 맛을 느끼는 구역이 나뉘어 있다","a":"X","why":"'맛 지도'는 잘못 알려진 속설입니다"},{"q":"쥐는 토할 수 없다","a":"O","why":""},{"q":"코알라는 하루 대부분을 잠으로 보낸다","a":"O","why":"18~22시간"},{"q":"얼룩말은 흰 바탕에 검은 줄무늬다","a":"X","why":"검은 바탕에 흰 줄입니다"},{"q":"해마는 수컷이 새끼를 품는다","a":"O","why":""},{"q":"꿀은 상하지 않는다","a":"O","why":""},{"q":"악어는 혀를 내밀 수 없다","a":"O","why":"혀가 입바닥에 붙어 있습니다"},{"q":"사람은 뇌의 10%만 쓴다","a":"X","why":"전부 씁니다"},{"q":"북극곰의 피부는 검은색이다","a":"O","why":"털이 투명해서 하얗게 보입니다"},{"q":"불가사리는 뇌가 없다","a":"O","why":""},{"q":"벌새는 뒤로 날 수 있다","a":"O","why":""},{"q":"사하라는 세계에서 가장 큰 사막이다","a":"X","why":"남극이 더 큽니다"},{"q":"고구마와 감자는 같은 과 식물이다","a":"X","why":"고구마는 메꽃과, 감자는 가지과"},{"q":"하마는 붉은색 분비물을 낸다","a":"O","why":"자외선을 막아줍니다"},{"q":"유리는 액체라서 오래된 창문은 아래가 두껍다","a":"X","why":"제조 방식 때문입니다"},{"q":"해바라기는 다 자란 뒤에도 해를 따라 움직인다","a":"X","why":"어린 개체만 따라갑니다"},{"q":"기린은 사람보다 목뼈가 많다","a":"X","why":"둘 다 7개입니다"},{"q":"사람 몸에서 가장 단단한 조직은 치아의 법랑질이다","a":"O","why":""},{"q":"지구는 완전한 구형이다","a":"X","why":"적도 쪽이 부풀어 있습니다"},{"q":"무지개는 항상 일곱 가지 색이다","a":"X","why":"연속된 색을 일곱으로 나눠 부르는 것입니다"},{"q":"딸기의 빨간 부분은 열매가 아니다","a":"O","why":"꽃받침이 부풀어 오른 헛열매입니다"},{"q":"땅콩은 견과류다","a":"X","why":"콩과 식물입니다"},{"q":"커피의 원산지는 브라질이다","a":"X","why":"에티오피아입니다"},{"q":"카멜레온은 주변 색에 맞추려고 몸 색을 바꾼다","a":"X","why":"감정·온도·소통 때문입니다"},{"q":"에펠탑은 여름에 더 높아진다","a":"O","why":"열팽창으로 최대 15cm"},{"q":"알루미늄은 철보다 무겁다","a":"X","why":"훨씬 가볍습니다"},{"q":"이집트 피라미드는 노예가 지었다","a":"X","why":"임금을 받는 노동자들이 지었습니다"},{"q":"물은 항상 100도에서 끓는다","a":"X","why":"기압에 따라 달라집니다"},{"q":"왼쪽 폐가 오른쪽 폐보다 크다","a":"X","why":"오른쪽이 더 큽니다. 왼쪽엔 심장이 있어요"},{"q":"일란성 쌍둥이도 지문은 서로 다르다","a":"O","why":""},{"q":"발톱이 손톱보다 빨리 자란다","a":"X","why":"손톱이 3~4배 빠릅니다"},{"q":"박쥐는 눈이 완전히 보이지 않는다","a":"X","why":"볼 수 있습니다"},{"q":"무궁화는 법으로 정해진 대한민국 국화다","a":"X","why":"관습상 국화이고 법으로 정해진 적은 없습니다"},{"q":"서울의 옛 이름 중 하나는 한성이다","a":"O","why":""},{"q":"오이는 90% 이상이 물이다","a":"O","why":""},{"q":"달빛이 지구에 닿는 데 약 1.3초가 걸린다","a":"O","why":""},{"q":"대한민국에서 가장 긴 강은 한강이다","a":"X","why":"낙동강이 약 510km로 가장 깁니다"},{"q":"성인 몸의 약 60%는 물이다","a":"O","why":""},{"q":"수성이 태양계에서 가장 뜨거운 행성이다","a":"X","why":"금성이 더 뜨겁습니다"},{"q":"재채기를 하면서 눈을 뜨고 있기는 어렵다","a":"O","why":""},{"q":"최초의 근대 올림픽은 프랑스에서 열렸다","a":"X","why":"1896년 그리스 아테네입니다"},{"q":"자석의 N극과 S극은 서로 밀어낸다","a":"X","why":"다른 극끼리는 붙습니다"},{"q":"수박은 채소로 분류되기도 한다","a":"O","why":""},{"q":"꿀벌 한 마리가 평생 만드는 꿀은 티스푼 한 술도 안 된다","a":"O","why":""},{"q":"아보카도는 채소다","a":"X","why":"과일입니다"},{"q":"1년은 정확히 365일이다","a":"X","why":"약 365.24일이라 윤년이 있습니다"},{"q":"쌀은 볍씨를 도정한 것이다","a":"O","why":""},{"q":"강원도에는 바다가 없다","a":"X","why":"동해와 접해 있습니다"},{"q":"지구의 자전 방향은 동에서 서다","a":"X","why":"서에서 동입니다"},{"q":"세계에서 가장 많이 팔린 책은 성경이다","a":"O","why":""},{"q":"지구가 한 바퀴 자전하는 데 걸리는 시간은 24시간보다 짧다","a":"O","why":"23시간 56분입니다"}],"seedCash":10000000,"startPrice":10000};
+
+const CFG={
+  apiKey:"AIzaSyCCO6d0wnCr6Gwk036BxpLZx1MwPpZGyjQ",
+  authDomain:"gunpo-invest.firebaseapp.com",
+  databaseURL:"https://gunpo-invest-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId:"gunpo-invest",
+  storageBucket:"gunpo-invest.firebasestorage.app",
+  messagingSenderId:"1051198223428",
+  appId:"1:1051198223428:web:ca527922d11cd8ee6e7811"
+};
+firebase.initializeApp(CFG);
+const db=firebase.database();
+const $=s=>document.querySelector(s);
+const won=n=>Math.round(n||0).toLocaleString('ko-KR');
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+const Y=D.years, SEED=D.seedCash, START=D.startPrice;
+const PSTK=D.practice.stocks;
+
+/* ── 단계 만들기 ── */
+function buildSteps(mode){
+  const s=[];
+  if(mode==='practice'){
+    s.push({t:'p_brief'});
+    s.push({t:'trade',yi:0}); s.push({t:'reveal',yi:1});
+    s.push({t:'ox'}); s.push({t:'hint'});
+    s.push({t:'trade',yi:1}); s.push({t:'reveal',yi:2});
+    s.push({t:'trade',yi:2}); s.push({t:'reveal',yi:3});
+    s.push({t:'p_done'});
+    return s;
+  }
+  s.push({t:'intro'}); s.push({t:'brief'});
+  for(let k=0;k<Y.length-1;k++){
+    s.push({t:'trade',yi:k});
+    s.push({t:'news',yi:k+1});
+    s.push({t:'reveal',yi:k+1});
+    if(Y[k+1]===2008 || Y[k+1]===2014){ s.push({t:'ox'}); s.push({t:'hint'}); }
+  }
+  s.push({t:'final'}); s.push({t:'unmask'});
+  return s;
+}
+let MODE='practice', STEPS=buildSteps('practice'), si=0;
+let players={}, tab='total', oxIdx=0, oxRanks=[], lastFlash=null;
+
+/* ── 가격 ── */
+function stocksOf(mode){ return mode==='practice'? PSTK : D.stocks; }
+function priceMap(mode,yi){ const m={}; stocksOf(mode).forEach(s=>m[s.id]=s.p[yi]); return m; }
+function labelsOf(mode){ return stocksOf(mode).map(s=>({id:s.id,sector:s.sector,letter:s.letter})); }
+function yiOfStep(st){
+  if(st.t==='trade') return st.yi;
+  if(st.t==='news') return Math.max(0,st.yi-1);
+  if(st.t==='reveal') return st.yi;
+  if(st.t==='p_brief'||st.t==='intro'||st.t==='brief') return 0;
+  if(st.t==='final'||st.t==='unmask'||st.t==='p_done') return stocksOf(MODE)[0].p.length-1;
+  // ox / hint : 직전 reveal 시점 유지
+  for(let i=si;i>=0;i--){ if(STEPS[i].t==='reveal') return STEPS[i].yi; }
+  return 0;
+}
+function yearLabel(yi){ return MODE==='practice' ? (yi===0?'출발':yi+'년차') : Y[yi]; }
+function nextHintYear(){
+  for(let i=si;i<STEPS.length;i++){ if(STEPS[i].t==='reveal') return Y[STEPS[i].yi]; }
+  return Y[Y.length-1];
+}
+
+/* ── 상태 밀어넣기 ── */
+function pushState(extra){
+  const st=STEPS[si], yi=yiOfStep(st);
+  const phase = ({p_brief:'lobby',intro:'lobby',brief:'lobby',p_done:'lobby'})[st.t] || st.t;
+  const payload=Object.assign({
+    phase, mode:MODE, step:si, seedCash:SEED,
+    year: MODE==='practice'? yi : Y[yi],
+    yearLabel: String(yearLabel(yi)),
+    labels: labelsOf(MODE),
+    prices: priceMap(MODE,yi),
+    prevPrices: yi>0? priceMap(MODE,yi-1) : priceMap(MODE,0),
+    tradingOpen: false,
+  }, extra||{});
+  return db.ref('state').update(payload);
+}
+db.ref('.info/connected').on('value',s=>$('#conn').classList.toggle('on',s.val()!==true));
+db.ref('players').on('value',s=>{ players=s.val()||{}; paintLive(); if(['ox','hint'].includes(STEPS[si].t)) render(); });
+db.ref('state/tradingOpen').on('value',s=>{
+  $('#openBtn').textContent = s.val()? '매매 마감' : '매매 열기';
+  $('#openBtn').classList.toggle('pri', !!s.val());
+});
+
+/* ── 렌더 ── */
+function commit(){ pushState(); render(); window.scrollTo({top:0,behavior:'smooth'}); }
+function render(){
+  const st=STEPS[si], yi=yiOfStep(st), stage=$('#stage');
+  $('#modeTag').textContent = MODE==='practice'?'연습게임':'본게임';
+  $('#modeTag').className = 'tag '+(MODE==='practice'?'prac':'live');
+  $('#stepTag').textContent = ({p_brief:'연습 안내',intro:'오프닝',brief:'종목 브리핑',trade:'매매',
+    news:'뉴스',reveal:'주가 공개',ox:'OX 퀴즈',hint:'힌트 배부',final:'최종 결산',
+    unmask:'정체 공개',p_done:'연습 종료'})[st.t] + (st.t==='trade'||st.t==='reveal'? ' · '+yearLabel(yi) : st.t==='news'? ' · '+yearLabel(st.yi) : '');
+  $('#prev').disabled = si===0; $('#next').disabled = si===STEPS.length-1;
+
+  if(st.t==='p_brief') stage.innerHTML=`<div class="eyebrow">연습게임 · 3라운드</div>
+    <h1 class="t">먼저 연습부터</h1>
+    <p class="lede">가상의 종목 3개로 조작법을 익힙니다. <b>실제 회사가 아닙니다.</b>
+      1년차가 끝나면 OX 퀴즈로 힌트를 나눠주고, 힌트가 어떻게 도착하는지도 같이 봅니다.</p>
+    ${boardHTML(0,0,false)}`;
+  else if(st.t==='intro') stage.innerHTML=`<div class="eyebrow">2005 → 2015 · 대한민국 증시 10년</div>
+    <h1 class="t">10년을 100분에.<br>당신의 1,000만 원은<br>어디로 갑니까</h1>
+    <p class="lede">모든 주가는 <b>실제 한국 주식의 실제 기록</b>입니다. 회사 이름은 알려드리지 않습니다.
+      아는 것은 업종뿐이고, 그 안에서 A·B·C·D 중 하나를 고릅니다.
+      매년 그 해에 실제로 벌어진 일이 공개됩니다. 10년 뒤 자산이 가장 큰 사람이 우승입니다.</p>`;
+  else if(st.t==='brief') stage.innerHTML=`<div class="eyebrow">2005년 12월 · 출발선</div>
+    <h1 class="t">40개 종목, 전부 10,000원</h1>
+    <p class="lede">13개 업종에 40개 종목이 있습니다. 이름은 없고 <b>업종과 알파벳</b>뿐입니다.</p>
+    ${boardHTML(0,0,false)}`;
+  else if(st.t==='trade') stage.innerHTML=`<div class="eyebrow">${yearLabel(yi)} 종가 기준</div>
+    <h1 class="t">매매 타임</h1>
+    <p class="lede">지금 이 시세로 거래됩니다. 위의 <b>매매 열기</b>를 눌러야 참가자 폰에서 거래가 열립니다.</p>
+    ${boardHTML(yi,yi,false)}`;
+  else if(st.t==='news') stage.innerHTML=`<div class="eyebrow">그 해에 실제로 벌어진 일</div>
+    <div class="yr">${MODE==='practice'?yearLabel(st.yi):Y[st.yi]}</div>
+    <ul class="news">${newsOf(st.yi).map((n,i)=>n?`<li><span class="d">0${i+1}</span><span>${esc(n)}</span></li>`:'').join('')}</ul>`;
+  else if(st.t==='reveal'){
+    stage.innerHTML=`<div class="eyebrow">${yearLabel(yi)} 결산 · 업종별</div>
+      <h1 class="t">${MODE==='practice'?yearLabel(yi):Y[yi]+'년'} 결과</h1>
+      ${boardHTML(yi,yi-1,true)}`;
+    flashRows();
+  }
+  else if(st.t==='ox') stage.innerHTML=oxHTML();
+  else if(st.t==='hint') stage.innerHTML=hintHTML();
+  else if(st.t==='p_done'){
+    const R=rank('total');
+    stage.innerHTML=`<div class="eyebrow">연습 종료</div><h1 class="t">이제 진짜입니다</h1>
+      <p class="lede">연습 결과입니다. <b>안정형 1.24배 · 성장형 1.89배 · 거품형 0.44배</b>.
+        1년차에 120% 오른 거품형을 따라간 사람은 반토막이 났습니다.</p>
+      ${podium(R)}
+      <p class="lede" style="margin-top:18px">아래 <b>본게임 시작</b>을 누르면 모두의 계좌가 1,000만으로 초기화되고 2005년으로 갑니다.</p>`;
+  }
+  else if(st.t==='final'){
+    const R=rank('total');
+    stage.innerHTML=`<div class="eyebrow">2015년 12월 · 10년 뒤</div><h1 class="t">최종 순위</h1>
+      ${podium(R)}${R.length?'':'<p class="lede">참가자가 없습니다.</p>'}`;
+  }
+  else if(st.t==='unmask'){
+    const last=D.stocks[0].p.length-1;
+    const items=D.stocks.map(s=>({...s,m:s.p[last]/START})).sort((a,b)=>b.m-a.m);
+    stage.innerHTML=`<div class="eyebrow">봉인 해제</div><h1 class="t">40개 종목의 정체</h1>
+      <p class="lede">전부 실제 한국 주식입니다. 2005년 12월 대비 2015년 12월 배수입니다.</p>
+      <div class="rv">${items.map(x=>`<div class="rvi">
+        <span class="c">${esc(x.sector)} ${x.letter}</span><span class="n">${esc(x.real)}</span>
+        <span class="m ${x.m>=1?'up':'down'}">${x.m.toFixed(2)}배</span></div>`).join('')}</div>`;
+  }
+  paintLive();
+  resetTimer(st.t==='trade'?120:0);
+}
+
+function newsOf(yi){
+  if(MODE==='practice') return D.practice.news;
+  return D.news[String(Y[yi])]||[];
+}
+function boardHTML(yi,prevYi,revealed){
+  const S=stocksOf(MODE), bySec={};
+  S.forEach(s=>{ (bySec[s.sector]=bySec[s.sector]||[]).push(s); });
+  const held=holdCount();
+  return `<div class="board">${Object.keys(bySec).map(sec=>{
+    const list=bySec[sec];
+    const chgs=list.map(s=>{ const cur=revealed?s.p[yi]:s.p[prevYi];
+      const base=revealed? s.p[prevYi] : (prevYi>0? s.p[prevYi-1]:null);
+      return base? cur/base-1 : null; });
+    const valid=chgs.filter(c=>c!==null);
+    const avg=valid.length? valid.reduce((a,b)=>a+b,0)/valid.length : null;
+    const n=list.reduce((a,s)=>a+(held[s.id]||0),0);
+    return `<div class="sec"><h4>${esc(sec)} <span class="cnt">${n?n+'명':''}</span>
+      <span class="avg ${avg===null?'flat':avg>0.0005?'up':avg<-0.0005?'down':'flat'}">${avg===null?'':(avg>0?'+':'')+(avg*100).toFixed(0)+'%'}</span></h4>
+      ${list.map((s,i)=>{ const cur=revealed?s.p[yi]:s.p[prevYi], c=chgs[i];
+        const cl=c===null?'flat':c>0.0005?'up':c<-0.0005?'down':'flat';
+        return `<div class="srow" data-row="${esc(s.id)}" data-dir="${c===null?0:c>0?1:c<0?-1:0}">
+          <span class="L">${s.letter}</span><span class="pz">${won(cur)}</span>
+          <span class="cg ${cl}">${c===null?'—':(c>0?'+':'')+(c*100).toFixed(0)+'%'}</span></div>`;
+      }).join('')}</div>`;
+  }).join('')}</div>`;
+}
+function flashRows(){
+  const rows=[...document.querySelectorAll('[data-row]')];
+  rows.forEach((el,i)=>{ const d=+el.dataset.dir; if(!d) return;
+    setTimeout(()=>{ el.classList.add(d>0?'fu':'fd');
+      setTimeout(()=>el.classList.remove('fu','fd'),900); }, Math.min(i*22,1400)); });
+}
+
+/* ── OX ── */
+function oxBank(){ return MODE==='practice'? [D.practice.ox] : D.ox; }
+function aliveList(){ return Object.entries(players).filter(([k,p])=>p&&p.alive!==false); }
+function oxHTML(){
+  const bank=oxBank(), q=bank[Math.min(oxIdx,bank.length-1)];
+  const alive=aliveList(), total=Object.keys(players).length;
+  const cur=(window.__ox)||{};
+  const answered=Object.values(players).filter(p=>p&&p.oxIdx===cur.idx&&p.oxA).length;
+  return `<div class="eyebrow">OX 퀴즈 · ${MODE==='practice'?'연습':'본게임'}</div>
+    <h1 class="t">${cur.reveal? '정답 '+esc(cur.answer) : '문제 '+(oxIdx+1)}</h1>
+    <div class="oxq"><div class="q">${esc(q.q)}</div>
+      ${cur.reveal? `<div class="why">정답 <b style="color:var(--amber)">${esc(q.a)}</b> — ${esc(q.why||'')}</div>`:''}</div>
+    <div class="stat">
+      <div>생존 <b class="up">${alive.length}명</b></div>
+      <div>전체 <b>${total}명</b></div>
+      <div>제출 <b>${answered}명</b></div>
+    </div>
+    <div class="picker">
+      <button class="btn pri" id="oxGo">문제 내기 (7초)</button>
+      <button class="btn" id="oxMark">채점하기</button>
+      <button class="btn sm" id="oxPrev">◀ 이전 문제</button>
+      <input type="number" id="oxJump" value="${oxIdx+1}" min="1" max="${bank.length}">
+      <button class="btn sm" id="oxNext">다음 문제 ▶</button>
+      <button class="btn sm" id="oxReset">전원 부활</button>
+    </div>
+    <div class="survivors">${alive.slice(0,40).map(([k,p])=>`<span class="sv">${esc(p.name)}</span>`).join('')}
+      ${alive.length>40?`<span class="sv">외 ${alive.length-40}명</span>`:''}</div>
+    <p class="lede" style="margin-top:14px">생존자가 <b>5명 이하</b>가 되면 다음 단계에서 힌트를 나눠줍니다.
+      너무 많이 남으면 문제를 더 내세요.</p>`;
+}
+function oxGo(){
+  const bank=oxBank(), q=bank[Math.min(oxIdx,bank.length-1)];
+  window.__ox={idx:oxIdx, q:q.q, answer:q.a, reveal:false, endsAt:Date.now()+7000};
+  db.ref('state').update({phase:'ox', ox:{idx:oxIdx,q:q.q,endsAt:window.__ox.endsAt,reveal:false,active:true}});
+  render();
+}
+function oxMark(){
+  const bank=oxBank(), q=bank[Math.min(oxIdx,bank.length-1)];
+  const up={};
+  Object.entries(players).forEach(([k,p])=>{
+    if(!p||p.alive===false) return;
+    const ok = p.oxIdx===oxIdx && p.oxA===q.a;
+    if(!ok) up['players/'+k+'/alive']=false;
+  });
+  up['state/ox']={idx:oxIdx,q:q.q,reveal:true,answer:q.a,active:true};
+  window.__ox={idx:oxIdx,q:q.q,answer:q.a,reveal:true};
+  db.ref().update(up).then(render);
+}
+function oxResetAll(){
+  const up={}; Object.keys(players).forEach(k=>{ up['players/'+k+'/alive']=true; });
+  db.ref().update(up);
+}
+
+/* ── 힌트 ── */
+function computeRanks(){
+  const alive=aliveList().map(([k,p])=>({k,name:p.name,t:p.oxT||0}));
+  alive.sort((a,b)=>a.t-b.t);
+  return alive.slice(0,5);
+}
+function hintTextFor(rank){
+  if(MODE==='practice') return D.practice.hints[String(Math.min(rank,4))];
+  const y=String(nextHintYear());
+  const H=D.hints[y]||{};
+  return H[String(Math.min(rank,4))]||'';
+}
+function hintHTML(){
+  const R=computeRanks();
+  return `<div class="eyebrow">힌트 배부 · ${MODE==='practice'?'연습':nextHintYear()+'년 정보'}</div>
+    <h1 class="t">살아남은 사람들</h1>
+    ${R.length? R.map((r,i)=>`<div class="hintrow"><span class="r">${i+1}</span>
+      <span class="n">${esc(r.name)}</span><span class="h">${esc(hintTextFor(i+1))}</span></div>`).join('')
+      : '<p class="lede">생존자가 없습니다. 이전 단계에서 <b>전원 부활</b>을 누르고 다시 진행하세요.</p>'}
+    <div class="picker"><button class="btn pri" id="sendHint">힌트 전송</button>
+      <button class="btn" id="clearHint">힌트 회수</button></div>
+    <p class="lede" style="margin-top:12px">전송하면 그 사람 폰에만 뜹니다. 나머지는 아무것도 못 봅니다.
+      매매가 끝나면 <b>힌트 회수</b>를 누르세요.</p>`;
+}
+function sendHints(){
+  const R=computeRanks(), up={};
+  R.forEach((r,i)=>{ up['players/'+r.k+'/hint']=hintTextFor(i+1); });
+  db.ref().update(up).then(()=>alert(R.length+'명에게 전송했습니다'));
+}
+function clearHints(){
+  const up={}; Object.keys(players).forEach(k=>{ up['players/'+k+'/hint']=null; });
+  db.ref().update(up);
+}
+
+/* ── 순위 ── */
+function priceNow(){ const st=STEPS[si]; return priceMap(MODE,yiOfStep(st)); }
+function calc(p){ const pr=priceNow(), q=p.qty||{};
+  const stock=Object.keys(q).reduce((a,k)=>a+(q[k]||0)*(pr[k]||0),0);
+  return {cash:p.cash||0, stock, total:(p.cash||0)+stock}; }
+function rank(kind){
+  return Object.entries(players).filter(([k,p])=>p&&p.name)
+    .map(([k,p])=>({k,name:p.name,...calc(p)}))
+    .sort((a,b)=>b[kind]-a[kind]);
+}
+function holdCount(){ const m={};
+  Object.values(players).forEach(p=>{ if(!p||!p.qty) return;
+    Object.keys(p.qty).forEach(id=>{ if(p.qty[id]>0) m[id]=(m[id]||0)+1; }); });
+  return m; }
+function paintLive(){
+  const R=rank(tab), n=Object.keys(players).length;
+  $('#pcount').textContent='참가 '+n+'명'; $('#rkCount').textContent=n+'명';
+  $('#rank').innerHTML = R.length? R.map((r,i)=>`<div class="rk"><span class="i">${i+1}</span>
+    <span class="nm">${esc(r.name)}</span><span class="v">${won(r[tab])}</span></div>`).join('')
+    : '<div class="empty">아직 참가자가 없습니다</div>';
+  const held=holdCount(), bySec={};
+  stocksOf(MODE).forEach(s=>{ bySec[s.sector]=(bySec[s.sector]||0)+(held[s.id]||0); });
+  const mx=Math.max(1,...Object.values(bySec));
+  const rows=Object.entries(bySec).sort((a,b)=>b[1]-a[1]);
+  $('#flow').innerHTML = rows.some(r=>r[1]>0)? rows.map(([s,c])=>`<div class="fl">
+      <span>${esc(s)}</span><span class="bar"><span class="bf" style="width:${(c/mx*100).toFixed(0)}%"></span></span>
+      <span class="c">${c}명</span></div>`).join('')
+    : '<div class="empty">아직 아무도 매수하지 않았습니다</div>';
+}
+document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{
+  tab=b.dataset.tab;
+  document.querySelectorAll('[data-tab]').forEach(x=>x.classList.toggle('on',x===b));
+  paintLive(); });
+
+function podium(R){
+  if(!R.length) return '';
+  const mx=Math.max(SEED,...R.map(r=>r.total));
+  return R.map((r,i)=>{ const m=r.total/SEED;
+    return `<div class="pod ${i===0?'p1':''}"><span class="i">${i+1}</span>
+      <span class="nm">${esc(r.name)}</span>
+      <span class="bw"><span class="bf" style="width:${Math.max(2,r.total/mx*100).toFixed(1)}%"></span></span>
+      <span class="v">${won(r.total)}</span>
+      <span class="m ${m>=1?'up':'down'}">${m.toFixed(2)}배</span></div>`; }).join('');
+}
+
+/* ── 타이머 ── */
+let tLeft=120,tOn=false,tInt=null;
+const fmt=n=>Math.floor(n/60)+':'+String(n%60).padStart(2,'0');
+function paintTimer(){ const e=$('#timer'); e.textContent=fmt(Math.max(0,tLeft));
+  e.classList.toggle('hot', tLeft<=15&&tLeft>0&&tOn); }
+function stopTimer(){ tOn=false; clearInterval(tInt); tInt=null; $('#tBtn').textContent='타이머'; }
+function resetTimer(v){ stopTimer(); tLeft=v||120; paintTimer(); }
+function toggleTimer(){
+  if(tOn){ stopTimer(); paintTimer(); return; }
+  tOn=true; $('#tBtn').textContent='정지';
+  tInt=setInterval(()=>{ tLeft--; paintTimer();
+    if(tLeft<=0){ stopTimer(); paintTimer(); db.ref('state/tradingOpen').set(false); } },1000);
+}
+$('#tBtn').onclick=toggleTimer;
+$('#openBtn').onclick=()=>db.ref('state/tradingOpen').once('value').then(s=>db.ref('state/tradingOpen').set(!s.val()));
+
+/* ── 백업 · 관리 ── */
+function backup(){
+  db.ref('state').once('value').then(s=>{
+    db.ref('backups').push({at:Date.now(), label:`${MODE} ${STEPS[si].t} ${yearLabel(yiOfStep(STEPS[si]))}`,
+      step:si, mode:MODE, state:s.val(), players:players});
+  }).catch(()=>{});
+}
+function resetAccounts(){
+  const up={};
+  Object.keys(players).forEach(k=>{
+    up['players/'+k+'/cash']=SEED; up['players/'+k+'/qty']={};
+    up['players/'+k+'/hint']=null; up['players/'+k+'/alive']=true;
+    up['players/'+k+'/oxA']=null; up['players/'+k+'/oxIdx']=null; up['players/'+k+'/oxT']=null;
+  });
+  return db.ref().update(up);
+}
+$('#startMain').onclick=()=>{
+  if(!confirm('모든 참가자의 계좌를 1,000만으로 초기화하고 본게임 2005년으로 갑니다.\n참가자 명단은 그대로 유지됩니다.\n\n계속할까요?')) return;
+  backup(); oxIdx=0; window.__ox=null;
+  resetAccounts().then(()=>{ MODE='main'; STEPS=buildSteps('main'); si=0; commit(); });
+};
+$('#toPractice').onclick=()=>{
+  if(!confirm('연습게임으로 돌아갑니다. 계좌가 초기화됩니다.\n계속할까요?')) return;
+  backup(); oxIdx=0; window.__ox=null;
+  resetAccounts().then(()=>{ MODE='practice'; STEPS=buildSteps('practice'); si=0; commit(); });
+};
+$('#undo').onclick=()=>{
+  if(si===0){ alert('첫 단계입니다.'); return; }
+  if(!confirm('한 단계 되돌립니다. 주가와 자산이 직전 상태로 돌아갑니다.\n(이미 체결된 매매는 취소되지 않습니다)\n\n계속할까요?')) return;
+  si--; commit();
+};
+$('#wipe').onclick=()=>{
+  const n=Object.keys(players).length;
+  if(!confirm(`참가자 ${n}명의 기록이 전부 삭제됩니다.\n되돌릴 수 없습니다.\n\n정말 진행할까요?`)) return;
+  if(!confirm('한 번 더 확인합니다. 정말 전체 초기화할까요?')) return;
+  backup();
+  db.ref('players').remove().then(()=>{ MODE='practice'; STEPS=buildSteps('practice'); si=0;
+    oxIdx=0; window.__ox=null; db.ref('state/ox').remove(); commit(); });
+};
+$('#restore').onclick=()=>{
+  db.ref('backups').limitToLast(12).once('value').then(s=>{
+    const v=s.val()||{}, ks=Object.keys(v).reverse();
+    if(!ks.length){ alert('백업이 없습니다.'); return; }
+    const list=ks.map((k,i)=>`${i+1}. ${new Date(v[k].at).toLocaleTimeString('ko-KR')} · ${v[k].label}`).join('\n');
+    const pick=prompt('복구할 백업 번호를 입력하세요.\n\n'+list);
+    const idx=parseInt(pick,10);
+    if(!Number.isFinite(idx)||idx<1||idx>ks.length) return;
+    const b=v[ks[idx-1]];
+    db.ref('players').set(b.players||{}).then(()=>{
+      MODE=b.mode||'practice'; STEPS=buildSteps(MODE); si=b.step||0; commit();
+      alert('복구했습니다.');
+    });
+  });
+};
+
+/* ── 이동 ── */
+function go(d){
+  const from=STEPS[si];
+  si=Math.min(STEPS.length-1,Math.max(0,si+d));
+  const to=STEPS[si];
+  if(to.t==='ox' && from.t!=='ox'){ oxIdx = MODE==='practice'?0:(nextHintYear()>2012?50:0); window.__ox=null; oxResetAll(); }
+  if(from.t==='trade') db.ref('state/tradingOpen').set(false);
+  if(to.t==='reveal') backup();
+  commit();
+}
+$('#next').onclick=()=>go(1); $('#prev').onclick=()=>go(-1);
+document.addEventListener('keydown',e=>{
+  if(/^(INPUT|TEXTAREA)$/.test(e.target.tagName)) return;
+  if(e.code==='Space'){e.preventDefault();go(1);}
+  else if(e.key==='ArrowRight')go(1);
+  else if(e.key==='ArrowLeft')go(-1);
+  else if(e.key.toLowerCase()==='t'){e.preventDefault();toggleTimer();}
+  else if(e.key.toLowerCase()==='o'){e.preventDefault();$('#openBtn').click();}
+  else if(e.key.toLowerCase()==='f'){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen();}
+});
+document.addEventListener('click',e=>{
+  const id=e.target.id;
+  if(id==='oxGo') oxGo();
+  else if(id==='oxMark') oxMark();
+  else if(id==='oxReset'){ if(confirm('탈락자를 전원 부활시킬까요?')) oxResetAll(); }
+  else if(id==='oxPrev'){ oxIdx=Math.max(0,oxIdx-1); window.__ox=null; render(); }
+  else if(id==='oxNext'){ oxIdx=Math.min(oxBank().length-1,oxIdx+1); window.__ox=null; render(); }
+  else if(id==='sendHint') sendHints();
+  else if(id==='clearHint'){ clearHints(); alert('힌트를 회수했습니다.'); }
+});
+document.addEventListener('change',e=>{
+  if(e.target.id==='oxJump'){ const v=parseInt(e.target.value,10);
+    if(Number.isFinite(v)) oxIdx=Math.max(0,Math.min(oxBank().length-1,v-1));
+    window.__ox=null; render(); }
+});
+
+commit();
+</script>
+</body>
+</html>
