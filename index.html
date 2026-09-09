@@ -121,6 +121,21 @@ input[type=tel]{font-family:var(--mono);text-align:center}
 .done .dm{font-family:var(--mono);font-size:14.5px;font-weight:600;margin-bottom:5px}
 .done .dh{font-family:var(--mono);font-size:12px;color:var(--faint);margin-bottom:13px}
 
+/* ── 차트 ── */
+.btn.gh{background:transparent;color:var(--dim);font-size:13.5px;font-weight:600}
+.chart{margin-top:11px;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:11px}
+.chart svg{width:100%;height:96px;display:block}
+.nochart{color:var(--faint);font-size:12.5px;text-align:center;padding:14px}
+.avgline{font-family:var(--mono);font-size:12px;color:var(--faint);text-align:center;margin-top:7px}
+.avgline b{color:var(--amber)}
+.crlist{margin-top:10px;border-top:1px solid var(--line);padding-top:8px;
+  max-height:186px;overflow-y:auto}
+.cr{display:grid;grid-template-columns:58px 1fr 54px;gap:8px;font-family:var(--mono);
+  font-size:12.5px;padding:3px 0;font-variant-numeric:tabular-nums}
+.cr .y{color:var(--faint)}
+.cr .v{text-align:right;font-weight:600}
+.cr .c{text-align:right;font-weight:700}
+
 /* ── OX ── */
 .ox{text-align:center;padding:2vh 0}
 .ansbig{font-family:var(--disp);font-weight:900;font-size:64px;color:var(--amber);line-height:1;margin-bottom:12px}
@@ -232,7 +247,8 @@ const db=firebase.database();
 const $=s=>document.querySelector(s);
 const won=n=>Math.round(n||0).toLocaleString('ko-KR');
 let uid=null, me=null, ST=null, openId=null, view='sectors', curSec=null;
-const VER='v9 · 09-09';
+const VER='v10 · 09-09';
+let chartId=null;
 let skew=0, doneId=null, doneMsg='', tradeMode='buy';
 const now=()=>Date.now()+skew;
 
@@ -459,6 +475,44 @@ function miniHold(){
   return `<div class="minih">${rows.map(s=>`<span class="chip">${esc(s.sector)} <b>${s.letter}</b>
     ${(q[s.id]).toLocaleString('ko-KR')}주</span>`).join('')}</div>`;
 }
+function chartHTML(id, price){
+  const H=((ST.history)||{})[id]||[];
+  const YL=(ST.yearLabels)||[];
+  if(H.length<2) return '<div class="nochart">아직 기록이 없습니다</div>';
+  const q=(me.qty||{})[id]||0, c=(me.cost||{})[id]||0;
+  const avg = q>0? c/q : null;
+  const W=300,Hh=96,PAD=6;
+  const vals=avg? H.concat([avg]) : H;
+  const mx=Math.max(...vals), mn=Math.min(...vals), sp=(mx-mn)||1;
+  const X=i=>PAD+(i/(H.length-1))*(W-PAD*2);
+  const Yv=v=>PAD+(1-(v-mn)/sp)*(Hh-PAD*2);
+  const line=H.map((v,i)=>(i?'L':'M')+X(i).toFixed(1)+' '+Yv(v).toFixed(1)).join(' ');
+  const area=line+` L${X(H.length-1).toFixed(1)} ${Hh-PAD} L${X(0).toFixed(1)} ${Hh-PAD} Z`;
+  const rise=H[H.length-1]>=H[0];
+  const col=rise?'#F04452':'#3182F6';
+  const avgLine = avg? `<line x1="${PAD}" y1="${Yv(avg).toFixed(1)}" x2="${W-PAD}" y2="${Yv(avg).toFixed(1)}"
+      stroke="#F5C24C" stroke-width="1.2" stroke-dasharray="4 3"/>` : '';
+  const rows=H.map((v,i)=>{
+    const ch = i? v/H[i-1]-1 : null;
+    const cc = ch===null?'flat':ch>0.0005?'up':ch<-0.0005?'down':'flat';
+    return `<div class="cr"><span class="y">${esc(YL[i]||i)}</span>
+      <span class="v">${won(v)}</span>
+      <span class="c ${cc}">${ch===null?'—':(ch>0?'+':'')+(ch*100).toFixed(0)+'%'}</span></div>`;
+  }).reverse().join('');
+  return `<div class="chart">
+    <svg viewBox="0 0 ${W} ${Hh}" preserveAspectRatio="none" aria-hidden="true">
+      <defs><linearGradient id="g${id.replace(/[^A-Za-z]/g,'')}" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="${col}" stop-opacity=".28"/>
+        <stop offset="1" stop-color="${col}" stop-opacity="0"/></linearGradient></defs>
+      <path d="${area}" fill="url(#g${id.replace(/[^A-Za-z]/g,'')})"/>
+      ${avgLine}
+      <path d="${line}" fill="none" stroke="${col}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+      <circle cx="${X(H.length-1).toFixed(1)}" cy="${Yv(H[H.length-1]).toFixed(1)}" r="3.5" fill="${col}"/>
+    </svg>
+    ${avg? `<div class="avgline">내 평단 <b>${won(avg)}</b>
+      <span class="${price>=avg?'up':'down'}">${price>=avg?'+':''}${((price/avg-1)*100).toFixed(1)}%</span></div>`:''}
+    <div class="crlist">${rows}</div></div>`;
+}
 function stocksHTML(sec,list){
   const p=P(), v=PREV(), q=(me.qty)||{}, cash=me.cash||0;
   return `<button class="back" id="back">← 업종 목록</button>
@@ -498,7 +552,10 @@ function stocksHTML(sec,list){
           <button class="btn wide act ${sell?'sell':'buy'}" data-act="${s.id}">${sell?'매도하기':'매수하기'}</button>
           <div class="note">${sell? '보유 '+have.toLocaleString('ko-KR')+'주 · 전량 팔면 '+won(have*price)
             : '현금 '+won(cash)+' · 최대 '+won(canBuy)+'주'}</div>
-          <button class="btn wide" data-close="1" style="margin-top:9px">닫기</button>`;})()}
+          <button class="btn wide" data-close="1" style="margin-top:9px">닫기</button>
+          <button class="btn wide gh" data-chart="${s.id}" style="margin-top:7px">
+            ${chartId===s.id?'▲ 그래프 닫기':'▼ 주가 흐름 보기'}</button>
+          ${chartId===s.id? chartHTML(s.id, price) : ''}`;})()}
         </div></div>`;
     }).join('')}`;
 }
@@ -536,9 +593,11 @@ function bind(){
   sec.forEach(b=>b.onclick=()=>{ curSec=b.dataset.sec; view='stocks'; openId=null; render(); });
   const bk=$('#back'); if(bk) bk.onclick=()=>{ view='sectors'; openId=null; render(); };
   document.querySelectorAll('[data-t]').forEach(b=>b.onclick=()=>{
-    openId = openId===b.dataset.t? null : b.dataset.t; doneId=null; tradeMode='buy'; render(); });
+    openId = openId===b.dataset.t? null : b.dataset.t; doneId=null; chartId=null; tradeMode='buy'; render(); });
   document.querySelectorAll('[data-done]').forEach(b=>b.onclick=()=>{ doneId=null; openId=null; render(); });
-  document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>{ openId=null; doneId=null; render(); });
+  document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>{ openId=null; doneId=null; chartId=null; render(); });
+  document.querySelectorAll('[data-chart]').forEach(b=>b.onclick=()=>{
+    chartId = chartId===b.dataset.chart? null : b.dataset.chart; render(); });
   document.querySelectorAll('[data-set]').forEach(b=>b.onclick=()=>{
     const i=b.dataset.set.lastIndexOf(':');
     const id=b.dataset.set.slice(0,i), v=b.dataset.set.slice(i+1);
@@ -563,8 +622,13 @@ function trade(id,dir){
     if(!cur) return cur;
     cur.qty=cur.qty||{};
     const have=cur.qty[id]||0;
-    if(dir>0){ const cost=n*price; if(cost>cur.cash) return; cur.cash-=cost; cur.qty[id]=have+n; }
-    else { if(n>have) return; cur.cash+=n*price; cur.qty[id]=have-n; if(!cur.qty[id]) delete cur.qty[id]; }
+    cur.cost=cur.cost||{};
+    const c0=cur.cost[id]||0;
+    if(dir>0){ const cost=n*price; if(cost>cur.cash) return;
+      cur.cash-=cost; cur.qty[id]=have+n; cur.cost[id]=c0+cost; }
+    else { if(n>have) return; cur.cash+=n*price;
+      cur.qty[id]=have-n; cur.cost[id]=have? c0*(have-n)/have : 0;
+      if(!cur.qty[id]){ delete cur.qty[id]; delete cur.cost[id]; } }
     return cur;
   }).then(r=>{
     if(!r.committed){ toast(dir>0?'현금이 부족합니다':'보유 수량이 부족합니다','bad'); return; }
