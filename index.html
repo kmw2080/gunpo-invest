@@ -137,6 +137,23 @@ input[type=tel]{font-family:var(--mono);text-align:center}
 .dead{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:26px 18px;text-align:center}
 .dead .big{font-family:var(--disp);font-weight:900;font-size:30px;margin-bottom:8px}
 
+/* ── 뉴스 · 정체 ── */
+.nwhead{background:var(--panel);border:1px solid var(--line);border-radius:12px;
+  padding:16px;margin-bottom:12px;text-align:center}
+.nwy{font-family:var(--disp);font-weight:900;font-size:30px;color:var(--amber);line-height:1}
+.nws{font-size:13px;color:var(--faint);margin-top:6px}
+.nws-list{list-style:none;padding:0;margin:0 0 12px;display:flex;flex-direction:column;gap:9px}
+.nws-list li{display:flex;gap:11px;background:var(--panel);border-left:3px solid var(--amber);
+  border-radius:0 9px 9px 0;padding:13px 15px;font-size:15.5px;line-height:1.55}
+.nws-list li .d{font-family:var(--mono);font-size:11px;color:var(--amberdim);padding-top:3px}
+.nwfoot{text-align:center;color:var(--faint);font-size:12.5px;margin-bottom:14px}
+.umlist{display:flex;flex-direction:column;gap:5px}
+.um{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;
+  background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:10px 12px}
+.um .c{font-family:var(--mono);font-size:11px;color:var(--amber)}
+.um .n{font-weight:700;font-size:14.5px}
+.um .m{font-family:var(--mono);font-size:14px;font-weight:700;font-variant-numeric:tabular-nums}
+
 /* ── 주가 결과 ── */
 .rvhead{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:17px;margin-bottom:13px;text-align:center}
 .rvhead .ry{font-family:var(--disp);font-weight:900;font-size:23px;margin-bottom:9px}
@@ -331,7 +348,27 @@ function bodyHTML(){
   if(ph==='ox') return oxHTML();
   if(ph==='trade') return tradeHTML();
   if(ph==='reveal') return revealHTML();
+  if(ph==='news') return newsHTML();
+  if(ph==='unmask') return unmaskHTML();
   return waitHTML(ph);
+}
+
+function newsHTML(){
+  const N=(ST.news)||[];
+  return `<div class="nwhead"><div class="nwy">${esc(ST.yearLabel||'')}</div>
+      <div class="nws">그 해에 벌어진 일</div></div>
+    <ul class="nws-list">${N.map((n,i)=>`<li><span class="d">0${i+1}</span><span>${esc(n)}</span></li>`).join('')}</ul>
+    <div class="nwfoot">잠시 후 주가가 공개됩니다</div>` + holdHTML();
+}
+
+function unmaskHTML(){
+  const U=(ST.unmask)||[];
+  return `<div class="nwhead"><div class="nwy">정체 공개</div>
+      <div class="nws">${U.length}개 종목의 진짜 이름</div></div>
+    <div class="umlist">${U.map(x=>`<div class="um">
+      <span class="c">${esc(x.sector)} ${esc(x.letter)}</span>
+      <span class="n">${esc(x.real)}</span>
+      <span class="m ${x.m>=1?'up':'down'}">${x.m.toFixed(2)}배</span></div>`).join('')}</div>`;
 }
 
 function revealHTML(){
@@ -375,14 +412,12 @@ function revealHTML(){
 }
 
 function waitHTML(ph){
+  const t=total(), m=t/(ST.seedCash||10000000);
   const M={
-    lobby:['⏳','곧 시작합니다','진행자 화면을 봐주세요'],
-    news:['📰','그 해의 뉴스','화면을 봐주세요'],
-    reveal:['📈','주가 공개','화면을 봐주세요'],
-    hint:['🔒','힌트 배부 중','잠시만요'],
-    final:['🏁','최종 결산','수고하셨습니다'],
-    unmask:['🎭','종목 정체 공개','화면을 봐주세요'],
-  }[ph]||['⏳','대기 중','진행자 화면을 봐주세요'];
+    lobby:['⏳','곧 시작합니다','잠시만 기다려주세요'],
+    hint:['🔒','힌트를 나눠주고 있습니다','받은 사람에게만 표시됩니다'],
+    final:['🏁','최종 결산',`내 자산 ${won(t)} · ${m.toFixed(2)}배`],
+  }[ph]||['⏳','다음 순서를 준비 중입니다','잠시만 기다려주세요'];
   return `<div class="wait"><div class="ic">${M[0]}</div>
     <div class="m"><span class="pulse"></span>${M[1]}</div><div class="s">${M[2]}</div></div>`
     + holdHTML();
