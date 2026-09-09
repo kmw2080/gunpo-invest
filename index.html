@@ -111,6 +111,10 @@ input[type=tel]{font-family:var(--mono);text-align:center}
 .buy{background:var(--up);border-color:var(--up);color:#fff}
 .sell{background:var(--down);border-color:var(--down);color:#fff}
 .note{font-family:var(--mono);font-size:11.5px;color:var(--faint);margin-top:9px;text-align:center}
+.done{text-align:center;padding:6px 0 2px}
+.done .dt{font-family:var(--disp);font-weight:900;font-size:21px;color:var(--ok);margin-bottom:8px}
+.done .dm{font-family:var(--mono);font-size:14.5px;font-weight:600;margin-bottom:5px}
+.done .dh{font-family:var(--mono);font-size:12px;color:var(--faint);margin-bottom:13px}
 
 /* ── OX ── */
 .ox{text-align:center;padding:2vh 0}
@@ -127,6 +131,29 @@ input[type=tel]{font-family:var(--mono);text-align:center}
 .oxb button:disabled{opacity:.4}
 .dead{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:26px 18px;text-align:center}
 .dead .big{font-family:var(--disp);font-weight:900;font-size:30px;margin-bottom:8px}
+
+/* ── 주가 결과 ── */
+.rvhead{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:17px;margin-bottom:13px;text-align:center}
+.rvhead .ry{font-family:var(--disp);font-weight:900;font-size:23px;margin-bottom:9px}
+.rvhead .rv1{font-family:var(--mono);font-size:34px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
+.rvhead .rv2{font-family:var(--mono);font-size:13px;color:var(--faint);margin-top:8px;font-variant-numeric:tabular-nums}
+.rvhead .rv2 b{color:var(--ink);font-size:15px}
+.rvsec{margin-bottom:15px}
+.rvsec h3{font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:var(--faint);margin:0 0 8px;font-weight:600}
+.rvnone{color:var(--faint);font-size:13px;padding:6px 2px}
+.rvgrp{margin-bottom:9px;background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:9px 11px}
+.rvgh{display:flex;justify-content:space-between;font-size:13px;font-weight:700;margin-bottom:5px}
+.rvgh span{font-family:var(--mono);font-size:12.5px}
+.rvrow{display:grid;grid-template-columns:1fr auto 74px 54px;gap:8px;align-items:center;
+  font-family:var(--mono);font-size:13px;padding:3px 0;font-variant-numeric:tabular-nums}
+.rvrow.mine{background:var(--panel);border:1px solid var(--amberdim);border-radius:8px;
+  padding:9px 11px;margin-bottom:6px}
+.rvrow.own{color:var(--amber)}
+.rvrow .s{font-family:var(--body);font-size:13px;color:var(--dim)}
+.rvrow .s b{font-family:var(--disp);color:var(--amber);font-size:14px}
+.rvrow .q{font-size:11.5px;color:var(--faint)}
+.rvrow .pz{text-align:right;font-weight:600}
+.rvrow .cg{text-align:right;font-weight:700;font-size:12px}
 
 /* ── 대기 ── */
 .wait{background:var(--panel);border:1px solid var(--line);border-radius:12px;
@@ -181,7 +208,7 @@ const db=firebase.database();
 const $=s=>document.querySelector(s);
 const won=n=>Math.round(n||0).toLocaleString('ko-KR');
 let uid=null, me=null, ST=null, openId=null, view='sectors', curSec=null;
-let skew=0, flashId=null, flashT=null;
+let skew=0, doneId=null, doneMsg='';
 const now=()=>Date.now()+skew;
 
 try{ uid=localStorage.getItem('gp_uid'); }catch(e){}
@@ -298,7 +325,48 @@ function bodyHTML(){
   const ph=ST.phase;
   if(ph==='ox') return oxHTML();
   if(ph==='trade') return tradeHTML();
+  if(ph==='reveal') return revealHTML();
   return waitHTML(ph);
+}
+
+function revealHTML(){
+  const p=P(), v=PREV(), q=(me.qty)||{}, cash=me.cash||0;
+  const before = cash + Object.keys(q).reduce((a,k)=>a+(q[k]||0)*(v[k]||0),0);
+  const after  = cash + Object.keys(q).reduce((a,k)=>a+(q[k]||0)*(p[k]||0),0);
+  const d=after-before, r=before? after/before-1 : 0;
+  const cls = d>0?'up':d<0?'down':'flat';
+  const mine=LABELS().filter(s=>(q[s.id]||0)>0);
+  const S=secList();
+  return `<div class="rvhead">
+      <div class="ry">${esc(ST.yearLabel||'')} 결과</div>
+      <div class="rv1 ${cls}">${d>0?'+':''}${won(d)}</div>
+      <div class="rv2">${won(before)} → <b>${won(after)}</b>
+        <span class="${cls}">${d>0?'+':''}${(r*100).toFixed(1)}%</span></div>
+    </div>
+    ${mine.length? `<div class="rvsec"><h3>내 보유</h3>${mine.map(s=>{
+        const c = v[s.id]? p[s.id]/v[s.id]-1 : null;
+        const cc = c===null?'flat':c>0.0005?'up':c<-0.0005?'down':'flat';
+        return `<div class="rvrow mine"><span class="s">${esc(s.sector)} <b>${s.letter}</b></span>
+          <span class="q">${(q[s.id]).toLocaleString('ko-KR')}주</span>
+          <span class="pz">${won(p[s.id])}</span>
+          <span class="cg ${cc}">${c===null?'—':(c>0?'+':'')+(c*100).toFixed(0)+'%'}</span></div>`;
+      }).join('')}</div>`
+      : `<div class="rvsec"><h3>내 보유</h3><div class="rvnone">전액 현금이었습니다</div></div>`}
+    <div class="rvsec"><h3>전체 종목</h3>${Object.keys(S).map(sec=>{
+      const list=S[sec];
+      const cs=list.map(s=>v[s.id]? p[s.id]/v[s.id]-1 : null).filter(x=>x!==null);
+      const avg=cs.length? cs.reduce((a,b)=>a+b,0)/cs.length : null;
+      const ac=avg===null?'flat':avg>0.0005?'up':avg<-0.0005?'down':'flat';
+      return `<div class="rvgrp"><div class="rvgh">${esc(sec)}
+        <span class="${ac}">${avg===null?'':(avg>0?'+':'')+(avg*100).toFixed(0)+'%'}</span></div>
+        ${list.map(s=>{ const c=v[s.id]? p[s.id]/v[s.id]-1 : null;
+          const cc=c===null?'flat':c>0.0005?'up':c<-0.0005?'down':'flat';
+          return `<div class="rvrow ${(q[s.id]||0)>0?'own':''}">
+            <span class="s"><b>${s.letter}</b></span><span class="q"></span>
+            <span class="pz">${won(p[s.id])}</span>
+            <span class="cg ${cc}">${c===null?'—':(c>0?'+':'')+(c*100).toFixed(0)+'%'}</span></div>`;
+        }).join('')}</div>`;
+    }).join('')}</div>`;
 }
 
 function waitHTML(ph){
@@ -356,7 +424,7 @@ function stocksHTML(sec,list){
       const price=p[s.id]||0, have=q[s.id]||0, canBuy=price?Math.floor(cash/price):0;
       const base=v[s.id], c = base? price/base-1 : null;
       const cc = c===null?'flat':c>0.0005?'up':c<-0.0005?'down':'flat';
-      return `<div class="stk ${openId===s.id?'open':''} ${have>0?'own':''} ${flashId===s.id?'flash':''}" data-card="${s.id}">
+      return `<div class="stk ${openId===s.id?'open':''} ${have>0?'own':''} ${doneId===s.id?'flash':''}" data-card="${s.id}">
         <button class="stkhd" data-t="${s.id}">
           <span class="L">${s.letter}</span>
           <span><span class="p">${won(price)}</span>
@@ -364,7 +432,13 @@ function stocksHTML(sec,list){
           <span class="r"><span class="q ${have>0?'on':''}">${have>0?have.toLocaleString('ko-KR')+'주':'보유 없음'}</span>
             ${have>0?`<span class="q">${won(have*price)}</span>`:''}</span>
         </button>
-        <div class="pan">
+        <div class="pan">${doneId===s.id? `
+          <div class="done">
+            <div class="dt">✓ 체결되었습니다</div>
+            <div class="dm">${esc(sec)} ${s.letter} · ${esc(doneMsg)}</div>
+            <div class="dh">보유 ${have.toLocaleString('ko-KR')}주 · 현금 ${won(cash)}</div>
+            <button class="btn pri wide" data-done="1">확인</button>
+          </div>` : `
           <div class="qbtns">
             <button class="btn" data-set="${s.id}:${Math.floor(canBuy*0.25)}">25%</button>
             <button class="btn" data-set="${s.id}:${Math.floor(canBuy*0.5)}">50%</button>
@@ -377,6 +451,7 @@ function stocksHTML(sec,list){
             <button class="btn sell" data-sell="${s.id}">매도</button>
           </div>
           <div class="note">현금으로 최대 ${won(canBuy)}주 · 보유 ${have.toLocaleString('ko-KR')}주</div>
+          <button class="btn wide" data-close="1" style="margin-top:9px">닫기</button>`}
         </div></div>`;
     }).join('')}`;
 }
@@ -414,7 +489,9 @@ function bind(){
   sec.forEach(b=>b.onclick=()=>{ curSec=b.dataset.sec; view='stocks'; openId=null; render(); });
   const bk=$('#back'); if(bk) bk.onclick=()=>{ view='sectors'; openId=null; render(); };
   document.querySelectorAll('[data-t]').forEach(b=>b.onclick=()=>{
-    openId = openId===b.dataset.t? null : b.dataset.t; render(); });
+    openId = openId===b.dataset.t? null : b.dataset.t; doneId=null; render(); });
+  document.querySelectorAll('[data-done]').forEach(b=>b.onclick=()=>{ doneId=null; openId=null; render(); });
+  document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>{ openId=null; doneId=null; render(); });
   document.querySelectorAll('[data-set]').forEach(b=>b.onclick=()=>{
     const i=b.dataset.set.lastIndexOf(':');
     const id=b.dataset.set.slice(0,i), v=b.dataset.set.slice(i+1);
@@ -445,9 +522,8 @@ function trade(id,dir){
   }).then(r=>{
     if(!r.committed){ toast(dir>0?'현금이 부족합니다':'보유 수량이 부족합니다','bad'); return; }
     if(el) el.value='';
-    openId=null; flashId=id;
-    clearTimeout(flashT); flashT=setTimeout(()=>{ flashId=null; render(); },1600);
-    toast(`✓ ${dir>0?'매수':'매도'} 완료 — ${n.toLocaleString('ko-KR')}주 · ${won(n*price)}`,'good');
+    openId=id; doneId=id;
+    doneMsg=`${dir>0?'매수':'매도'} ${n.toLocaleString('ko-KR')}주 · ${won(n*price)}`;
     render();
   }).catch(()=>toast('처리 실패. 다시 시도해주세요','bad'));
 }
