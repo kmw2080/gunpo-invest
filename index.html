@@ -106,10 +106,15 @@ input[type=tel]{font-family:var(--mono);text-align:center}
 .stk.open .pan{display:block}
 .qbtns{display:flex;gap:6px;margin-bottom:9px}
 .qbtns .btn{flex:1;padding:9px 0;font-size:12.5px}
-.trade{display:flex;gap:8px;margin-top:9px}
-.trade .btn{flex:1;padding:14px 0;font-size:15px;font-weight:700}
-.buy{background:var(--up);border-color:var(--up);color:#fff}
-.sell{background:var(--down);border-color:var(--down);color:#fff}
+.modes{display:flex;gap:8px;margin-bottom:11px}
+.mb{flex:1;padding:12px 0;font-size:15px;font-weight:700;border-radius:9px;
+  background:var(--panel2);border:1.5px solid var(--line);color:var(--faint)}
+.mb.buy.on{background:rgba(240,68,82,.16);border-color:var(--up);color:var(--up)}
+.mb.sell.on{background:rgba(49,130,246,.16);border-color:var(--down);color:var(--down)}
+.mb:disabled{opacity:.3}
+.act{margin-top:10px;color:#fff;font-weight:700;font-size:16px}
+.act.buy{background:var(--up);border-color:var(--up)}
+.act.sell{background:var(--down);border-color:var(--down)}
 .note{font-family:var(--mono);font-size:11.5px;color:var(--faint);margin-top:9px;text-align:center}
 .done{text-align:center;padding:6px 0 2px}
 .done .dt{font-family:var(--disp);font-weight:900;font-size:21px;color:var(--ok);margin-bottom:8px}
@@ -208,7 +213,7 @@ const db=firebase.database();
 const $=s=>document.querySelector(s);
 const won=n=>Math.round(n||0).toLocaleString('ko-KR');
 let uid=null, me=null, ST=null, openId=null, view='sectors', curSec=null;
-let skew=0, doneId=null, doneMsg='';
+let skew=0, doneId=null, doneMsg='', tradeMode='buy';
 const now=()=>Date.now()+skew;
 
 try{ uid=localStorage.getItem('gp_uid'); }catch(e){}
@@ -259,8 +264,8 @@ function render(){
 
 function renderEnter(app){
   app.innerHTML=`<div class="enter">
-    <div class="kick">GUNPO CENTER · 2005—2015</div>
-    <h1>당신은 2005년의<br>투자자입니다</h1>
+    <div class="kick">GUNPO CENTER INVESTMENT CUP</div>
+    <h1>투자 대회에<br>오신 것을 환영합니다</h1>
     <p>실명을 입력해주세요. 시상할 때 필요합니다.<br>
        한 사람이 한 대만 접속하세요.</p>
     <div class="field">
@@ -284,7 +289,7 @@ function renderEnter(app){
 
 function renderRules(app){
   app.innerHTML=`<div class="rules" style="padding-top:2vh">
-    <div class="kick">${me.name}님, 환영합니다</div>
+    <div class="kick">${esc(me.name)}님</div>
     <h2 style="margin-top:10px">게임 규칙</h2>
     <div class="blk"><p><b>시드머니 1,000만 머니</b>로 시작합니다. 40개 종목이 전부 <b>10,000원</b>에서 출발해요.</p></div>
     <div class="blk"><p><b>회사 이름은 알려드리지 않습니다.</b> 아는 것은 업종뿐이에요.
@@ -296,7 +301,7 @@ function renderRules(app){
       10년 뒤 자산이 가장 큰 사람이 우승합니다.</p></div>
     <div class="blk"><p>이 화면에는 <b>내 자산만</b> 보입니다. 순위는 아무도 몰라요.</p></div>
     <button class="btn pri wide" id="ok" style="margin-top:16px">이해했습니다</button>
-    <div class="foot">모든 주가는 2005~2015년 실제 한국 주식의 실제 기록입니다</div>
+    <div class="foot">모든 주가는 실제 한국 주식의 실제 기록입니다</div>
   </div>`;
   $('#ok').onclick=()=>db.ref('players/'+uid+'/rulesSeen').set(true);
 }
@@ -438,20 +443,24 @@ function stocksHTML(sec,list){
             <div class="dm">${esc(sec)} ${s.letter} · ${esc(doneMsg)}</div>
             <div class="dh">보유 ${have.toLocaleString('ko-KR')}주 · 현금 ${won(cash)}</div>
             <button class="btn pri wide" data-done="1">확인</button>
-          </div>` : `
+          </div>` : (()=>{
+            const sell = tradeMode==='sell' && have>0;
+            const base = sell? have : canBuy;
+            return `
+          <div class="modes">
+            <button class="mb buy ${!sell?'on':''}" data-mode="buy">매수</button>
+            <button class="mb sell ${sell?'on':''}" data-mode="sell" ${have>0?'':'disabled'}>매도</button>
+          </div>
           <div class="qbtns">
-            <button class="btn" data-set="${s.id}:${Math.floor(canBuy*0.25)}">25%</button>
-            <button class="btn" data-set="${s.id}:${Math.floor(canBuy*0.5)}">50%</button>
-            <button class="btn" data-set="${s.id}:${canBuy}">최대</button>
-            <button class="btn" data-set="${s.id}:${have}">보유</button>
+            <button class="btn" data-set="${s.id}:${Math.floor(base*0.25)}">25%</button>
+            <button class="btn" data-set="${s.id}:${Math.floor(base*0.5)}">50%</button>
+            <button class="btn" data-set="${s.id}:${base}">${sell?'전량':'최대'}</button>
           </div>
-          <input type="tel" inputmode="numeric" data-qty="${s.id}" value="" placeholder="수량">
-          <div class="trade">
-            <button class="btn buy" data-buy="${s.id}">매수</button>
-            <button class="btn sell" data-sell="${s.id}">매도</button>
-          </div>
-          <div class="note">현금으로 최대 ${won(canBuy)}주 · 보유 ${have.toLocaleString('ko-KR')}주</div>
-          <button class="btn wide" data-close="1" style="margin-top:9px">닫기</button>`}
+          <input type="tel" inputmode="numeric" data-qty="${s.id}" value="" placeholder="수량 (주)">
+          <button class="btn wide act ${sell?'sell':'buy'}" data-act="${s.id}">${sell?'매도하기':'매수하기'}</button>
+          <div class="note">${sell? '보유 '+have.toLocaleString('ko-KR')+'주 · 전량 팔면 '+won(have*price)
+            : '현금 '+won(cash)+' · 최대 '+won(canBuy)+'주'}</div>
+          <button class="btn wide" data-close="1" style="margin-top:9px">닫기</button>`;})()}
         </div></div>`;
     }).join('')}`;
 }
@@ -489,15 +498,15 @@ function bind(){
   sec.forEach(b=>b.onclick=()=>{ curSec=b.dataset.sec; view='stocks'; openId=null; render(); });
   const bk=$('#back'); if(bk) bk.onclick=()=>{ view='sectors'; openId=null; render(); };
   document.querySelectorAll('[data-t]').forEach(b=>b.onclick=()=>{
-    openId = openId===b.dataset.t? null : b.dataset.t; doneId=null; render(); });
+    openId = openId===b.dataset.t? null : b.dataset.t; doneId=null; tradeMode='buy'; render(); });
   document.querySelectorAll('[data-done]').forEach(b=>b.onclick=()=>{ doneId=null; openId=null; render(); });
   document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>{ openId=null; doneId=null; render(); });
   document.querySelectorAll('[data-set]').forEach(b=>b.onclick=()=>{
     const i=b.dataset.set.lastIndexOf(':');
     const id=b.dataset.set.slice(0,i), v=b.dataset.set.slice(i+1);
     const el=document.querySelector(`[data-qty="${cssEsc(id)}"]`); if(el){ el.value=v; el.focus(); } });
-  document.querySelectorAll('[data-buy]').forEach(b=>b.onclick=()=>trade(b.dataset.buy,1));
-  document.querySelectorAll('[data-sell]').forEach(b=>b.onclick=()=>trade(b.dataset.sell,-1));
+  document.querySelectorAll('[data-mode]').forEach(b=>b.onclick=()=>{ tradeMode=b.dataset.mode; render(); });
+  document.querySelectorAll('[data-act]').forEach(b=>b.onclick=()=>trade(b.dataset.act, tradeMode==='sell'?-1:1));
   document.querySelectorAll('[data-ox]').forEach(b=>b.onclick=()=>submitOx(b.dataset.ox));
 }
 function submitOx(a){
