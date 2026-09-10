@@ -29,7 +29,7 @@ button{font-family:var(--body);cursor:pointer;-webkit-tap-highlight-color:transp
 .mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
 .up{color:var(--up)} .down{color:var(--down)} .flat{color:var(--flat)}
 
-/* ── 진입 화면 ── */
+/* ── 진입 ── */
 .enter{padding-top:7vh}
 .kick{font-family:var(--mono);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--amber)}
 .enter h1{font-family:var(--disp);font-weight:900;font-size:clamp(32px,9vw,46px);line-height:1.1;margin:10px 0 14px;text-wrap:balance}
@@ -66,6 +66,8 @@ input[type=tel]{font-family:var(--mono);text-align:center}
 .assets b{color:var(--ink);font-weight:600}
 .assets .tot{grid-column:1/-1;border-top:1px solid var(--line);margin-top:5px;padding-top:6px;font-size:17px}
 .assets .tot b{font-size:22px;font-weight:700}
+.debt{grid-column:1/-1;margin-top:6px;padding-top:6px;border-top:1px dashed var(--amberdim);
+  display:flex;justify-content:space-between;font-size:12.5px;color:var(--amber)}
 
 /* ── 힌트 ── */
 .hint{background:linear-gradient(180deg,rgba(245,194,76,.14),rgba(245,194,76,.05));
@@ -94,7 +96,6 @@ input[type=tel]{font-family:var(--mono);text-align:center}
 .stk{background:var(--panel);border:1px solid var(--line);border-radius:11px;margin-bottom:8px;overflow:hidden}
 .stk.own{border-color:var(--amberdim)}
 .stk.flash{border-color:var(--ok);box-shadow:0 0 0 1px var(--ok) inset}
-.stk.flash .stkhd .q.on{color:var(--ok)}
 .stkhd{display:grid;grid-template-columns:36px 1fr auto;align-items:center;gap:12px;
   padding:13px;width:100%;background:none;border:none;color:inherit;text-align:left}
 .stkhd .L{font-family:var(--disp);font-weight:900;font-size:24px;color:var(--amber);text-align:center;line-height:1}
@@ -128,31 +129,14 @@ input[type=tel]{font-family:var(--mono);text-align:center}
 .nochart{color:var(--faint);font-size:12.5px;text-align:center;padding:14px}
 .avgline{font-family:var(--mono);font-size:12px;color:var(--faint);text-align:center;margin-top:7px}
 .avgline b{color:var(--amber)}
-.crlist{margin-top:10px;border-top:1px solid var(--line);padding-top:8px;
-  max-height:186px;overflow-y:auto}
+.crlist{margin-top:10px;border-top:1px solid var(--line);padding-top:8px;max-height:186px;overflow-y:auto}
 .cr{display:grid;grid-template-columns:58px 1fr 54px;gap:8px;font-family:var(--mono);
   font-size:12.5px;padding:3px 0;font-variant-numeric:tabular-nums}
 .cr .y{color:var(--faint)}
 .cr .v{text-align:right;font-weight:600}
 .cr .c{text-align:right;font-weight:700}
 
-/* ── OX ── */
-.ox{text-align:center;padding:2vh 0}
-.ansbig{font-family:var(--disp);font-weight:900;font-size:64px;color:var(--amber);line-height:1;margin-bottom:12px}
-.res{font-size:20px;font-weight:700}
-.res.good{color:var(--ok)} .res.bad{color:var(--up)}
-.oxmsg{margin-top:18px;font-size:15px;color:var(--dim);font-weight:600}
-.oxmsg.done{color:var(--ok)} .oxmsg.shut{color:var(--up)}
-.ox .q{font-size:23px;font-weight:700;line-height:1.5;margin:6px 0 26px;text-wrap:balance}
-.oxb{display:flex;gap:12px}
-.oxb button{flex:1;aspect-ratio:1;border-radius:18px;border:2px solid var(--line);
-  background:var(--panel);color:var(--ink);font-family:var(--disp);font-weight:900;font-size:64px}
-.oxb button.sel{border-color:var(--amber);background:rgba(245,194,76,.16);color:var(--amber)}
-.oxb button:disabled{opacity:.4}
-.dead{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:26px 18px;text-align:center}
-.dead .big{font-family:var(--disp);font-weight:900;font-size:30px;margin-bottom:8px}
-
-/* ── 뉴스 · 정체 ── */
+/* ── 뉴스 · 결과 · 정체 ── */
 .nwhead{background:var(--panel);border:1px solid var(--line);border-radius:12px;
   padding:16px;margin-bottom:12px;text-align:center}
 .nwy{font-family:var(--disp);font-weight:900;font-size:30px;color:var(--amber);line-height:1}
@@ -162,6 +146,8 @@ input[type=tel]{font-family:var(--mono);text-align:center}
   border-radius:0 9px 9px 0;padding:13px 15px;font-size:15.5px;line-height:1.55}
 .nws-list li .d{font-family:var(--mono);font-size:11px;color:var(--amberdim);padding-top:3px}
 .nwfoot{text-align:center;color:var(--faint);font-size:12.5px;margin-bottom:14px}
+.recap{background:var(--panel2);border:1px solid var(--amberdim);border-radius:10px;
+  padding:13px 15px;margin-bottom:12px;font-size:14.5px;line-height:1.6;color:var(--amber);text-align:center}
 .umlist{display:flex;flex-direction:column;gap:5px}
 .um{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;
   background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:10px 12px}
@@ -183,8 +169,7 @@ input[type=tel]{font-family:var(--mono);text-align:center}
 .rvgh span{font-family:var(--mono);font-size:12.5px}
 .rvrow{display:grid;grid-template-columns:1fr auto 74px 54px;gap:8px;align-items:center;
   font-family:var(--mono);font-size:13px;padding:3px 0;font-variant-numeric:tabular-nums}
-.rvrow.mine{background:var(--panel);border:1px solid var(--amberdim);border-radius:8px;
-  padding:9px 11px;margin-bottom:6px}
+.rvrow.mine{background:var(--panel);border:1px solid var(--amberdim);border-radius:8px;padding:9px 11px;margin-bottom:6px}
 .rvrow.own{color:var(--amber)}
 .rvrow .s{font-family:var(--body);font-size:13px;color:var(--dim)}
 .rvrow .s b{font-family:var(--disp);color:var(--amber);font-size:14px}
@@ -192,7 +177,42 @@ input[type=tel]{font-family:var(--mono);text-align:center}
 .rvrow .pz{text-align:right;font-weight:600}
 .rvrow .cg{text-align:right;font-weight:700;font-size:12px}
 
-/* ── 대기 ── */
+/* ── 미니게임 ── */
+.mg{text-align:center;padding:1vh 0}
+.mg .cap{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--amber);margin-bottom:10px}
+.mg h2{font-family:var(--disp);font-weight:900;font-size:27px;margin:0 0 14px;text-wrap:balance}
+.mg .rule{background:var(--panel);border:1px solid var(--line);border-radius:11px;
+  padding:15px 17px;font-size:15px;line-height:1.75;color:var(--dim);text-align:left;margin-bottom:18px}
+.mg .rule b{color:var(--ink)}
+.mg .rule .em{color:var(--amber);font-weight:600}
+.bigbtn{width:100%;aspect-ratio:1/.62;border-radius:20px;border:2px solid var(--amberdim);
+  background:linear-gradient(180deg,rgba(245,194,76,.2),rgba(245,194,76,.06));color:var(--amber);
+  font-family:var(--disp);font-weight:900;font-size:46px;letter-spacing:-.01em}
+.bigbtn:active{background:rgba(245,194,76,.34)}
+.bigbtn:disabled{opacity:.32;border-color:var(--line);color:var(--faint);background:var(--panel)}
+.bigbtn.red{border-color:var(--up);color:var(--up);background:linear-gradient(180deg,rgba(240,68,82,.2),rgba(240,68,82,.06))}
+.bigbtn.red:active{background:rgba(240,68,82,.34)}
+.mgmsg{margin-top:18px;font-size:15px;color:var(--dim);font-weight:600;line-height:1.6}
+.mgmsg.done{color:var(--ok)} .mgmsg.shut{color:var(--up)}
+.mgbig{font-family:var(--disp);font-weight:900;font-size:60px;color:var(--amber);line-height:1;margin:6px 0}
+.numpad{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.numpad button{aspect-ratio:1;border-radius:14px;border:2px solid var(--line);background:var(--panel);
+  color:var(--ink);font-family:var(--disp);font-weight:900;font-size:24px}
+.numpad button.sel{border-color:var(--amber);background:rgba(245,194,76,.16);color:var(--amber)}
+.numpad button:disabled{opacity:.4}
+.tapcount{font-family:var(--mono);font-size:52px;font-weight:700;color:var(--amber);
+  line-height:1;font-variant-numeric:tabular-nums}
+.oxb{display:flex;gap:12px}
+.oxb button{flex:1;aspect-ratio:1;border-radius:18px;border:2px solid var(--line);
+  background:var(--panel);color:var(--ink);font-family:var(--disp);font-weight:900;font-size:64px}
+.oxb button.sel{border-color:var(--amber);background:rgba(245,194,76,.16);color:var(--amber)}
+.oxb button:disabled{opacity:.4}
+.res{font-size:20px;font-weight:700}
+.res.good{color:var(--ok)} .res.bad{color:var(--up)}
+.dead{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:26px 18px;text-align:center}
+.dead .big{font-family:var(--disp);font-weight:900;font-size:30px;margin-bottom:8px}
+
+/* ── 대기 · 보유 ── */
 .wait{background:var(--panel);border:1px solid var(--line);border-radius:12px;
   padding:30px 18px;text-align:center;color:var(--dim)}
 .wait .ic{font-size:30px;margin-bottom:10px}
@@ -201,8 +221,6 @@ input[type=tel]{font-family:var(--mono);text-align:center}
 .pulse{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--ok);
   margin-right:6px;animation:bl 1.6s infinite}
 @keyframes bl{50%{opacity:.25}}
-
-/* ── 보유 요약 ── */
 .hold{margin-top:16px;border-top:1px solid var(--line);padding-top:13px}
 .hold h3{font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:var(--faint);margin:0 0 9px;font-weight:600}
 .hrow{display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:center;
@@ -246,40 +264,39 @@ const db=firebase.database();
 
 const $=s=>document.querySelector(s);
 const won=n=>Math.round(n||0).toLocaleString('ko-KR');
-let uid=null, me=null, ST=null, openId=null, view='sectors', curSec=null;
-const VER='v10 · 09-09';
-let chartId=null;
-let skew=0, doneId=null, doneMsg='', tradeMode='buy';
-const now=()=>Date.now()+skew;
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const cssEsc=s=>String(s).replace(/["\\]/g,'\\$&');
+const VER='v11 · 09-10';
+let uid=null, me=null, ST=null;
+let openId=null, view='sectors', curSec=null, chartId=null;
+let doneId=null, doneMsg='', tradeMode='buy';
+let mgSeq=null, mgLocal={};
+let tapTimer=null, lateTimer=null;
 
 try{ uid=localStorage.getItem('gp_uid'); }catch(e){}
 function newUid(){ const u='p'+Date.now().toString(36)+Math.random().toString(36).slice(2,7);
   try{ localStorage.setItem('gp_uid',u); }catch(e){} return u; }
 
-/* ── 연결 상태 ── */
-db.ref('.info/connected').on('value',s=>$('#conn').classList.toggle('on', s.val()!==true));
-db.ref('.info/serverTimeOffset').on('value',s=>{ skew=s.val()||0; });
+function watchMe(){ if(!uid) return; db.ref('players/'+uid).on('value',s=>{ me=s.val(); render(); }); }
 
-/* ── 구독 ── */
-db.ref('state').on('value',s=>{ ST=s.val(); render(); });
-function watchMe(){
-  if(!uid) return;
-  db.ref('players/'+uid).on('value',s=>{ me=s.val(); render(); });
-}
-if(uid) watchMe();
-
-/* ── 토스트 ── */
 let tt=null;
 function toast(m,k){ const e=$('#toast'); e.textContent=m; e.className='toast on '+(k||'');
   clearTimeout(tt); tt=setTimeout(()=>e.className='toast '+(k||''),2000); }
 
 /* ── 계산 ── */
-const P=()=> (ST&&ST.prices)||{};
-const PREV=()=> (ST&&ST.prevPrices)||{};
-const LABELS=()=> (ST&&ST.labels)||[];
+const P=()=>(ST&&ST.prices)||{};
+const PREV=()=>(ST&&ST.prevPrices)||{};
+const LABELS=()=>(ST&&ST.labels)||[];
+const MG=()=>(ST&&ST.mini)||null;
 function stockVal(){ const p=P(),q=(me&&me.qty)||{};
   return Object.keys(q).reduce((a,k)=>a+(q[k]||0)*(p[k]||0),0); }
 function total(){ return ((me&&me.cash)||0)+stockVal(); }
+function loanList(){ const L=(me&&me.loans)||{}; return Array.isArray(L)?L:Object.keys(L).map(k=>L[k]); }
+function loanPrincipal(){ return loanList().reduce((a,l)=>a+((l&&l.amt)||0),0); }
+function loanDue(){
+  const r=(ST&&ST.loanRate)||0.06, ri=(ST&&ST.ri)||0;
+  return loanList().reduce((a,l)=>a+((l&&l.amt)||0)*Math.pow(1+r, Math.max(0, ri-((l&&l.ri)||0))),0);
+}
 function secList(){ const m={}; LABELS().forEach(s=>{ (m[s.sector]=m[s.sector]||[]).push(s); }); return m; }
 function secChg(sec){ const p=P(),v=PREV(),L=secList()[sec]||[];
   const r=L.filter(s=>v[s.id]).map(s=>p[s.id]/v[s.id]-1);
@@ -292,29 +309,32 @@ function render(){
   const app=$('#app');
   if(!ST){ app.innerHTML=`<div class="wait" style="margin-top:30vh"><div class="ic">⏳</div>
       <div class="m">연결 중입니다</div><div class="s">잠시만 기다려주세요</div></div>`; return; }
-  if(!uid || !me){ return renderEnter(app); }
+  if(!uid || !me) return renderEnter(app);
   if(me.rulesSeen!==true) return renderRules(app);
-  app.innerHTML = header() + hintBox() + bodyHTML() + `<div class="ver bot">${VER}</div>`;
+  if(ST.phase==='mini'){ app.innerHTML=header()+miniHTML()+ver(); bindMini(); return; }
+  app.innerHTML = header() + hintBox() + bodyHTML() + ver();
   bind();
 }
+const ver=()=>`<div class="ver bot">${VER}</div>`;
 
 function renderEnter(app){
+  const team = ST.mode==='team';
   app.innerHTML=`<div class="enter">
     <div class="kick">GUNPO CENTER INVESTMENT CUP</div>
     <h1>투자 대회에<br>오신 것을 환영합니다</h1>
-    <p>실명을 입력해주세요. 시상할 때 필요합니다.<br>
-       한 사람이 한 대만 접속하세요.</p>
+    <p>${team? '팀 이름을 정해서 입력해주세요.<br>한 팀에 폰 <b style="color:#E9EDF2">한 대</b>만 접속합니다.'
+             : '실명을 입력해주세요. 시상할 때 필요합니다.<br>한 사람이 한 대만 접속하세요.'}</p>
     <div class="field">
-      <input type="text" id="nm" placeholder="이름" maxlength="10" autocomplete="off">
+      <input type="text" id="nm" placeholder="${team?'팀 이름':'이름'}" maxlength="12" autocomplete="off">
       <button class="btn pri" id="go">입장</button>
     </div>
     <div class="foot">시크릿 모드에서는 기록이 남지 않습니다<br><span class="ver">${VER}</span></div>
   </div>`;
   const go=()=>{
     const v=$('#nm').value.trim();
-    if(v.length<2){ toast('이름을 입력해주세요','bad'); return; }
+    if(v.length<2){ toast((team?'팀 이름을':'이름을')+' 입력해주세요','bad'); return; }
     uid=uid||newUid();
-    db.ref('players/'+uid).set({name:v, cash:(ST.seedCash||10000000), qty:{},
+    db.ref('players/'+uid).set({name:v, cash:(ST.seedCash||10000000), qty:{}, cost:{},
       joinedAt:firebase.database.ServerValue.TIMESTAMP, alive:true, rulesSeen:false})
       .then(watchMe).catch(()=>toast('입장 실패. 다시 눌러주세요','bad'));
   };
@@ -324,18 +344,21 @@ function renderEnter(app){
 }
 
 function renderRules(app){
+  const team = ST.mode==='team';
   app.innerHTML=`<div class="rules" style="padding-top:2vh">
-    <div class="kick">${esc(me.name)}님</div>
+    <div class="kick">${esc(me.name)}${team?' 팀':''}</div>
     <h2 style="margin-top:10px">게임 규칙</h2>
-    <div class="blk"><p><b>시드머니 1,000만 머니</b>로 시작합니다. 40개 종목이 전부 <b>10,000원</b>에서 출발해요.</p></div>
-    <div class="blk"><p><b>회사 이름은 알려드리지 않습니다.</b> 아는 것은 업종뿐이에요.
+    <div class="blk"><p><b>시드머니 1,000만 머니</b>로 시작합니다. 모든 종목이 <b>10,000원</b>에서 출발해요.</p></div>
+    <div class="blk"><p><b>회사 이름은 알려드리지 않습니다.</b> 아는 건 업종뿐이에요.
       업종을 먼저 고르고, 그 안에서 A·B·C 중 하나를 고릅니다.</p></div>
-    <div class="blk"><p><b>한 번 사면 1년을 들고 갑니다.</b> 중간에 못 팔아요. 다음 기회는 1년 뒤입니다.</p>
-      <ul><li>수수료·세금 없음</li><li>한 종목에 전부 몰아넣어도 됨</li>
-      <li>아무것도 안 사고 현금으로 버텨도 됨</li><li>매매 시간이 끝나면 잠깁니다</li></ul></div>
-    <div class="blk"><p>매년 그 해에 <b>실제로 벌어진 일</b>이 공개되고 주가가 따라 움직입니다.
-      10년 뒤 자산이 가장 큰 사람이 우승합니다.</p></div>
-    <div class="blk"><p>이 화면에는 <b>내 자산만</b> 보입니다. 순위는 아무도 몰라요.</p></div>
+    <div class="blk"><p><b>한 라운드가 1년입니다.</b></p>
+      <ul><li>라운드가 시작되면 <b>그 해 뉴스 3줄</b>이 이 화면에 뜹니다</li>
+      <li>뉴스를 보고 매매 시간에 사고 팝니다</li>
+      <li>마감되면 주가가 공개되고 정산됩니다</li>
+      <li>수수료·세금 없음 · 한 종목에 전부 몰아넣어도 됨</li></ul></div>
+    <div class="blk"><p>라운드 사이사이에 <b>미니게임</b>이 있습니다.
+      우승하면 <b>다음 해에 대해 아무도 모르는 정보</b>를 받습니다.</p></div>
+    <div class="blk"><p>이 화면에는 <b>${team?'우리 팀':'내'} 자산만</b> 보입니다. 순위는 아무도 몰라요.</p></div>
     <button class="btn pri wide" id="ok" style="margin-top:16px">이해했습니다</button>
     <div class="foot">모든 주가는 실제 한국 주식의 실제 기록입니다</div>
   </div>`;
@@ -344,14 +367,15 @@ function renderRules(app){
 
 function header(){
   const t=total(), m=t/(ST.seedCash||10000000);
-  const label = ST.mode==='practice' ? '연습' : (ST.year||2005)+'년';
+  const label = ST.mode==='practice' ? '연습' : (ST.yearLabel||ST.year||'')+'년';
+  const lp=loanPrincipal();
   return `<div class="hd">
-    <div class="r1"><div class="nm">${esc(me.name)}</div>
-      <div class="yr">${label}</div></div>
+    <div class="r1"><div class="nm">${esc(me.name)}</div><div class="yr">${esc(label)}</div></div>
     <div class="assets">
       <div><span>현금</span><b>${won(me.cash)}</b></div>
       <div><span>주식</span><b>${won(stockVal())}</b></div>
       <div class="tot"><span>합계</span><b class="${m>1.0005?'up':m<0.9995?'down':''}">${won(t)}</b></div>
+      ${lp? `<div class="debt"><span>빚 ${won(lp)}</span><span>상환 예정 ${won(loanDue())}</span></div>`:''}
     </div></div>`;
 }
 
@@ -364,7 +388,6 @@ function hintBox(){
 
 function bodyHTML(){
   const ph=ST.phase;
-  if(ph==='ox') return oxHTML();
   if(ph==='trade') return tradeHTML();
   if(ph==='reveal') return revealHTML();
   if(ph==='news') return newsHTML();
@@ -375,9 +398,9 @@ function bodyHTML(){
 function newsHTML(){
   const N=(ST.news)||[];
   return `<div class="nwhead"><div class="nwy">${esc(ST.yearLabel||'')}</div>
-      <div class="nws">그 해에 벌어진 일</div></div>
+      <div class="nws">올해 이런 이야기가 돌고 있습니다</div></div>
     <ul class="nws-list">${N.map((n,i)=>`<li><span class="d">0${i+1}</span><span>${esc(n)}</span></li>`).join('')}</ul>
-    <div class="nwfoot">잠시 후 주가가 공개됩니다</div>` + holdHTML();
+    <div class="nwfoot">셋 다 사실입니다. 다만 주가가 따라가 줄지는 모릅니다</div>` + holdHTML();
 }
 
 function unmaskHTML(){
@@ -404,6 +427,7 @@ function revealHTML(){
       <div class="rv2">${won(before)} → <b>${won(after)}</b>
         <span class="${cls}">${d>0?'+':''}${(r*100).toFixed(1)}%</span></div>
     </div>
+    ${ST.recap? `<div class="recap">${esc(ST.recap)}</div>`:''}
     ${mine.length? `<div class="rvsec"><h3>내 보유</h3>${mine.map(s=>{
         const c = v[s.id]? p[s.id]/v[s.id]-1 : null;
         const cc = c===null?'flat':c>0.0005?'up':c<-0.0005?'down':'flat';
@@ -431,15 +455,14 @@ function revealHTML(){
 }
 
 function waitHTML(ph){
-  const t=total(), m=t/(ST.seedCash||10000000);
+  const t=total(), m=t/(ST.seedCash||10000000), due=loanDue();
   const M={
     lobby:['⏳','곧 시작합니다','잠시만 기다려주세요'],
-    hint:['🔒','힌트를 나눠주고 있습니다','받은 사람에게만 표시됩니다'],
-    final:['🏁','최종 결산',`내 자산 ${won(t)} · ${m.toFixed(2)}배`],
+    hint:['🔒','힌트를 나눠주고 있습니다','받은 팀에게만 표시됩니다'],
+    final:['🏁','최종 결산', due? `내 자산 ${won(t)} · 상환 ${won(due)}` : `내 자산 ${won(t)} · ${m.toFixed(2)}배`],
   }[ph]||['⏳','다음 순서를 준비 중입니다','잠시만 기다려주세요'];
   return `<div class="wait"><div class="ic">${M[0]}</div>
-    <div class="m"><span class="pulse"></span>${M[1]}</div><div class="s">${M[2]}</div></div>`
-    + holdHTML();
+    <div class="m"><span class="pulse"></span>${M[1]}</div><div class="s">${M[2]}</div></div>` + holdHTML();
 }
 
 function holdHTML(){
@@ -469,50 +492,48 @@ function tradeHTML(){
 }
 
 function miniHold(){
-  const q=(me.qty)||{}, p=P();
+  const q=(me.qty)||{};
   const rows=LABELS().filter(s=>(q[s.id]||0)>0);
   if(!rows.length) return `<div class="minih empty2">아직 아무것도 사지 않았습니다 — 전액 현금</div>`;
   return `<div class="minih">${rows.map(s=>`<span class="chip">${esc(s.sector)} <b>${s.letter}</b>
     ${(q[s.id]).toLocaleString('ko-KR')}주</span>`).join('')}</div>`;
 }
+
 function chartHTML(id, price){
-  const H=((ST.history)||{})[id]||[];
-  const YL=(ST.yearLabels)||[];
-  if(H.length<2) return '<div class="nochart">아직 기록이 없습니다</div>';
-  const q=(me.qty||{})[id]||0, c=(me.cost||{})[id]||0;
-  const avg = q>0? c/q : null;
-  const W=300,Hh=96,PAD=6;
-  const vals=avg? H.concat([avg]) : H;
-  const mx=Math.max(...vals), mn=Math.min(...vals), sp=(mx-mn)||1;
-  const X=i=>PAD+(i/(H.length-1))*(W-PAD*2);
-  const Yv=v=>PAD+(1-(v-mn)/sp)*(Hh-PAD*2);
-  const line=H.map((v,i)=>(i?'L':'M')+X(i).toFixed(1)+' '+Yv(v).toFixed(1)).join(' ');
-  const area=line+` L${X(H.length-1).toFixed(1)} ${Hh-PAD} L${X(0).toFixed(1)} ${Hh-PAD} Z`;
+  const H=((ST.history)||{})[id]||[], YL=(ST.yearLabels)||[];
+  if(H.length<2) return `<div class="chart"><div class="nochart">아직 기록이 없습니다</div></div>`;
+  const W=300,Hh=96,pad=4;
+  const mx=Math.max(...H), mn=Math.min(...H), rng=(mx-mn)||1;
+  const X=i=>pad+i*(W-pad*2)/(H.length-1);
+  const Y=v=>pad+(1-(v-mn)/rng)*(Hh-pad*2);
+  const line=H.map((v,i)=>`${i?'L':'M'}${X(i).toFixed(1)},${Y(v).toFixed(1)}`).join('');
+  const area=`${line}L${X(H.length-1).toFixed(1)},${Hh}L${X(0).toFixed(1)},${Hh}Z`;
   const rise=H[H.length-1]>=H[0];
   const col=rise?'#F04452':'#3182F6';
-  const avgLine = avg? `<line x1="${PAD}" y1="${Yv(avg).toFixed(1)}" x2="${W-PAD}" y2="${Yv(avg).toFixed(1)}"
-      stroke="#F5C24C" stroke-width="1.2" stroke-dasharray="4 3"/>` : '';
-  const rows=H.map((v,i)=>{
-    const ch = i? v/H[i-1]-1 : null;
-    const cc = ch===null?'flat':ch>0.0005?'up':ch<-0.0005?'down':'flat';
-    return `<div class="cr"><span class="y">${esc(YL[i]||i)}</span>
-      <span class="v">${won(v)}</span>
-      <span class="c ${cc}">${ch===null?'—':(ch>0?'+':'')+(ch*100).toFixed(0)+'%'}</span></div>`;
-  }).reverse().join('');
+  const gid='g'+String(id).replace(/[^A-Za-z0-9]/g,'');
+  const q=(me.qty||{})[id]||0, cost=(me.cost||{})[id]||0;
+  const avg=q?cost/q:0;
+  const avgY=(avg && avg>=mn && avg<=mx)? Y(avg) : null;
+  const rows=H.map((v,i)=>({y:YL[i]||'', v, c:i? v/H[i-1]-1 : null})).reverse();
   return `<div class="chart">
     <svg viewBox="0 0 ${W} ${Hh}" preserveAspectRatio="none" aria-hidden="true">
-      <defs><linearGradient id="g${id.replace(/[^A-Za-z]/g,'')}" x1="0" y1="0" x2="0" y2="1">
+      <defs><linearGradient id="${gid}" x1="0" y1="0" x2="0" y2="1">
         <stop offset="0" stop-color="${col}" stop-opacity=".28"/>
         <stop offset="1" stop-color="${col}" stop-opacity="0"/></linearGradient></defs>
-      <path d="${area}" fill="url(#g${id.replace(/[^A-Za-z]/g,'')})"/>
-      ${avgLine}
-      <path d="${line}" fill="none" stroke="${col}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
-      <circle cx="${X(H.length-1).toFixed(1)}" cy="${Yv(H[H.length-1]).toFixed(1)}" r="3.5" fill="${col}"/>
+      <path d="${area}" fill="url(#${gid})"/>
+      ${avgY!==null?`<line x1="0" y1="${avgY.toFixed(1)}" x2="${W}" y2="${avgY.toFixed(1)}"
+         stroke="#F5C24C" stroke-width="1" stroke-dasharray="3 3" opacity=".8"/>`:''}
+      <path d="${line}" fill="none" stroke="${col}" stroke-width="2" stroke-linejoin="round"/>
+      <circle cx="${X(H.length-1).toFixed(1)}" cy="${Y(H[H.length-1]).toFixed(1)}" r="3.2" fill="${col}"/>
     </svg>
-    ${avg? `<div class="avgline">내 평단 <b>${won(avg)}</b>
+    ${q? `<div class="avgline">내 평단 <b>${won(avg)}</b>
       <span class="${price>=avg?'up':'down'}">${price>=avg?'+':''}${((price/avg-1)*100).toFixed(1)}%</span></div>`:''}
-    <div class="crlist">${rows}</div></div>`;
+    <div class="crlist">${rows.map(r=>`<div class="cr"><span class="y">${esc(r.y)}</span>
+      <span class="v">${won(r.v)}</span>
+      <span class="c ${r.c===null?'flat':r.c>0?'up':r.c<0?'down':'flat'}">${r.c===null?'—':(r.c>0?'+':'')+(r.c*100).toFixed(0)+'%'}</span>
+      </div>`).join('')}</div></div>`;
 }
+
 function stocksHTML(sec,list){
   const p=P(), v=PREV(), q=(me.qty)||{}, cash=me.cash||0;
   return `<button class="back" id="back">← 업종 목록</button>
@@ -521,7 +542,7 @@ function stocksHTML(sec,list){
       const price=p[s.id]||0, have=q[s.id]||0, canBuy=price?Math.floor(cash/price):0;
       const base=v[s.id], c = base? price/base-1 : null;
       const cc = c===null?'flat':c>0.0005?'up':c<-0.0005?'down':'flat';
-      return `<div class="stk ${openId===s.id?'open':''} ${have>0?'own':''} ${doneId===s.id?'flash':''}" data-card="${s.id}">
+      return `<div class="stk ${openId===s.id?'open':''} ${have>0?'own':''} ${doneId===s.id?'flash':''}">
         <button class="stkhd" data-t="${s.id}">
           <span class="L">${s.letter}</span>
           <span><span class="p">${won(price)}</span>
@@ -537,16 +558,16 @@ function stocksHTML(sec,list){
             <button class="btn pri wide" data-done="1">확인</button>
           </div>` : (()=>{
             const sell = tradeMode==='sell' && have>0;
-            const base = sell? have : canBuy;
+            const base2 = sell? have : canBuy;
             return `
           <div class="modes">
             <button class="mb buy ${!sell?'on':''}" data-mode="buy">매수</button>
             <button class="mb sell ${sell?'on':''}" data-mode="sell" ${have>0?'':'disabled'}>매도</button>
           </div>
           <div class="qbtns">
-            <button class="btn" data-set="${s.id}:${Math.floor(base*0.25)}">25%</button>
-            <button class="btn" data-set="${s.id}:${Math.floor(base*0.5)}">50%</button>
-            <button class="btn" data-set="${s.id}:${base}">${sell?'전량':'최대'}</button>
+            <button class="btn" data-set="${s.id}:${Math.floor(base2*0.25)}">25%</button>
+            <button class="btn" data-set="${s.id}:${Math.floor(base2*0.5)}">50%</button>
+            <button class="btn" data-set="${s.id}:${base2}">${sell?'전량':'최대'}</button>
           </div>
           <input type="tel" inputmode="numeric" data-qty="${s.id}" value="" placeholder="수량 (주)">
           <button class="btn wide act ${sell?'sell':'buy'}" data-act="${s.id}">${sell?'매도하기':'매수하기'}</button>
@@ -560,38 +581,207 @@ function stocksHTML(sec,list){
     }).join('')}`;
 }
 
-/* ── OX ── */
-function oxHTML(){
-  const ox=ST.ox||{};
-  if(me.alive===false) return `<div class="dead"><div class="big">탈락</div>
-    <div style="color:var(--dim);font-size:15px;line-height:1.6">자리에 앉아주세요.<br>다음 라운드에서 다시 만나요.</div></div>`;
-  if(!ox.q) return `<div class="wait"><div class="ic">✋</div>
-    <div class="m"><span class="pulse"></span>문제 준비 중</div>
-    <div class="s">진행자가 문제를 열면 O · X 버튼이 나옵니다</div></div>`;
-  const answered = me.oxIdx===ox.idx && me.oxA;
-  if(ox.reveal){
-    const right = answered && me.oxA===ox.answer;
-    return `<div class="ox"><div class="q">${esc(ox.q)}</div>
-      <div class="ansbig">정답 ${esc(ox.answer||'')}</div>
-      <div class="res ${right?'good':'bad'}">${answered? (right?'맞혔습니다 🎉':'틀렸습니다') : '미제출'}</div></div>`;
+/* ══════════ 미니게임 ══════════ */
+function syncMini(){
+  const g=MG();
+  if(!g){ mgSeq=null; mgLocal={}; clearInterval(tapTimer); clearInterval(lateTimer); return; }
+  if(g.seq!==mgSeq){ mgSeq=g.seq; mgLocal={};
+    clearInterval(tapTimer); clearInterval(lateTimer); }
+  if(g.stage==='open'){
+    if(g.kind==='late' && !mgLocal.lateStart) startLate();
+    if(g.kind==='tap'  && !mgLocal.tapStart)  startTap();
   }
-  const locked = answered || !ox.open;
-  return `<div class="ox">
-    <div class="q">${esc(ox.q)}</div>
+}
+function myMini(){ const m=(me&&me.mini)||{}; return (m.seq===mgSeq)? m : {}; }
+function sendMini(o){ db.ref('players/'+uid+'/mini').set(Object.assign({seq:mgSeq},o)); }
+
+function miniHTML(){
+  const g=MG();
+  if(!g) return waitHTML('mini');
+  if(g.kind==='reverse') return mgReverse(g);
+  if(g.kind==='ox')      return mgOx(g);
+  if(g.kind==='late')    return mgLate(g);
+  if(g.kind==='guess')   return mgGuess(g);
+  if(g.kind==='tap')     return mgTap(g);
+  return waitHTML('mini');
+}
+
+function mgReverse(g){
+  const m=myMini();
+  if(g.stage==='intro') return `<div class="mg">
+    <div class="cap">MINI GAME</div><h2>🔊 거꾸로 재생됩니다</h2>
+    <div class="rule">노래가 <b>거꾸로</b> 나옵니다.<br>
+      알아챈 순간 버튼을 누르고 <span class="em">큰 소리로 외쳐주세요.</span><br>
+      <b>가수와 제목</b>을 모두 맞춰야 정답입니다.<br>
+      틀리면 다음 순서에게 기회가 넘어갑니다.</div>
+    <button class="bigbtn" disabled>정답!</button>
+    <div class="mgmsg">곧 재생됩니다</div></div>`;
+  if(g.stage==='open'){
+    const buzzed=!!m.buzz;
+    return `<div class="mg"><div class="cap">MINI GAME · 역재생</div>
+      <h2>${buzzed?'눌렀습니다':'귀를 기울이세요'}</h2>
+      <button class="bigbtn" id="buzz" ${buzzed?'disabled':''}>정답!</button>
+      <div class="mgmsg ${buzzed?'done':''}">${buzzed
+        ? '진행자가 순서를 확인 중입니다 — 이름이 불리면 외쳐주세요'
+        : '알아챈 순간 누르세요'}</div></div>`;
+  }
+  return `<div class="mg"><div class="cap">MINI GAME · 역재생</div>
+    <h2>정답 공개</h2><div class="mgbig" style="font-size:32px">${esc(g.answer||'')}</div>
+    <div class="mgmsg">${esc(g.winner? g.winner+' 정답!' : '아무도 못 맞췄습니다')}</div></div>`;
+}
+
+function mgOx(g){
+  const m=myMini();
+  if(me.alive===false) return `<div class="dead"><div class="big">탈락</div>
+    <div style="color:#93A0B1;font-size:15px;line-height:1.6">자리에 앉아주세요.<br>다음 라운드에서 다시 만나요.</div></div>`;
+  if(!g.q) return `<div class="mg"><div class="cap">MINI GAME · OX</div>
+    <h2>문제 준비 중</h2><div class="mgmsg"><span class="pulse"></span>잠시만요</div></div>`;
+  const answered = !!m.ox;
+  if(g.stage==='result'){
+    const right = answered && m.ox===g.answer;
+    return `<div class="mg"><div class="cap">MINI GAME · OX</div>
+      <div class="rule" style="text-align:center;font-size:19px;font-weight:700;color:#E9EDF2">${esc(g.q)}</div>
+      <div class="mgbig">정답 ${esc(g.answer||'')}</div>
+      <div class="res ${right?'good':'bad'}">${answered?(right?'맞혔습니다 🎉':'틀렸습니다'):'미제출'}</div>
+      ${g.why?`<div class="mgmsg">${esc(g.why)}</div>`:''}</div>`;
+  }
+  const locked = answered || g.stage!=='open';
+  return `<div class="mg"><div class="cap">MINI GAME · OX</div>
+    <div class="rule" style="text-align:center;font-size:19px;font-weight:700;color:#E9EDF2">${esc(g.q)}</div>
     <div class="oxb">
-      <button data-ox="O" class="${answered&&me.oxA==='O'?'sel':''}" ${locked?'disabled':''}>O</button>
-      <button data-ox="X" class="${answered&&me.oxA==='X'?'sel':''}" ${locked?'disabled':''}>X</button>
+      <button data-ox="O" class="${answered&&m.ox==='O'?'sel':''}" ${locked?'disabled':''}>O</button>
+      <button data-ox="X" class="${answered&&m.ox==='X'?'sel':''}" ${locked?'disabled':''}>X</button>
     </div>
-    <div class="oxmsg ${answered?'done':ox.open?'':'shut'}">
-      ${answered? '✓ 제출했습니다 — '+esc(me.oxA) : ox.open? 'O 또는 X를 고르세요' : '마감되었습니다'}
-    </div></div>`;
+    <div class="mgmsg ${answered?'done':g.stage==='open'?'':'shut'}">
+      ${answered? '✓ 제출했습니다 — '+esc(m.ox) : g.stage==='open'? 'O 또는 X를 고르세요' : '마감되었습니다'}</div></div>`;
+}
+
+function startLate(){
+  mgLocal.lateStart=Date.now();
+  clearInterval(lateTimer);
+  lateTimer=setInterval(()=>{
+    if(!mgLocal.lateStart||mgLocal.lateMs!=null) return;
+    if(Date.now()-mgLocal.lateStart>10000){
+      mgLocal.lateMs=-1; sendMini({ms:-1}); clearInterval(lateTimer); render();
+    }
+  },100);
+}
+function mgLate(g){
+  const m=myMini();
+  if(g.stage==='intro') return `<div class="mg">
+    <div class="cap">MINI GAME</div><h2>가장 늦게 누르기</h2>
+    <div class="rule">시작하면 <b>10초</b>가 흘러갑니다.<br>
+      <span class="em">가장 늦게 누른 쪽이 이깁니다.</span><br>
+      단, <b>10초를 넘기면 탈락</b>입니다.<br>
+      화면에 시계는 없습니다. 감으로 세세요.</div>
+    <button class="bigbtn" disabled>STOP</button>
+    <div class="mgmsg">진행자의 신호를 기다리세요</div></div>`;
+  if(g.stage==='open'){
+    const pressed = m.ms!=null || mgLocal.lateMs!=null;
+    const out = (m.ms===-1)||(mgLocal.lateMs===-1);
+    return `<div class="mg"><div class="cap">MINI GAME · 늦게 누르기</div>
+      <h2>${out?'시간 초과':pressed?'눌렀습니다':'지금부터…'}</h2>
+      <button class="bigbtn ${out?'red':''}" id="late" ${pressed?'disabled':''}>STOP</button>
+      <div class="mgmsg ${out?'shut':pressed?'done':''}">${out? '10초를 넘겼습니다 — 탈락'
+        : pressed? '기록됐습니다. 결과를 기다려주세요' : '10초 안에, 최대한 늦게'}</div></div>`;
+  }
+  const my=m.ms;
+  return `<div class="mg"><div class="cap">MINI GAME · 늦게 누르기</div>
+    <h2>결과</h2>
+    <div class="mgbig">${my==null?'—':my===-1?'OUT':(my/1000).toFixed(2)+'초'}</div>
+    <div class="mgmsg">${esc(g.winner? g.winner+' 우승!' : '집계 중입니다')}</div></div>`;
+}
+
+function mgGuess(g){
+  const m=myMini();
+  if(me.alive===false) return `<div class="dead"><div class="big">탈락</div>
+    <div style="color:#93A0B1;font-size:15px;line-height:1.6">여기까지입니다.<br>남은 팀을 응원해주세요.</div></div>`;
+  if(g.stage==='intro') return `<div class="mg">
+    <div class="cap">MINI GAME</div><h2>진행자의 숫자</h2>
+    <div class="rule">진행자가 <b>1부터 10 중 하나</b>를 마음속으로 골랐습니다.<br>
+      <span class="em">정확히 맞춘 쪽만 살아남습니다.</span><br>
+      아무도 못 맞추면 탈락 없이 다시 냅니다.<br>
+      <b>하나가 남을 때까지</b> 계속됩니다.</div>
+    <div class="mgmsg">곧 시작합니다</div></div>`;
+  if(g.stage==='result'){
+    const right = m.pick===g.answer;
+    return `<div class="mg"><div class="cap">MINI GAME · ${g.round||1}차</div>
+      <h2>진행자의 숫자는</h2><div class="mgbig">${esc(String(g.answer==null?'':g.answer))}</div>
+      <div class="res ${right?'good':'bad'}">${m.pick==null?'미제출':right?'맞혔습니다 🎉':'내 선택 '+m.pick}</div>
+      <div class="mgmsg">${esc(g.note||'')}</div></div>`;
+  }
+  const picked=m.pick!=null;
+  return `<div class="mg"><div class="cap">MINI GAME · ${g.round||1}차</div>
+    <h2>${picked?'제출했습니다':'몇 번일까요?'}</h2>
+    <div class="numpad">${[1,2,3,4,5,6,7,8,9,10].map(n=>
+      `<button data-pick="${n}" class="${m.pick===n?'sel':''}" ${picked?'disabled':''}>${n}</button>`).join('')}</div>
+    <div class="mgmsg ${picked?'done':''}">${picked? '✓ '+m.pick+'번을 골랐습니다' : '진행자의 마음을 읽으세요'}</div></div>`;
+}
+
+function startTap(){
+  mgLocal.tapStart=Date.now(); mgLocal.taps=0; mgLocal.sent=0;
+  clearInterval(tapTimer);
+  tapTimer=setInterval(()=>{
+    const el=Date.now()-mgLocal.tapStart;
+    if(mgLocal.taps!==mgLocal.sent){ mgLocal.sent=mgLocal.taps; sendMini({taps:mgLocal.taps}); }
+    if(el>=10000){ clearInterval(tapTimer); mgLocal.tapDone=true; sendMini({taps:mgLocal.taps}); }
+    render();
+  },1000);
+}
+function mgTap(g){
+  const m=myMini();
+  if(g.stage==='intro') return `<div class="mg">
+    <div class="cap">MINI GAME</div><h2>연타</h2>
+    <div class="rule"><b>10초</b> 동안 화면을 두드립니다.<br>
+      <span class="em">가장 많이 두드린 쪽이 이깁니다.</span><br>
+      폰 하나에 <b>몇 명이 달라붙든, 손가락 몇 개를 쓰든</b> 상관없습니다.</div>
+    <button class="bigbtn" disabled>TAP</button>
+    <div class="mgmsg">준비하세요</div></div>`;
+  if(g.stage==='open'){
+    const left = mgLocal.tapStart? Math.max(0, 10-Math.floor((Date.now()-mgLocal.tapStart)/1000)) : 10;
+    const done = !!mgLocal.tapDone;
+    return `<div class="mg"><div class="cap">MINI GAME · 연타</div>
+      <h2>${done?'끝!':left+'초'}</h2>
+      <button class="bigbtn ${done?'':'red'}" id="tap" ${done?'disabled':''}>TAP</button>
+      <div class="tapcount" style="margin-top:16px">${mgLocal.taps||0}</div>
+      <div class="mgmsg ${done?'done':''}">${done?'기록됐습니다':'두드리세요!'}</div></div>`;
+  }
+  return `<div class="mg"><div class="cap">MINI GAME · 연타</div>
+    <h2>결과</h2><div class="mgbig">${m.taps||0}</div>
+    <div class="mgmsg">${esc(g.winner? g.winner+' 우승!' : '집계 중입니다')}</div></div>`;
+}
+
+function bindMini(){
+  const g=MG(); if(!g) return;
+  const b=$('#buzz'); if(b) b.onclick=()=>{ sendMini({buzz:firebase.database.ServerValue.TIMESTAMP}); };
+  document.querySelectorAll('[data-ox]').forEach(x=>x.onclick=()=>{
+    if(g.stage!=='open'){ toast('마감되었습니다','bad'); return; }
+    sendMini({ox:x.dataset.ox, t:firebase.database.ServerValue.TIMESTAMP}); });
+  const lt=$('#late'); if(lt) lt.onclick=()=>{
+    if(mgLocal.lateMs!=null) return;
+    const ms=Date.now()-(mgLocal.lateStart||Date.now());
+    mgLocal.lateMs = ms>10000? -1 : ms;
+    sendMini({ms:mgLocal.lateMs}); clearInterval(lateTimer); render(); };
+  document.querySelectorAll('[data-pick]').forEach(x=>x.onclick=()=>{
+    if(g.stage!=='open') return;
+    sendMini({pick:parseInt(x.dataset.pick,10), t:firebase.database.ServerValue.TIMESTAMP}); });
+  const tp=$('#tap');
+  if(tp){
+    const hit=e=>{ if(e.cancelable) e.preventDefault();
+      if(mgLocal.tapDone) return;
+      const n=(e.changedTouches&&e.changedTouches.length)||1;
+      mgLocal.taps=(mgLocal.taps||0)+n;
+      const c=document.querySelector('.tapcount'); if(c) c.textContent=mgLocal.taps; };
+    tp.addEventListener('touchstart',hit,{passive:false});
+    tp.addEventListener('mousedown',hit);
+  }
 }
 
 /* ── 이벤트 ── */
 function bind(){
-  const sec=document.querySelectorAll('[data-sec]');
-  sec.forEach(b=>b.onclick=()=>{ curSec=b.dataset.sec; view='stocks'; openId=null; render(); });
-  const bk=$('#back'); if(bk) bk.onclick=()=>{ view='sectors'; openId=null; render(); };
+  document.querySelectorAll('[data-sec]').forEach(b=>b.onclick=()=>{
+    curSec=b.dataset.sec; view='stocks'; openId=null; chartId=null; render(); });
+  const bk=$('#back'); if(bk) bk.onclick=()=>{ view='sectors'; openId=null; chartId=null; render(); };
   document.querySelectorAll('[data-t]').forEach(b=>b.onclick=()=>{
     openId = openId===b.dataset.t? null : b.dataset.t; doneId=null; chartId=null; tradeMode='buy'; render(); });
   document.querySelectorAll('[data-done]').forEach(b=>b.onclick=()=>{ doneId=null; openId=null; render(); });
@@ -604,45 +794,37 @@ function bind(){
     const el=document.querySelector(`[data-qty="${cssEsc(id)}"]`); if(el){ el.value=v; el.focus(); } });
   document.querySelectorAll('[data-mode]').forEach(b=>b.onclick=()=>{ tradeMode=b.dataset.mode; render(); });
   document.querySelectorAll('[data-act]').forEach(b=>b.onclick=()=>trade(b.dataset.act, tradeMode==='sell'?-1:1));
-  document.querySelectorAll('[data-ox]').forEach(b=>b.onclick=()=>submitOx(b.dataset.ox));
 }
-function submitOx(a){
-  const ox=ST.ox||{};
-  if(ox.reveal || !ox.open){ toast('마감되었습니다','bad'); return; }
-  db.ref('players/'+uid).update({oxA:a, oxIdx:ox.idx, oxT:firebase.database.ServerValue.TIMESTAMP});
-}
+
 function trade(id,dir){
   if(!ST.tradingOpen){ toast('매매가 마감됐습니다','bad'); return; }
   const el=document.querySelector(`[data-qty="${cssEsc(id)}"]`);
   const n=parseInt(el&&el.value,10);
   if(!Number.isFinite(n)||n<=0){ toast('수량을 입력하세요','bad'); return; }
   const price=P()[id]; if(!price){ toast('시세를 불러오는 중입니다','bad'); return; }
-  const ref=db.ref('players/'+uid);
-  ref.transaction(cur=>{
+  db.ref('players/'+uid).transaction(cur=>{
     if(!cur) return cur;
-    cur.qty=cur.qty||{};
-    const have=cur.qty[id]||0;
-    cur.cost=cur.cost||{};
-    const c0=cur.cost[id]||0;
+    cur.qty=cur.qty||{}; cur.cost=cur.cost||{};
+    const have=cur.qty[id]||0, c0=cur.cost[id]||0;
     if(dir>0){ const cost=n*price; if(cost>cur.cash) return;
       cur.cash-=cost; cur.qty[id]=have+n; cur.cost[id]=c0+cost; }
     else { if(n>have) return; cur.cash+=n*price;
-      cur.qty[id]=have-n; cur.cost[id]=have? c0*(have-n)/have : 0;
+      cur.qty[id]=have-n; cur.cost[id]= have? c0*(have-n)/have : 0;
       if(!cur.qty[id]){ delete cur.qty[id]; delete cur.cost[id]; } }
     return cur;
   }).then(r=>{
     if(!r.committed){ toast(dir>0?'현금이 부족합니다':'보유 수량이 부족합니다','bad'); return; }
     if(el) el.value='';
-    openId=id; doneId=id;
+    openId=id; doneId=id; chartId=null;
     doneMsg=`${dir>0?'매수':'매도'} ${n.toLocaleString('ko-KR')}주 · ${won(n*price)}`;
     render();
-  }).catch(()=>toast('처리 실패. 다시 시도해주세요','bad'));
+  });
 }
 
-/* ── 유틸 ── */
-function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
-function cssEsc(s){ return String(s).replace(/["\\]/g,'\\$&'); }
-render();
+/* ── 구독 시작 (모든 함수 정의 뒤) ── */
+db.ref('.info/connected').on('value',s=>$('#conn').classList.toggle('on', s.val()!==true));
+db.ref('state').on('value',s=>{ ST=s.val(); syncMini(); render(); });
+if(uid) watchMe();
 </script>
 </body>
 </html>
