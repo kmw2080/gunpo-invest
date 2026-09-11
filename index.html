@@ -228,9 +228,9 @@ input::placeholder{color:#9BA4B1}
 .backs{display:flex;flex-direction:column;gap:10px;margin-bottom:16px}
 .bk{background:#fff;border:1px solid var(--line);border-left:5px solid var(--line2);
   border-radius:0 11px 11px 0;padding:15px 17px}
-.bk.t{border-left-color:var(--ok)} .bk.f{border-left-color:var(--line2)} .bk.m{border-left-color:var(--goldfill)}
+.bk{border-left-color:var(--goldfill)}
 .bk .bh{display:flex;flex-wrap:wrap;align-items:baseline;gap:9px;font-size:17px;font-weight:700;margin-bottom:7px}
-.bk.t .bh{color:var(--ok)} .bk.f .bh{color:var(--ink)} .bk.m .bh{color:var(--gold)}
+.bk .bh{color:var(--ink)}
 .bk .bh b{font-family:var(--disp);font-size:19px}
 .bk .bs{margin-left:auto;font-family:var(--mono);font-size:15px;color:var(--dim);font-weight:600}
 .bk .bs b{font-family:var(--mono);font-size:16px}
@@ -364,7 +364,7 @@ const $=s=>document.querySelector(s);
 const won=n=>Math.round(n||0).toLocaleString('ko-KR');
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const cssEsc=s=>String(s).replace(/["\\]/g,'\\$&');
-const VER='v14 · 09-11';
+const VER='v15 · 09-11';
 /* 연도 차단 — 진행자 쪽에서 뭐가 오든 참가자 화면엔 연도가 못 찍힌다 */
 const yrTest=v=>/(?:18|19|20)\d{2}/.test(String(v==null?'':v));
 const noYear=v=>String(v==null?'':v)
@@ -577,9 +577,10 @@ function recapHTML(){
   const R=ST.recap;
   if(!R) return '';
   if(typeof R==='string') return `<div class="recap">${esc(noYear(R))}</div>`;
-  const L=Array.isArray(R)? R : Object.keys(R).map(k=>R[k]);
-  return `<div class="backs">${L.map(r=>`<div class="bk ${r.k}">
-    <div class="bh">${r.n? `<b>${r.n}번</b>이 ${r.k==='t'?'진짜였습니다':'함정이었습니다'}` : '한 줄 정리'}
+  const L=(Array.isArray(R)? R : Object.keys(R).map(k=>R[k]))
+    .slice().sort((a,b)=>((a.n||99)-(b.n||99)));
+  return `<div class="backs">${L.map(r=>`<div class="bk">
+    <div class="bh">${r.n? `<b>${r.n}번</b> 뉴스는` : '한 줄 정리'}
       ${r.s? `<span class="bs">${esc(noYear(r.s))} <b class="${r.v>=0?'up':'down'}">${r.v>0?'+':''}${r.v}%</b></span>`:''}</div>
     <div class="bm">${esc(noYear(r.m))}</div></div>`).join('')}</div>`;
 }
