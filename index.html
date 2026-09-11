@@ -364,7 +364,17 @@ const $=s=>document.querySelector(s);
 const won=n=>Math.round(n||0).toLocaleString('ko-KR');
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const cssEsc=s=>String(s).replace(/["\\]/g,'\\$&');
-const VER='v13 · 09-11';
+const VER='v14 · 09-11';
+/* 연도 차단 — 진행자 쪽에서 뭐가 오든 참가자 화면엔 연도가 못 찍힌다 */
+const yrTest=v=>/(?:18|19|20)\d{2}/.test(String(v==null?'':v));
+const noYear=v=>String(v==null?'':v)
+  .replace(/(?:18|19|20)\d{2}\s*년?(?:\s*\d{1,2}\s*월)?/g,'')
+  .replace(/\s{2,}/g,' ').trim();
+function roundLabel(){
+  const raw=String((ST&&ST.yearLabel)||'');
+  if(yrTest(raw)) return (ST&&ST.round)? ST.round+'라운드' : '';
+  return raw;
+}
 let uid=null, me=null, ST=null;
 let openId=null, openSec=null, chartId=null, amtId=null, flashId=null, undoSnap=null;
 let picks=[];
@@ -467,7 +477,7 @@ function renderRules(app){
 function header(){
   const t=total(), m=t/(ST.seedCash||10000000);
   const label = ST.mode==='practice' ? '연습'
-    : (ST.yearLabel? ST.yearLabel + (ST.totalRounds? ' / '+ST.totalRounds : '') : '');
+    : (roundLabel()? roundLabel() + (ST.totalRounds? ' / '+ST.totalRounds : '') : '');
   const lp=loanPrincipal();
   const stat = (ST.phase==='reveal'||ST.phase==='unmask'||ST.phase==='final') ? ' st' : '';
   return `<div class="hd${stat}">
@@ -484,7 +494,7 @@ function hintBox(){
   if(!me.hint) return '';
   if(ST.phase!=='trade' && ST.phase!=='news') return '';
   return `<div class="hint"><div class="t">🔒 당신만 아는 정보</div>
-    <div class="b">${esc(me.hint)}</div>
+    <div class="b">${esc(noYear(me.hint))}</div>
     <div class="s">이번 매매가 끝나면 사라집니다</div></div>`;
 }
 
@@ -499,9 +509,9 @@ function bodyHTML(){
 
 function newsHTML(){
   const N=(ST.news)||[];
-  return `<div class="nwhead"><div class="nwy">${esc(ST.yearLabel||'')}</div>
+  return `<div class="nwhead"><div class="nwy">${esc(roundLabel())}</div>
       <div class="nws">이번 라운드, 이런 이야기가 돌고 있습니다</div></div>
-    <ul class="nws-list">${N.map((n,i)=>`<li><span class="d">0${i+1}</span><span>${esc(n)}</span></li>`).join('')}</ul>
+    <ul class="nws-list">${N.map((n,i)=>`<li><span class="d">0${i+1}</span><span>${esc(noYear(n))}</span></li>`).join('')}</ul>
     <div class="nwfoot">셋 다 사실입니다. 다만 주가가 따라가 줄지는 모릅니다</div>
     <div class="peek">지금은 <b>구경만</b> 할 수 있습니다.
       마음에 드는 종목에 <b>★</b>를 눌러두세요.</div>`
@@ -530,7 +540,7 @@ function revealHTML(){
   const mine=LABELS().filter(s=>(q[s.id]||0)>0);
   const S=secList();
   return `<div class="rvhead">
-      <div class="ry">${esc(ST.yearLabel||'')} 결과</div>
+      <div class="ry">${esc(roundLabel())} 결과</div>
       <div class="rv1 ${cls}">${d>0?'+':''}${won(d)}</div>
       <div class="rv2">${won(before)} → <b>${won(after)}</b>
         <span class="${cls}">${d>0?'+':''}${(r*100).toFixed(1)}%</span></div>
@@ -566,12 +576,12 @@ function revealHTML(){
 function recapHTML(){
   const R=ST.recap;
   if(!R) return '';
-  if(typeof R==='string') return `<div class="recap">${esc(R)}</div>`;
+  if(typeof R==='string') return `<div class="recap">${esc(noYear(R))}</div>`;
   const L=Array.isArray(R)? R : Object.keys(R).map(k=>R[k]);
   return `<div class="backs">${L.map(r=>`<div class="bk ${r.k}">
     <div class="bh">${r.n? `<b>${r.n}번</b>이 ${r.k==='t'?'진짜였습니다':'함정이었습니다'}` : '한 줄 정리'}
-      ${r.s? `<span class="bs">${esc(r.s)} <b class="${r.v>=0?'up':'down'}">${r.v>0?'+':''}${r.v}%</b></span>`:''}</div>
-    <div class="bm">${esc(r.m)}</div></div>`).join('')}</div>`;
+      ${r.s? `<span class="bs">${esc(noYear(r.s))} <b class="${r.v>=0?'up':'down'}">${r.v>0?'+':''}${r.v}%</b></span>`:''}</div>
+    <div class="bm">${esc(noYear(r.m))}</div></div>`).join('')}</div>`;
 }
 
 function waitHTML(ph){
@@ -616,7 +626,7 @@ function chartHTML(id, price){
   const rows=H.map((v,i)=>{
     const ch = i? v/H[i-1]-1 : null;
     const cc = ch===null?'flat':ch>0.0005?'up':ch<-0.0005?'down':'flat';
-    return `<div class="cr"><span class="y">${esc(YL[i]||i)}</span>
+    return `<div class="cr"><span class="y">${esc(noYear(YL[i])||(i?i+'R':'출발'))}</span>
       <span class="v">${won(v)}</span>
       <span class="c ${cc}">${ch===null?'—':(ch>0?'+':'')+(ch*100).toFixed(0)+'%'}</span></div>`;
   }).join('');
