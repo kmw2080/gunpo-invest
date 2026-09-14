@@ -446,7 +446,7 @@ const $=s=>document.querySelector(s);
 const won=n=>Math.round(n||0).toLocaleString('ko-KR');
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const cssEsc=s=>String(s).replace(/["\\]/g,'\\$&');
-const VER='v22 · 09-14';
+const VER='v23 · 09-14';
 /* 연도 차단 — 진행자 쪽에서 뭐가 오든 참가자 화면엔 연도가 못 찍힌다 */
 const yrTest=v=>/(?:18|19|20)\d{2}/.test(String(v==null?'':v));
 const noYear=v=>String(v==null?'':v)
