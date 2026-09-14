@@ -246,7 +246,8 @@ input::placeholder{color:#9BA4B1}
 .nws-list li{display:flex;gap:12px;background:#fff;border:1px solid var(--line);
   border-left:5px solid var(--goldfill);border-radius:0 11px 11px 0;padding:16px 17px;
   font-size:18.5px;line-height:1.6}
-.nws-list li .d{font-family:var(--mono);font-size:14px;color:var(--gold);padding-top:4px;font-weight:700}
+.bq{font-size:16px;line-height:1.6;color:var(--dim);padding-bottom:9px;margin-bottom:9px;
+  border-bottom:1px solid var(--line)}
 .nwfoot{text-align:center;color:var(--faint);font-size:14.5px;margin-bottom:16px}
 .recap{background:var(--goldwash);border:2px solid var(--goldbd);border-radius:11px;
   padding:15px 17px;margin-bottom:14px;font-size:17px;line-height:1.6;color:var(--gold);text-align:center;font-weight:600}
@@ -254,10 +255,10 @@ input::placeholder{color:#9BA4B1}
 .bk{background:#fff;border:1px solid var(--line);border-left:5px solid var(--line2);
   border-radius:0 11px 11px 0;padding:15px 17px}
 .bk{border-left-color:var(--goldfill)}
-.bk .bh{display:flex;flex-wrap:wrap;align-items:baseline;gap:9px;font-size:17px;font-weight:700;margin-bottom:7px}
+.bk .bh{display:flex;flex-wrap:wrap;align-items:baseline;gap:9px;font-size:17px;font-weight:700;margin-bottom:6px}
 .bk .bh{color:var(--ink)}
 .bk .bh b{font-family:var(--disp);font-size:19px}
-.bk .bs{margin-left:auto;font-family:var(--mono);font-size:15px;color:var(--dim);font-weight:600}
+.bk .bs{font-family:var(--mono);font-size:16px;color:var(--ink);font-weight:700}
 .bk .bs b{font-family:var(--mono);font-size:16px}
 .bk .bm{font-size:17px;color:var(--dim);line-height:1.6}
 .umlist{display:flex;flex-direction:column;gap:7px}
@@ -445,7 +446,7 @@ const $=s=>document.querySelector(s);
 const won=n=>Math.round(n||0).toLocaleString('ko-KR');
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const cssEsc=s=>String(s).replace(/["\\]/g,'\\$&');
-const VER='v17 · 09-14';
+const VER='v19 · 09-14';
 /* 연도 차단 — 진행자 쪽에서 뭐가 오든 참가자 화면엔 연도가 못 찍힌다 */
 const yrTest=v=>/(?:18|19|20)\d{2}/.test(String(v==null?'':v));
 const noYear=v=>String(v==null?'':v)
@@ -596,7 +597,7 @@ function newsHTML(){
   const N=(ST.news)||[];
   return `<div class="nwhead"><div class="nwy">${esc(roundLabel())}</div>
       <div class="nws">이번 라운드, 이런 이야기가 돌고 있습니다</div></div>
-    <ul class="nws-list">${N.map((n,i)=>`<li><span class="d">0${i+1}</span><span>${esc(noYear(n))}</span></li>`).join('')}</ul>
+    <ul class="nws-list">${N.map(n=>`<li><span>${esc(noYear(n))}</span></li>`).join('')}</ul>
     <div class="nwfoot">셋 다 사실입니다. 다만 주가가 따라가 줄지는 모릅니다</div>
     <div class="peek">지금은 <b>구경만</b> 할 수 있습니다.
       마음에 드는 종목에 <b>★</b>를 눌러두세요.</div>`
@@ -764,8 +765,9 @@ function recapHTML(){
   const L=(Array.isArray(R)? R : Object.keys(R).map(k=>R[k]))
     .slice().sort((a,b)=>((a.n||99)-(b.n||99)));
   return `<div class="backs">${L.map(r=>`<div class="bk">
-    <div class="bh">${r.n? `<b>${r.n}번</b> 뉴스는` : '한 줄 정리'}
-      ${r.s? `<span class="bs">${esc(noYear(r.s))} <b class="${r.v>=0?'up':'down'}">${r.v>0?'+':''}${r.v}%</b></span>`:''}</div>
+    ${r.q? `<div class="bq">${esc(noYear(r.q))}</div>`:''}
+    ${r.s? `<div class="bh"><span class="bs">${esc(noYear(r.s))}
+      <b class="${r.v>=0?'up':'down'}">${r.v>0?'+':''}${r.v}%</b></span></div>`:''}
     <div class="bm">${esc(noYear(r.m))}</div></div>`).join('')}</div>`;
 }
 
