@@ -104,6 +104,20 @@ input::placeholder{color:#9BA4B1}
 .si b{font-family:var(--mono);font-size:18px;color:var(--ink);font-weight:700}
 .cashout{margin-left:auto;background:#fff;border:2px solid var(--down);color:var(--down);
   border-radius:10px;padding:12px 16px;font-size:16px;font-weight:700}
+.how{background:#fff;border:2px solid var(--line);border-radius:12px;margin-bottom:12px;overflow:hidden}
+.how.on{border-color:var(--goldbd)}
+.howhd{display:flex;align-items:center;gap:10px;width:100%;background:none;border:none;
+  color:inherit;padding:15px;text-align:left;font-size:17px}
+.howhd b{font-weight:700}
+.howhd .hs{margin-left:auto;font-size:13.5px;color:var(--faint);font-weight:600}
+.howb{border-top:2px solid var(--line);padding:14px 15px 16px;background:var(--panel2)}
+.hstep{display:flex;gap:11px;margin-bottom:14px}
+.hn{flex:none;width:26px;height:26px;border-radius:8px;background:var(--goldfill);color:#20180A;
+  display:grid;place-items:center;font-family:var(--mono);font-size:14px;font-weight:700}
+.hstep b{font-size:16.5px}
+.hstep p{margin:5px 0 0;font-size:15.5px;line-height:1.65;color:var(--dim)}
+.hstep .rr{color:var(--up)} .hstep .bb{color:var(--down)}
+.hnote{border-top:1px solid var(--line2);padding-top:11px;font-size:14.5px;color:var(--faint);line-height:1.6}
 .broke{background:#FDECEE;border:2px solid var(--up);border-radius:11px;padding:16px;
   text-align:center;font-size:17px;color:var(--up);font-weight:700;line-height:1.6;margin-bottom:12px}
 .lockbar{background:var(--panel2);border:1px solid var(--line2);border-radius:10px;
@@ -151,7 +165,9 @@ input::placeholder{color:#9BA4B1}
   color:inherit;padding:17px 15px;text-align:left}
 .sechd .ar{font-size:16px;color:var(--faint);width:14px}
 .sechd .nm{font-size:18.5px;font-weight:700;flex:1}
-.sechd .nm .own{color:var(--goldfill);font-style:normal;font-size:14px}
+.sechd .nm .own{font-style:normal;font-size:13px;font-weight:700;color:#20180A;
+  background:var(--goldfill);border:1px solid #D9A62F;border-radius:6px;padding:2px 7px;margin-left:6px;
+  vertical-align:middle}
 .sechd .ch{font-family:var(--mono);font-size:16px;font-weight:700}
 .secbody{border-top:2px solid var(--line);padding:10px 11px 11px}
 
@@ -164,6 +180,8 @@ input::placeholder{color:#9BA4B1}
 .srow{display:grid;grid-template-columns:38px 1fr auto;align-items:center;gap:12px;
   padding:15px 13px;width:100%;background:none;border:none;color:inherit;text-align:left}
 .srow .L{font-family:var(--disp);font-weight:900;font-size:28px;color:var(--gold);text-align:center;line-height:1}
+.srow .L .ow{display:block;font-family:var(--body);font-style:normal;font-size:11px;font-weight:700;
+  color:#20180A;background:var(--goldfill);border-radius:5px;padding:1px 0;margin-top:4px;letter-spacing:-.02em}
 .srow .mid{display:flex;flex-direction:column;gap:3px}
 .srow .sc{font-size:13px;color:var(--faint);font-weight:600}
 .srow .pz{font-family:var(--mono);font-size:21px;font-weight:700;font-variant-numeric:tabular-nums}
@@ -196,7 +214,14 @@ input::placeholder{color:#9BA4B1}
 .ai input{flex:1;min-width:0;font-size:20px;padding:12px;border-radius:9px;border:2px solid var(--line2);
   font-family:var(--mono);text-align:right}
 .ai .unit{font-size:16px;font-weight:700;color:var(--dim)}
-.ah{font-family:var(--mono);font-size:13px;color:var(--faint);margin-top:8px;text-align:center}
+.ah{font-family:var(--mono);font-size:13px;color:var(--faint);margin-top:7px;text-align:center}
+.al{font-size:14.5px;font-weight:700;color:var(--dim);margin:2px 2px 8px}
+.asep{border-top:1.5px solid var(--line);margin:14px 0 12px}
+.amtb{flex:none;min-width:78px;padding:13px 14px;font-size:16.5px;font-weight:700}
+.amtb.buy{background:var(--up);border-color:#A8151F;color:#fff}
+.amtb.buy:active{background:#A8151F}
+.amtb.sell{background:#fff;border-color:var(--down);color:var(--down)}
+.amtb.sell:active{background:#E9F0FD}
 
 /* ── 차트 ── */
 .btn.gh{background:transparent;border-color:transparent;color:var(--dim);font-size:16px;font-weight:700;text-decoration:underline}
@@ -267,6 +292,62 @@ input::placeholder{color:#9BA4B1}
 .rvrow .q{font-size:13.5px;color:var(--faint)}
 .rvrow .pz{text-align:right;font-weight:700}
 .rvrow .cg{text-align:right;font-weight:700;font-size:14px}
+
+/* ── 최종 리포트 ── */
+.fh{background:#fff;border:2px solid var(--goldbd);border-radius:14px;padding:22px 18px;
+  margin-bottom:16px;text-align:center}
+.ft{font-family:var(--mono);font-size:13px;letter-spacing:.14em;color:var(--gold);font-weight:700}
+.fv{font-family:var(--mono);font-size:38px;font-weight:700;line-height:1.1;margin:10px 0 8px;
+  font-variant-numeric:tabular-nums}
+.fs{font-size:15px;color:var(--dim)} .fs b{color:var(--ink);font-family:var(--mono);font-size:17px}
+.fsec{margin-bottom:18px}
+.fsec h3{font-family:var(--mono);font-size:13px;letter-spacing:.12em;color:var(--faint);
+  margin:0 0 10px;font-weight:700}
+.slist{background:#fff;border:1px solid var(--line);border-radius:11px;padding:8px 13px}
+.srow2{display:grid;grid-template-columns:76px 1fr 62px;gap:9px;font-family:var(--mono);
+  font-size:15px;padding:8px 0;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
+.srow2:last-child{border-bottom:none}
+.srow2 .k{color:var(--faint);font-size:14px}
+.srow2 .v{text-align:right;font-weight:700}
+.srow2 .c{text-align:right;font-weight:700;font-size:14px}
+.mylist{display:flex;flex-direction:column;gap:9px}
+.myc{background:#fff;border:2px solid var(--goldbd);border-radius:11px;padding:13px 15px}
+.mh{display:flex;align-items:baseline;gap:9px;margin-bottom:7px}
+.mh .ml{font-size:15px;color:var(--dim);font-weight:600}
+.mh .mr{margin-left:auto;font-family:var(--disp);font-weight:900;font-size:19px;color:var(--gold)}
+.mm{display:flex;flex-direction:column;gap:3px;font-size:14px;color:var(--faint)}
+.mm .kept{color:var(--ok);font-weight:700}
+.mm .mu{font-family:var(--mono);font-weight:700}
+.bw{display:grid;grid-template-columns:1fr auto;gap:4px 10px;background:#fff;
+  border:2px solid var(--line);border-radius:11px;padding:13px 15px;margin-bottom:9px}
+.bw.up{border-color:var(--up)} .bw.down{border-color:var(--down)}
+.bw .t{grid-column:1/-1;font-size:13px;color:var(--faint);font-weight:600}
+.bw .n{font-family:var(--disp);font-weight:900;font-size:21px}
+.bw.up .n{color:var(--up)} .bw.down .n{color:var(--down)}
+.bw .s{grid-column:1;font-size:13.5px;color:var(--faint)}
+.bw .m{grid-row:2/4;grid-column:2;align-self:center;font-family:var(--mono);font-size:20px;font-weight:700}
+.bw.up .m{color:var(--up)} .bw.down .m{color:var(--down)}
+.mh .hid{font-style:normal;font-family:var(--body);font-size:14px;color:var(--faint);font-weight:600}
+.wlist{display:flex;flex-direction:column;gap:9px}
+.wc{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;
+  background:#fff;border:2px solid var(--line);border-radius:12px;padding:15px 16px}
+.wc.r1{border-color:var(--goldbd);background:var(--goldwash)}
+.wc.worst{border-color:#9A6B3F;background:#FBF3EA}
+.wc.worst .wn{color:#7A4F20}
+.wc .wn i{display:block;font-style:normal;font-family:var(--body);font-size:13px;
+  font-weight:700;color:#9A6B3F;margin-top:2px}
+.wc .wme.bad{background:#9A6B3F}
+.myrank{background:#fff;border:2px solid var(--line);border-radius:11px;padding:14px;
+  text-align:center;font-size:17px;color:var(--dim);margin-bottom:11px}
+.myrank b{font-family:var(--disp);font-size:24px;color:var(--gold)}
+.wc .rk{font-size:26px;line-height:1}
+.wc .wn{font-family:var(--disp);font-weight:900;font-size:21px}
+.wc.r1 .wn{color:var(--gold)}
+.wc .wv{text-align:right;font-family:var(--mono);font-size:16px;font-weight:700}
+.wc .wv i{display:block;font-style:normal;font-size:13px;color:var(--faint);font-weight:600;margin-top:2px}
+.wc .wme{grid-column:1/-1;background:var(--ok);color:#fff;border-radius:7px;padding:5px 0;
+  text-align:center;font-size:14px;font-weight:700;margin-top:4px}
+.fend{text-align:center;font-size:17px;color:var(--dim);font-weight:700;margin:22px 0 6px}
 
 /* ── 미니게임 ── */
 .mg{text-align:center;padding:1vh 0;display:flex;flex-direction:column;
@@ -364,7 +445,7 @@ const $=s=>document.querySelector(s);
 const won=n=>Math.round(n||0).toLocaleString('ko-KR');
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const cssEsc=s=>String(s).replace(/["\\]/g,'\\$&');
-const VER='v15 · 09-11';
+const VER='v17 · 09-14';
 /* 연도 차단 — 진행자 쪽에서 뭐가 오든 참가자 화면엔 연도가 못 찍힌다 */
 const yrTest=v=>/(?:18|19|20)\d{2}/.test(String(v==null?'':v));
 const noYear=v=>String(v==null?'':v)
@@ -377,6 +458,8 @@ function roundLabel(){
 }
 let uid=null, me=null, ST=null;
 let openId=null, openSec=null, chartId=null, amtId=null, flashId=null, undoSnap=null;
+let amtBuyV='', amtSellV='';
+window.__setAmt=(k,v)=>{ if(k==='b') amtBuyV=v; else amtSellV=v; };
 let picks=[];
 try{ picks=JSON.parse(localStorage.getItem('gp_picks')||'[]')||[]; }catch(e){ picks=[]; }
 function savePicks(){ try{ localStorage.setItem('gp_picks',JSON.stringify(picks)); }catch(e){} }
@@ -465,7 +548,8 @@ function renderRules(app){
     <div class="blk"><p><b>1,000만 머니</b>로 시작합니다.
       모든 종목이 <b>10,000원</b>에서 출발해요.</p></div>
     <div class="blk"><p><b>회사 이름은 안 알려드립니다.</b>
-      업종을 고르고, 그 안에서 <b>A·B·C</b> 중 하나를 찍는 겁니다.</p></div>
+      업종을 고르고, 그 안에서 <b>A·B·C…</b> 중 하나를 찍는 겁니다.
+      정체는 게임이 끝나야 공개돼요.</p></div>
     <div class="blk"><p>한 라운드마다 <b>뉴스 3줄</b> → <b>매매</b> → <b>주가 공개</b> 순서입니다.
       수수료·세금 없고, 한 종목에 전부 몰아넣어도 됩니다.</p></div>
     <div class="okbar"><button class="btn pri wide" id="ok">이해했습니다</button></div>
@@ -504,6 +588,7 @@ function bodyHTML(){
   if(ph==='reveal') return revealHTML();
   if(ph==='news') return newsHTML();
   if(ph==='unmask') return unmaskHTML();
+  if(ph==='final') return finalHTML();  // 진행자가 단계별로 공개
   return waitHTML(ph);
 }
 
@@ -529,6 +614,105 @@ function unmaskHTML(){
       <span class="c">${esc(x.sector)} ${esc(x.letter)}${held?'<i class="badge">'+WE()+' 보유</i>':''}</span>
       <span class="n">${esc(x.real)}</span>
       <span class="m ${x.m>=1?'up':'down'}">${mult}</span></div>`;}).join('')}</div>`;
+}
+
+function logList(){
+  const L=(me&&me.log)||{};
+  const a=Array.isArray(L)? L.slice() : Object.keys(L).map(k=>L[k]);
+  return a.filter(x=>x&&x.i).sort((x,y)=>(x.r-y.r));
+}
+function realName(id){
+  const U=(ST&&ST.unmask)||[];
+  const x=U.find(u=>u.sector+'|'+u.letter===id);
+  return x? x.real : '';
+}
+function finalHTML(){
+  const FS=(ST.finStage)||0;
+  if(FS<1) return `<div class="wait"><div class="ic">🏁</div>
+    <div class="m"><span class="pulse"></span>곧 결과를 발표합니다</div>
+    <div class="s">진행자 안내를 기다려주세요</div></div>`;
+
+  const t=total(), seed=(ST.seedCash||10000000), due=loanDue(), net=t-due;
+  const m=net/seed, cls=m>1.0005?'up':m<0.9995?'down':'flat';
+  const U=(ST.unmask)||[], W=(ST.winners)||[], WORST=ST.worst||null;
+  const snap=(me.snap)||{};
+  const ks=Object.keys(snap).map(Number).sort((a,b)=>a-b);
+  const L=logList(), by={};
+  L.forEach(x=>{ const o=by[x.i]=by[x.i]||{buy:0,sell:0,rounds:[]};
+    if(x.s) o.buy+=x.n; else o.sell+=x.n;
+    if(o.rounds.indexOf(x.r)<0) o.rounds.push(x.r); });
+  const q=(me.qty)||{}, p=P(), v=PREV();
+  const mineIds=Object.keys(by);
+  const mult=id=>{ const u=U.find(x=>x.sector+'|'+x.letter===id); return u? u.m : null; };
+
+  return `<div class="fin">
+    <div class="fh">
+      <div class="ft">${WE()} 최종 성적</div>
+      <div class="fv ${cls}">${won(net)}</div>
+      <div class="fs">시드 ${won(seed)} → <b>${m.toFixed(2)}배</b>${due? ` · 대출 상환 ${won(due)} 차감`:''}</div>
+    </div>
+
+    ${ks.length>1? `<div class="fsec"><h3>라운드별 자산</h3>
+      <div class="slist">${ks.map(k=>{
+        const val=snap[k], pv=k>ks[0]? snap[k-1] : seed;
+        const c=pv? val/pv-1 : 0;
+        const cc=c>0.0005?'up':c<-0.0005?'down':'flat';
+        return `<div class="srow2"><span class="k">${k}라운드</span>
+          <span class="v">${won(val)}</span>
+          <span class="c ${cc}">${c>0?'+':''}${(c*100).toFixed(0)}%</span></div>`;
+      }).join('')}</div></div>`:''}
+
+    ${mineIds.length? `<div class="fsec"><h3>${WESUB()} 투자했던 종목</h3>
+      <div class="mylist">${mineIds.map(id=>{
+        const o=by[id], hold=q[id]||0, mm=mult(id);
+        const nm=FS>=3? realName(id) : '';
+        return `<div class="myc">
+          <div class="mh"><span class="ml">${esc(labelOf(id)||id.replace('|',' '))}</span>
+            <span class="mr">${nm? esc(nm) : '<i class="hid">이름 공개 전</i>'}</span></div>
+          <div class="mm">
+            <span>${o.rounds.length}개 라운드에서 거래 · 샀다 ${o.buy.toLocaleString('ko-KR')}주 · 팔았다 ${o.sell.toLocaleString('ko-KR')}주</span>
+            ${hold>0? `<span class="kept">끝까지 ${hold.toLocaleString('ko-KR')}주 들고 있었습니다</span>`:''}
+            ${mm!==null? `<span class="mu ${mm>=1?'up':'down'}">끝까지 뒀다면 ${mm>=10?Math.round(mm):mm.toFixed(mm>=1?1:2)}배</span>`:''}
+          </div></div>`;
+      }).join('')}</div></div>`
+      : `<div class="fsec"><h3>${WESUB()} 투자했던 종목</h3>
+          <div class="rvnone">한 번도 매매하지 않았습니다</div></div>`}
+
+    ${FS>=2 && W.length? `<div class="fsec"><h3>시상</h3>
+      ${me.rank? `<div class="myrank">${WE()}은 <b>${me.rank}등</b>${me.rankOf? ` / ${me.rankOf}${ST.mode==='team'?'팀':'명'}`:''}입니다</div>`:''}
+      <div class="wlist">${W.map(w=>`<div class="wc r${w.rank}">
+        <span class="rk">${w.rank===1?'🏆':w.rank===2?'🥈':'🥉'}</span>
+        <span class="wn">${esc(w.name)}</span>
+        <span class="wv">${won(w.net)}<i>${w.mult.toFixed(2)}배</i></span>
+        ${w.name===me.name? '<span class="wme">우리 팀!</span>':''}</div>`).join('')}
+      ${WORST? `<div class="wc worst">
+        <span class="rk">💩</span>
+        <span class="wn">${esc(WORST.name)}<i>똥손상</i></span>
+        <span class="wv">${won(WORST.net)}<i>${WORST.mult.toFixed(2)}배</i></span>
+        ${WORST.name===me.name? '<span class="wme bad">우리 팀… 🫠</span>':''}</div>`:''}
+      </div></div>`:''}
+
+    ${FS>=3 && U.length? `<div class="fsec"><h3>이 게임에서</h3>
+      <div class="bw up"><span class="t">가장 많이 오른 종목</span>
+        <span class="n">${esc(U[0].real)}</span>
+        <span class="s">${esc(U[0].sector)} ${esc(U[0].letter)}</span>
+        <span class="m">${U[0].m>=10?Math.round(U[0].m):U[0].m.toFixed(1)}배</span></div>
+      <div class="bw down"><span class="t">가장 많이 떨어진 종목</span>
+        <span class="n">${esc(U[U.length-1].real)}</span>
+        <span class="s">${esc(U[U.length-1].sector)} ${esc(U[U.length-1].letter)}</span>
+        <span class="m">${U[U.length-1].m.toFixed(2)}배</span></div></div>`:''}
+
+    ${FS>=3 && U.length? `<details class="allsec"><summary>전체 종목의 진짜 이름 (${U.length}개)</summary>
+      <div class="inner"><div class="umlist">${U.map(x=>{
+        const id=x.sector+'|'+x.letter, held=(q[id]||0)>0, traded=!!by[id];
+        return `<div class="um${held||traded?' held':''}">
+          <span class="c">${esc(x.sector)} ${esc(x.letter)}${held?'<i class="badge">'+WE()+' 보유</i>':traded?'<i class="badge">거래함</i>':''}</span>
+          <span class="n">${esc(x.real)}</span>
+          <span class="m ${x.m>=1?'up':'down'}">${x.m>=10?Math.round(x.m):x.m.toFixed(x.m>=1?1:2)}배</span></div>`;
+      }).join('')}</div></div></details>`:''}
+
+    <div class="fend">${FS>=3? '수고하셨습니다 🎉' : FS>=2? '회사 이름은 곧 공개됩니다' : '잠시 후 우승팀을 발표합니다'}</div>
+  </div>`;
 }
 
 function revealHTML(){
@@ -674,7 +858,7 @@ function marketHTML(locked){
       return `<div class="secbox ${open?'open':''}">
         <button class="sechd" data-sec="${esc(sec)}">
           <span class="ar">${open?'▾':'▸'}</span>
-          <span class="nm">${esc(sec)}${own?' <i class="own">●</i>':''}</span>
+          <span class="nm">${esc(sec)}${own?' <i class="own">보유중</i>':''}</span>
           <span class="ch">${h}</span></button>
         ${open? `<div class="secbody">${S[sec].map(x=>stockBlock(x, sec, locked)).join('')}</div>`:''}
       </div>`;
@@ -694,7 +878,7 @@ function stockBlock(s, sec, locked){
   return `<div class="stk ${sel?'sel':''} ${have>0?'own':''} ${flashId===s.id?'flash':''}">
     <div class="srowwrap">
       <button class="srow" data-t="${s.id}">
-        <span class="L">${s.letter}</span>
+        <span class="L">${s.letter}${have>0?'<i class="ow">보유</i>':''}</span>
         <span class="mid">
           <span class="pz">${won(price)}</span>
           ${c===null?'':`<span class="dl ${cc}">${c>0?'+':''}${(c*100).toFixed(0)}%</span>`}</span>
@@ -722,13 +906,47 @@ function stockBlock(s, sec, locked){
         <button class="xb" data-chart="${s.id}">${chartId===s.id?'그래프 닫기':'주가 흐름'}</button>
       </div>
       ${(!locked && amtId===s.id)? `<div class="amtbox">
-        <div class="ai"><input type="tel" inputmode="numeric" id="amtin" placeholder="금액" value="">
+        <div class="al">얼마어치 살까요</div>
+        <div class="ai"><input type="tel" inputmode="numeric" id="amtbuy" placeholder="금액"
+            value="${esc(amtBuyV)}" oninput="window.__setAmt('b',this.value)">
           <span class="unit">만원</span>
-          <button class="btn pri" data-amtgo="${s.id}">주문</button></div>
-        <div class="ah">현금 ${won(cash)} · 1주 ${won(price)}</div></div>`:''}
+          <button class="btn amtb buy" data-amtbuy="${s.id}">사기</button></div>
+        <div class="ah">현금 ${won(cash)} · 1주 ${won(price)}</div>
+        ${have>0? `<div class="asep"></div>
+        <div class="al">얼마어치 팔까요</div>
+        <div class="ai"><input type="tel" inputmode="numeric" id="amtsell" placeholder="금액"
+            value="${esc(amtSellV)}" oninput="window.__setAmt('s',this.value)">
+          <span class="unit">만원</span>
+          <button class="btn amtb sell" data-amtsell="${s.id}">팔기</button></div>
+        <div class="ah">보유 ${have.toLocaleString('ko-KR')}주 · ${won(val)}</div>`:''}
+      </div>`:''}
       ${chartId===s.id? chartHTML(s.id, price) : ''}
     </div>`:''}
   </div>`;
+}
+
+let howOpen=false;
+function howHTML(){
+  return `<div class="how ${howOpen?'on':''}">
+    <button class="howhd" id="howtg"><span>${howOpen?'▾':'▸'}</span>
+      <b>사고파는 방법</b><span class="hs">${howOpen?'닫기':'처음이면 눌러보세요'}</span></button>
+    ${howOpen? `<div class="howb">
+      <div class="hstep"><span class="hn">1</span><div><b>업종을 고릅니다</b>
+        <p>전자·반도체, 뷰티 같은 줄을 누르면 그 안에 A·B·C… 종목이 펼쳐집니다.</p></div></div>
+      <div class="hstep"><span class="hn">2</span><div><b>종목을 누릅니다</b>
+        <p>A·B·C… 중 하나를 누르면 아래에 주문 버튼이 나옵니다.
+        회사 이름은 끝까지 안 알려드려요. 가격과 등락률만 보고 고르시면 됩니다.</p></div></div>
+      <div class="hstep"><span class="hn">3</span><div><b>빨간 버튼이 사기, 파란 버튼이 팔기</b>
+        <p><b class="rr">절반 사기</b>는 현금의 절반, <b class="rr">전액 사기</b>는 현금 전부로 삽니다.
+        <b class="bb">절반 팔기</b>·<b class="bb">전량 팔기</b>도 똑같아요. 수량은 계산 안 하셔도 됩니다.</p></div></div>
+      <div class="hstep"><span class="hn">4</span><div><b>갈아타기</b>
+        <p><b>전부 여기로 갈아타기</b>를 누르면 들고 있던 걸 다 팔고 그 종목으로 옮깁니다. 한 번이면 끝나요.</p></div></div>
+      <div class="hstep"><span class="hn">5</span><div><b>잘못 눌렀으면 되돌리기</b>
+        <p>주문하면 위에 검은 띠가 뜹니다. <b>10초 안에</b> 되돌리기를 누르면 없던 일이 됩니다.</p></div></div>
+      <div class="hstep"><span class="hn">6</span><div><b>금액을 직접 넣고 싶으면</b>
+        <p><b>금액으로 입력</b>을 누르고 만원 단위로 숫자를 넣으세요. 사기·팔기 둘 다 됩니다.</p></div></div>
+      <div class="hnote">수수료도 세금도 없습니다. 한 종목에 전부 몰아넣어도 되고, 몇 번을 사고팔아도 손해가 없어요.</div>
+    </div>`:''}</div>`;
 }
 
 function tradeHTML(){
@@ -737,7 +955,7 @@ function tradeHTML(){
   const n=Object.keys(q).filter(k=>q[k]>0).length;
   const brokeMsg = (!(me.cash>0) && !Object.keys(q).some(k=>q[k]>0))
     ? `<div class="broke">돈이 다 떨어졌습니다.<br>진행자에게 <b>대출</b>을 요청해보세요.</div>` : '';
-  return `${locked? '' : undoHTML()}${brokeMsg}
+  return `${locked? '' : undoHTML()}${brokeMsg}${howHTML()}
     ${locked
       ? `<div class="lockbar">🔒 매매가 마감됐습니다 — 결과를 기다려주세요</div>`
       : (n? `<div class="sumbar"><div class="si"><span>가진 종목</span><b>${n}개</b></div>
@@ -772,14 +990,26 @@ function commitTrade(mut,label,focusId){
   db.ref('players/'+uid).transaction(cur=>{
     if(!cur) return cur;
     cur.qty=cur.qty||{}; cur.cost=cur.cost||{};
+    const before=JSON.parse(JSON.stringify(cur.qty||{}));
     if(mut(cur)===false) return;
     cur.tr = (ST && ST.round) || 0;
+    (function(){
+      const pr=P(), r=(ST&&ST.round)||0, lg=cur.log||{};
+      const ids=new Set(Object.keys(before).concat(Object.keys(cur.qty||{})));
+      ids.forEach(k=>{
+        const d=((cur.qty||{})[k]||0)-(before[k]||0);
+        if(!d) return;
+        lg['t'+Date.now().toString(36)+Math.random().toString(36).slice(2,6)]=
+          {r:r, i:k, n:Math.abs(d), s:d>0?1:0, p:pr[k]||0};
+      });
+      cur.log=lg;
+    })();
     Object.keys(cur.qty).forEach(k=>{ if(!cur.qty[k]){ delete cur.qty[k]; delete cur.cost[k]; } });
     return cur;
   }).then(r=>{
     if(!r.committed){ toast('주문이 되지 않았습니다','bad'); return; }
     setUndo(snap,label);
-    flashId=focusId||null; amtId=null;
+    flashId=focusId||null; amtId=null; amtBuyV=''; amtSellV='';
     setTimeout(()=>{ flashId=null; render(); },1200);
     render();
   });
@@ -794,16 +1024,28 @@ function buyBy(id, amount){
     cur.cash-=cost; cur.qty[id]=(cur.qty[id]||0)+n; cur.cost[id]=(cur.cost[id]||0)+cost;
   }, lb, id);
 }
-function sellBy(id, ratio){
-  const price=P()[id]||0, have=(me.qty||{})[id]||0;
-  const n = ratio>=1? have : Math.floor(have*ratio);
-  if(n<=0){ toast('팔 수량이 없습니다','bad'); return; }
+function sellShares(id, n){
+  const price=P()[id]||0;
   const lb=`${labelOf(id)} ${n.toLocaleString('ko-KR')}주 매도 · ${won(n*price)}`;
   commitTrade(cur=>{
     const h=cur.qty[id]||0; if(n>h) return false;
     const c0=cur.cost[id]||0;
     cur.cash+=n*price; cur.qty[id]=h-n; cur.cost[id]= h? c0*(h-n)/h : 0;
   }, lb, id);
+}
+function sellBy(id, ratio){
+  const have=(me.qty||{})[id]||0;
+  const n = ratio>=1? have : Math.floor(have*ratio);
+  if(n<=0){ toast('팔 수량이 없습니다','bad'); return; }
+  sellShares(id, n);
+}
+function sellAmt(id, amount){
+  const price=P()[id]||0, have=(me.qty||{})[id]||0;
+  if(!price || have<=0){ toast('팔 수량이 없습니다','bad'); return; }
+  let n=Math.floor(amount/price);
+  if(n<=0){ toast(`1주에 ${won(price)}입니다. 금액을 늘려주세요`,'bad'); return; }
+  if(n>have) n=have;
+  sellShares(id, n);
 }
 function switchTo(id){
   const p=P(), price=p[id]; if(!price) return;
@@ -1066,18 +1308,25 @@ function bind(){
   document.querySelectorAll('[data-chart]').forEach(b=>b.onclick=()=>{
     chartId = chartId===b.dataset.chart? null : b.dataset.chart; render(); });
   document.querySelectorAll('[data-amt]').forEach(b=>b.onclick=()=>{
-    amtId = amtId===b.dataset.amt? null : b.dataset.amt; render();
-    const el=document.querySelector('#amtin'); if(el) el.focus(); });
+    amtId = amtId===b.dataset.amt? null : b.dataset.amt;
+    amtBuyV=''; amtSellV=''; render();
+    const el=document.querySelector('#amtbuy'); if(el) el.focus(); });
   document.querySelectorAll('[data-buy]').forEach(b=>b.onclick=()=>{
     const [id,r]=splitAct(b.dataset.buy); buyBy(id, Math.floor((me.cash||0)*parseFloat(r))); });
   document.querySelectorAll('[data-sell]').forEach(b=>b.onclick=()=>{
     const [id,r]=splitAct(b.dataset.sell); sellBy(id, parseFloat(r)); });
   document.querySelectorAll('[data-sw]').forEach(b=>b.onclick=()=>switchTo(b.dataset.sw));
-  document.querySelectorAll('[data-amtgo]').forEach(b=>b.onclick=()=>{
-    const el=document.querySelector('#amtin');
-    const v=parseInt(el&&el.value,10);
-    if(!Number.isFinite(v)||v<=0){ toast('금액을 입력하세요','bad'); return; }
-    buyBy(b.dataset.amtgo, v*10000); });
+  document.querySelectorAll('[data-amtbuy]').forEach(b=>b.onclick=()=>{
+    const el=document.querySelector('#amtbuy');
+    const v=parseInt((el&&el.value)||amtBuyV,10);
+    if(!Number.isFinite(v)||v<=0){ toast('살 금액을 입력하세요','bad'); return; }
+    buyBy(b.dataset.amtbuy, v*10000); });
+  document.querySelectorAll('[data-amtsell]').forEach(b=>b.onclick=()=>{
+    const el=document.querySelector('#amtsell');
+    const v=parseInt((el&&el.value)||amtSellV,10);
+    if(!Number.isFinite(v)||v<=0){ toast('팔 금액을 입력하세요','bad'); return; }
+    sellAmt(b.dataset.amtsell, v*10000); });
+  const ht=document.querySelector('#howtg'); if(ht) ht.onclick=()=>{ howOpen=!howOpen; render(); };
   const co=document.querySelector('#cashout'); if(co) co.onclick=cashOut;
   const ud=document.querySelector('#undo'); if(ud) ud.onclick=doUndo;
 }
