@@ -145,6 +145,8 @@ tr.dead td{opacity:.4}
 .nchip{border-radius:7px;padding:6px 10px;font-size:14px;font-weight:600;
   border:1px solid var(--line);background:var(--panel)}
 .nchip.none{border-color:#8A3038;background:#2A1416;color:#FCA5A5}
+.nchip.ok{border-color:#2E7D52;background:#12241A;color:#86EFAC}
+.namegrp>.h b{color:var(--ink)}
 .nchip.hold{border-color:var(--line);color:var(--faint)}
 .bars{display:flex;flex-direction:column;gap:6px;max-height:470px;overflow-y:auto}
 .bl{display:grid;grid-template-columns:100px 1fr 62px;gap:9px;align-items:center;font-size:13px}
@@ -182,7 +184,7 @@ select{min-width:150px}
   <span class="tag hot" id="tMode">—</span>
   <span class="tag" id="tStep">—</span>
   <span class="tag ok" id="tCount">참가 0</span>
-  <span class="sp tag" style="opacity:.6">v21 · 09-14</span>
+  <span class="sp tag" style="opacity:.6">v22 · 09-14</span>
 </div>
 
 <div class="grid">
@@ -543,6 +545,15 @@ function cheatDefault(st){
   if(!st.k) return 1;
   return Math.min(st.t==='reveal'? st.k+1 : st.k, last);
 }
+/* 미니게임 이름표 — 누가 냈고 누가 맞고 틀렸는지 */
+function chips(list, cls){
+  if(!list.length) return '<span class="mut" style="font-size:13px">없음</span>';
+  return `<div class="names">${list.map(r=>`<span class="nchip ${cls||''}">${esc(r.name)}</span>`).join('')}</div>`;
+}
+function nameBlock(title, list, cls){
+  return `<div class="namegrp"><div class="h">${title} <b>${list.length}</b></div>${chips(list,cls)}</div>`;
+}
+
 function drawCheat(st){
   const e=$('#cheatCard'), md=MD(), last=ENDAT?Math.min(ENDAT,N()):N();
   const k=Math.max(1,Math.min(CHEATK||cheatDefault(st), last));
@@ -692,7 +703,21 @@ function mgPanel(){
       <div class="ss">${q? '정답 <b class="amb">'+q.a+'</b> · '+esc(q.why||'') : MD().ox.length+'문제 준비됨'}</div>
       <div class="row"><span class="tag">제출 ${an.length} / ${al.length}</span>
         <span class="tag">O ${an.filter(r=>r.mini.ox==='O').length}</span>
-        <span class="tag">X ${an.filter(r=>r.mini.ox==='X').length}</span></div></div>
+        <span class="tag">X ${an.filter(r=>r.mini.ox==='X').length}</span></div>
+      ${(()=>{ const ans=MINI.answer;
+        if(MINI.stage==='result' && ans){
+          const pass=R.filter(r=>r.alive), out=R.filter(r=>!r.alive);
+          const miss=R.filter(r=>!r.mini.ox);
+          return `<div class="namewrap">
+            ${nameBlock('통과 · 남은 팀', pass, 'ok')}
+            ${nameBlock('탈락', out, 'none')}
+            ${miss.length? nameBlock('미제출이었던 팀', miss, 'hold'):''}</div>`;
+        }
+        const no=al.filter(r=>!r.mini.ox);
+        return `<div class="namewrap">
+          ${nameBlock('아직 안 낸 팀', no, 'none')}
+          ${nameBlock('낸 팀', an, 'hold')}</div>`;
+      })()}</div>
       <div class="row">
         <button class="btn pri" id="oxNext">${q?'다음 문제':'문제 뽑기'}</button>
         <span class="mut">남은 문제 ${oxLeft()} / ${(MD().ox||[]).length}</span>
@@ -725,6 +750,13 @@ function mgPanel(){
     const dist={}; for(let i=1;i<=10;i++) dist[i]=0;
     an.forEach(r=>dist[r.mini.pick]++);
     return `<div class="live"><div class="hh">${MINI.round||1}차 · 남은 ${al.length}${MODE==='team'?'팀':'명'}</div>
+      ${(()=>{ if(MINI.stage==='result'){
+          const pass=R.filter(r=>r.alive), out=R.filter(r=>!r.alive);
+          return `<div class="namewrap">${nameBlock('생존', pass, 'ok')}${nameBlock('탈락', out, 'none')}</div>`;
+        }
+        const al2=R.filter(r=>r.alive), no=al2.filter(r=>r.mini.pick==null);
+        return `<div class="namewrap">${nameBlock('아직 안 고른 팀', no, 'none')}</div>`;
+      })()}
       <div class="ss">진행자가 고른 숫자: <b class="amb">${MINI.answer!=null?MINI.answer:'아직 안 정함'}</b>
         · 제출 ${an.length} / ${al.length}</div>
       <div class="numgrid">${[1,2,3,4,5,6,7,8,9,10].map(n=>
